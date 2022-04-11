@@ -1,5 +1,5 @@
 Flask==2.0.2
-werkzeug>=1,<2
+werkzeug>=1,<2.1
 flask-session~=0.3.2
 requests>=2,<3
 msal>=1.7,<2
