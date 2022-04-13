@@ -26,14 +26,14 @@ def authorized():
         _save_cache(cache)
     except ValueError:  # Usually caused by CSRF
         pass  # Simply ignore them
-    return redirect(url_for("index"))
+    return redirect(url_for("home.index"))
 
 @azauth.route("/logout")
 def logout():
     session.clear()  # Wipe out user and its token cache from session
     return redirect(  # Also logout from your tenant's web session
         app_config.AUTHORITY + "/oauth2/v2.0/logout" +
-        "?post_logout_redirect_uri=" + url_for("index", _external=True))
+        "?post_logout_redirect_uri=" + url_for("home.index", _external=True))
 
 @azauth.route("/graphcall")
 def graphcall():
@@ -45,7 +45,6 @@ def graphcall():
         headers={'Authorization': 'Bearer ' + token['access_token']},
         ).json()
     return render_template('display.html', result=graph_data)
-
 
 def _load_cache():
     cache = msal.SerializableTokenCache()
