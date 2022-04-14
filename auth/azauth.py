@@ -1,16 +1,22 @@
+# Microsoft provides a python library for authentication called MSAL (Microsoft Authentication Library) upon which the code below was built
+# Documentation for the MSAl can be found here: https://msal-python.readthedocs.io/en/latest/?badge=latest
 import app_config
 import msal
 import requests
 from flask import Flask, render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
 
+# Register this file as a Blueprint to be used in the application
 azauth = Blueprint("azauth", __name__, static_folder="../static/", template_folder="../templates/")
 
 
 @azauth.route("/login")
 def login():
-    # Technically we could use empty list [] as scopes to do just sign in,
-    # here we choose to also collect end user consent upfront
+    # Go through the login process with the helper methods in this class.
+    # Pass the scopes (i/e the types of information about the user we want) as part of the auth process
+    # so we can get the information we need in the session, such as group membership to distinguish admin and standard users.
+    # The user will need to approve / consent to the request the first time they access and authenticate against the application
+    # to sharing the data we ask for
     session["flow"] = _build_auth_code_flow(scopes=app_config.SCOPE)
     return render_template("login.html", auth_url=session["flow"]["auth_uri"], version=msal.__version__)
 
@@ -28,20 +34,22 @@ def authorized():
         result = buildAzureMSALApp(cache=cache).acquire_token_by_auth_code_flow(
             session.get("flow", {}), request.args)
         if "error" in result:
-            return render_template("auth_error.html", result=result) # cleanly redirect to an error page if we hit a problem with the authentication
+            return render_template("login_failure.html", result=result) # cleanly redirect to an error page if we hit a problem with the authentication
         session["user"] = result.get("id_token_claims") # store the user token details in the session cache so it can be picked up later if needed
         saveAppCache(cache) # update the msal cache 
     except ValueError:  # not sure why but sometimes an error happens
         pass  # we can ignore this error and let the code run
     return redirect(url_for("home.index")) # once user has been authenticated, redirect the browser to the home page
 
+# This method removes the user credentials from the session to effectively "log out" the user
 @azauth.route("/logout")
 def logout():
-    session.clear()  # Wipe out user and its token cache from session
-    return redirect(  # Also logout from your tenant's web session
+    session.clear()  # Remove all credentials from the session (user and token cache)
+    return redirect(  # The redirect will go to the Azure App Registration application's logout URL to terminate the session
         app_config.AUTHORITY + "/oauth2/v2.0/logout" +
-        "?post_logout_redirect_uri=" + url_for("home.index", _external=True))
+        "?post_logout_redirect_uri=" + url_for("home.index", _external=True)) # and once it has logged out / terminated the App Registration session, the user will be redirected to the Home.Index view
 
+# This method is used to get more information about the user from Azure Active Directory using Microsoft Graph API
 @azauth.route("/graphcall")
 def graphcall():
     token = getTokenFromCache(app_config.SCOPE)
@@ -53,6 +61,10 @@ def graphcall():
         ).json()
     return render_template('display.html', result=graph_data)
 
+# This method will look to the server-side token cache for the sessions (this is configured in the app_config.py)
+# and if it can find it (i/e we have created a session previously and stored credentials in the session cache)
+# then return the results, deseialize so the code can use it and return the object
+# otherwise it returns null
 def loadSessionCache():
     sessionCache = msal.SerializableTokenCache()
     if session.get("token_cache"):
@@ -71,10 +83,13 @@ def buildAzureMSALApp(cache=None, authority=None):
     return msal.ConfidentialClientApplication(
         app_config.CLIENT_ID, authority=authority or app_config.AUTHORITY, client_credential=app_config.CLIENT_SECRET, token_cache=cache)
 
+# This method will first get the confidential client application for this web app
+# then it will initiate the authentication flow and passing along any scopes (i/e details we want to get about the user from Azure Active Directory)
+# and where to send the web browser once authentication has completed.
 def _build_auth_code_flow(authority=None, scopes=None):
     return buildAzureMSALApp(authority=authority).initiate_auth_code_flow(
-        scopes or [],
-        redirect_uri=url_for("azauth.authorized", _external=True))
+        scopes or [], # scopes an optional parameter, so check if something has been passed along and use it. If nothing passed, don't request any specific scopes.
+        redirect_uri=url_for("azauth.authorized", _external=True)) # set the authorized view as the redirect url when authentication completes.
 
 # if user is already logged in and we have stored a token in the session
 # then we can use this method to find the token in the session to save us
