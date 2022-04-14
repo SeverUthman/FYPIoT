@@ -36,11 +36,15 @@ def authorized():
         cache = loadSessionCache()
         # get an instance of the confidential client application and call the acquire token by auth code flow method to retieve an
         # authorisation code. 
+        print("In MSAL result = buildAzureMSALApp")
         result = buildAzureMSALApp(cache=cache).acquire_token_by_auth_code_flow(
             session.get("flow", {}), request.args)
+        print("In MSAL  if 'error' in result:")
         if "error" in result:
             return render_template("login_failure.html", result=result) # cleanly redirect to an error page if we hit a problem with the authentication
+        print("In MSAL  session['user'] = result.get")
         session["user"] = result.get("id_token_claims") # store the user token details in the session cache so it can be picked up later if needed
+        print("In MSAL  saveAppCache(cache)")
         saveAppCache(cache) # update the msal cache 
     except ValueError:  # not sure why but sometimes an error happens
         pass  # we can ignore this error and let the code run
