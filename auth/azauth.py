@@ -31,6 +31,7 @@ def login():
 @azauth.route(app_config.REDIRECT_PATH)  # setting the route value using a config file allows us to change the route in one config location only
 def authorized():
     try:
+        print("In MSAL try statement")
         # the application uses a single cache for the whole instance, so we want to load it
         cache = loadSessionCache()
         # get an instance of the confidential client application and call the acquire token by auth code flow method to retieve an
@@ -43,6 +44,7 @@ def authorized():
         saveAppCache(cache) # update the msal cache 
     except ValueError:  # not sure why but sometimes an error happens
         pass  # we can ignore this error and let the code run
+    print("about to redirect to " + url_for("home.index"))
     return redirect(url_for("home.index")) # once user has been authenticated, redirect the browser to the home page
 
 # This method removes the user credentials from the session to effectively "log out" the user

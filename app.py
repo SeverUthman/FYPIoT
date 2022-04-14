@@ -14,8 +14,8 @@ app = Flask(__name__)
 # generate http scheme when this sample is running on localhost,
 # and to generate https scheme when it is deployed behind reversed proxy.
 # See also https://flask.palletsprojects.com/en/1.0.x/deploying/wsgi-standalone/#proxy-setups
-#from werkzeug.middleware.proxy_fix import ProxyFix
-#app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+from werkzeug.middleware.proxy_fix import ProxyFix
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 
 def create_app():
