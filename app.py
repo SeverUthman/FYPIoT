@@ -19,8 +19,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 
 def create_app():
-    app = Flask(__name__)   
-    app.secret_key = 'super secret key' 
+    app = Flask(__name__)    
     # register a blueprint for authorization.
     app.register_blueprint(azauth, url_prefix="/auth")
     # register the home/index blueprint
