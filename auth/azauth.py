@@ -39,6 +39,7 @@ def authorized():
         print("In MSAL result = buildAzureMSALApp")
         result = buildAzureMSALApp(cache=cache).acquire_token_by_auth_code_flow(
             session.get("flow", {}), request.args)
+        print("printing result " + str(result))
         print("In MSAL  if 'error' in result:")
         if "error" in result:
             return render_template("login_failure.html", result=result) # cleanly redirect to an error page if we hit a problem with the authentication
