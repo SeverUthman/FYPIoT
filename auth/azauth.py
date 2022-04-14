@@ -104,6 +104,10 @@ def buildAzureMSALApp(cache=None, authority=None):
 # then it will initiate the authentication flow and passing along any scopes (i/e details we want to get about the user from Azure Active Directory)
 # and where to send the web browser once authentication has completed.
 def _build_auth_code_flow(authority=None, scopes=None):
+    print("IN _build_auth_code_flow")
+    print(str(scopes or []))
+    print(str(url_for("azauth.authorized", _external=True)))
+    print("FINISHED _build_auth_code_flow")
     return buildAzureMSALApp(authority=authority).initiate_auth_code_flow(
         scopes or [], # scopes an optional parameter, so check if something has been passed along and use it. If nothing passed, don't request any specific scopes.
         redirect_uri=url_for("azauth.authorized", _external=True)) # set the authorized view as the redirect url when authentication completes.
