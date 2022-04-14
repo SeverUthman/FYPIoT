@@ -19,7 +19,8 @@ app = Flask(__name__)
 
 
 def create_app():
-    app = Flask(__name__)    
+    app = Flask(__name__)   
+    app.secret_key = 'super secret key' 
     # register a blueprint for authorization.
     app.register_blueprint(azauth, url_prefix="/auth")
     # register the home/index blueprint
