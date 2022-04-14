@@ -18,8 +18,11 @@ def login():
     # The user will need to approve / consent to the request the first time they access and authenticate against the application
     # to sharing the data we ask for
     session["flow"] = _build_auth_code_flow(scopes=app_config.SCOPE)
-    
-    return render_template("login.html", auth_url=session["flow"]["auth_uri"], version=msal.__version__)
+    authurl=session["flow"]["auth_uri"]
+
+    if("localhost" not in authurl):
+        authurl = authurl.replace("redirect_uri=http%", "redirect_uri=https%")
+    return render_template("login.html", auth_url=authurl, version=msal.__version__)
 
 
 # Once a user has been prompted for credentials and authenticate successfully against Azure AD
