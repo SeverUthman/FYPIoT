@@ -13,5 +13,5 @@ home = Blueprint("home", __name__, static_folder="../static/", template_folder="
 def index():
     if not session.get("user"):
         print("returning page auth/login")
-        return redirect("http://localhost:5000/auth/login")
+        return redirect("https://kitchencontrol.azurewebsites.net/auth/login")
     return render_template('index.html', user=session["user"], version=msal.__version__)
