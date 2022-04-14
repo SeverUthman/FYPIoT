@@ -33,7 +33,7 @@ if __name__ == '__main__':
     app = create_app()
     app.config.from_object(app_config)
     Session(app)
-    app.run(host='localhost', port=5000, debug=True)
+    app.run()
 else:
     app = create_app()
 
