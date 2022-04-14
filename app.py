@@ -33,12 +33,9 @@ if __name__ == '__main__':
     app = create_app()
     app.config.from_object(app_config)
     Session(app)
-    app.run()
+    app.run(host='localhost', port=5000, debug=True)
 else:
     app = create_app()
-
-
-app.jinja_env.globals.update(_build_auth_code_flow=azauth._build_auth_code_flow)  # Used in template
 
 #if __name__ == "__main__":
 #    app.run()
