@@ -24,7 +24,7 @@ def create_app():
     app.register_blueprint(azauth, url_prefix="/auth")
     # register the home/index blueprint
     app.register_blueprint(home, url_prefix="")
-    
+
     return app
 
 if __name__ == '__main__':
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     app = create_app()
     app.config.from_object(app_config)
     Session(app)
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(debug=True)
 else:
     app = create_app()
 
