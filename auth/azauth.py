@@ -91,6 +91,12 @@ def saveAppCache(cache):
 # This method creates an instance of a Confidential client application that represents
 # the Azure App Registration application and will be used to manage credentials and tokens
 def buildAzureMSALApp(cache=None, authority=None):
+    print("IN BUILDAZUREMSALAPP")
+    print(str(app_config.CLIENT_ID))
+    print(str(authority or app_config.AUTHORITY))
+    print(str(app_config.CLIENT_SECRET))
+    print(str(cache))
+    print("FINISHED BUILDAZUREMSALAPP PRINTS")
     return msal.ConfidentialClientApplication(
         app_config.CLIENT_ID, authority=authority or app_config.AUTHORITY, client_credential=app_config.CLIENT_SECRET, token_cache=cache)
 
