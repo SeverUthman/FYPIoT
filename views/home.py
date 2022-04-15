@@ -11,7 +11,8 @@ home = Blueprint("home", __name__, static_folder="../static/", template_folder="
 # The default (aka home) route for the app
 @home.route('/', methods=['POST', 'GET'])
 def index():
-    if not session.get("user"):
+    print (str(session["user"]))
+    if not session.get("user") is None:
         print("returning page auth/login ---- HERE IS STUFF " + str(session.get("user")))
         #return redirect("http://localhost:5000/auth/login")
         return redirect(url_for("azauth.login"))
