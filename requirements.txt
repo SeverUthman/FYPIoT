@@ -4,7 +4,7 @@ werkzeug>=1,<2.1
 Flask-Session>=0,<1
 requests>=2,<3
 msal>=1.7,<2
-
+CacheLib
 #Flask>=2,<3
 
 #werkzeug>=1,<2
