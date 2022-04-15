@@ -43,7 +43,7 @@ def authorized():
         print("In MSAL  if 'error' in result:")
         if "error" in result:
             return render_template("login_failure.html", result=result) # cleanly redirect to an error page if we hit a problem with the authentication
-        print("In MSAL  session['user'] = result.get")
+        print("In MSAL  session['user'] = result.get -------------------" + str(result.get("id_token_claims")))
         session["user"] = result.get("id_token_claims") # store the user token details in the session cache so it can be picked up later if needed
         print("In MSAL  saveAppCache(cache)")
         saveAppCache(cache) # update the msal cache 
