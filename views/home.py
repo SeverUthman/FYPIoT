@@ -11,7 +11,8 @@ home = Blueprint("home", __name__, static_folder="../static/", template_folder="
 # The default (aka home) route for the app
 @home.route('/', methods=['POST', 'GET'])
 def index():
-    print("################################################################################################################################# returning page auth/login ---- IS IT NONE?? \n" + str(session.get("user")))
+    print("################################################################################################################################# returning page auth/login ---- IS IT NONE?? \n" + str(session["user"]))
+    print("IS USER LOGGED IN??? ################################################################################################################################# " + str(session["userisloggedin"]))
     if not session.get("user"):
         print("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH returning page auth/login ---- HERE IS STUFF " + str(session.get("user")))
         #return redirect("http://localhost:5000/auth/login")
