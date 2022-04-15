@@ -20,6 +20,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 def create_app():
     app = Flask(__name__)   
+    app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
     # register a blueprint for authorization.
     app.register_blueprint(azauth, url_prefix="/auth")
     # register the home/index blueprint
@@ -32,10 +33,12 @@ if __name__ == '__main__':
     # Service, a docker container will be used to publish the app, likely running a web server like gunicorn
     app = create_app()
     app.config.from_object(app_config)
+    app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
     Session(app)
     app.run(host='localhost', port=5000, debug=True)
 else:
     app = create_app()
+    app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
 
 #if __name__ == "__main__":
 #    app.run()
