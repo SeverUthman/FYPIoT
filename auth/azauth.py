@@ -108,9 +108,14 @@ def _build_auth_code_flow(authority=None, scopes=None):
     print(str(scopes or []))
     print(str(url_for("azauth.authorized", _external=True, _scheme='https')))
     print("FINISHED _build_auth_code_flow")
+    if("localhost" in url_for("azauth.authorized", _external=True)):
+        urlfor = url_for("azauth.authorized", _external=True)
+    else:
+        urlfor = url_for("azauth.authorized", _external=True, _scheme='https')
+        
     return buildAzureMSALApp(authority=authority).initiate_auth_code_flow(
         scopes or [], # scopes an optional parameter, so check if something has been passed along and use it. If nothing passed, don't request any specific scopes.
-        redirect_uri=url_for("azauth.authorized", _external=True)) # set the authorized view as the redirect url when authentication completes.
+        redirect_uri=urlfor) # set the authorized view as the redirect url when authentication completes.
 
 # if user is already logged in and we have stored a token in the session
 # then we can use this method to find the token in the session to save us
