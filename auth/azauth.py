@@ -106,7 +106,7 @@ def buildAzureMSALApp(cache=None, authority=None):
 def _build_auth_code_flow(authority=None, scopes=None):
     print("IN _build_auth_code_flow")
     print(str(scopes or []))
-    print(str(url_for("azauth.authorized", _external=True)))
+    print(str(url_for("azauth.authorized", _external=True, _scheme='https')))
     print("FINISHED _build_auth_code_flow")
     return buildAzureMSALApp(authority=authority).initiate_auth_code_flow(
         scopes or [], # scopes an optional parameter, so check if something has been passed along and use it. If nothing passed, don't request any specific scopes.
