@@ -1,7 +1,7 @@
 import os
 import uuid
 from flask import Flask, render_template, session, request, redirect, url_for
-from flask_session import Session
+#from flask_session import Session
 from auth.azauth import azauth
 from views.home import home
 
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     app.config.from_object(app_config)
     app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
     app.config.from_object(app_config)
-    Session(app)
+    #Session(app)
     app.run(host='localhost', port=5000, debug=True)
 else:
     app = create_app()
