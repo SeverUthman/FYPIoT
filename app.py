@@ -1,7 +1,7 @@
 import os
 import uuid
 from flask import Flask, render_template, session, request, redirect, url_for
-#from flask_session import Session
+from flask_session import Session
 from auth.azauth import azauth
 from views.home import home
 
@@ -24,6 +24,7 @@ def create_app():
     app = Flask(__name__)   
     app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
     app.config.from_object(app_config)
+    Session(app)
     # register a blueprint for authorization.
     app.register_blueprint(azauth, url_prefix="/auth")
     # register the home/index blueprint
