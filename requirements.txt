@@ -5,6 +5,9 @@ Flask-Session>=0,<1
 requests>=2,<3
 msal>=1.7,<2
 CacheLib
+Flask-SQLAlchemy==2.5.1
+PyMySQL
+flask_sqlalchemy_session
 #Flask>=2,<3
 
 #werkzeug>=1,<2

@@ -25,11 +25,13 @@ def create_app():
     app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
     app.config.from_object(app_config)
     Session(app)
+    from database import db
     # register a blueprint for authorization.
     app.register_blueprint(azauth, url_prefix="/auth")
     # register the home/index blueprint
     app.register_blueprint(home, url_prefix="")
     
+    db.db.init_app(app)
     return app
 
 if __name__ == '__main__':

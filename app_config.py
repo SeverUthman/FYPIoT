@@ -19,3 +19,7 @@ ENDPOINT = 'https://graph.microsoft.com/v1.0/users'  # This resource requires no
 SCOPE = ["User.ReadBasic.All"]
 
 SESSION_TYPE = "filesystem"  # Specifies the token cache should be stored in server-side session
+
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://kcwebapp:123456789@kitchencontroldb.mysql.database.azure.com/kcdb?ssl_ca=database/DigiCertGlobalRootCA.crt.pem'
+
+SQLALCHEMY_TRACK_MODIFICATIONS = False
