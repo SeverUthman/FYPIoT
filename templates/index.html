@@ -1,104 +1,39 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Home - KitchenControl</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/kitchencontrol.min.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/simple-line-icons.min.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/vanilla-zoom.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-</head>
+{% block head %}
 
-<body>
-    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-        <div class="container"><a class="navbar-brand logo" href="#">KitchenControl</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/auth/logout">Log Out</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Support</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <main class="page landing-page">
-        <section class="clean-block features">
-            <div class="container">
-                <div class="block-heading">
-                    <h2 class="text-info">Take control of your Kitchen!</h2>
-                    <p>Top tip: You can tell your IoT devices to change their behaviour from right here! Go to Manage devices, select the device and tell it what you want...</p>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-5 feature-box"><i class="icon-puzzle icon"></i><a class="stretched-link, a_nostyle_blacktext" href="/" style="text-decoration: none; color: black;">
-                            <h4>Manage Devices</h4>
-                            <p>Assign devices to locations and digital twins you create of your kitchen</p>
-                        </a></div>
-                    <div class="col-md-5 feature-box"><i class="icon-pencil icon"></i><a class="stretched-link" href="/" style="text-decoration: none; color: black;">
-                            <h4>Kitchen Digital Twin</h4>
-                            <p>Create Digital Twins of your kitchens, such as ovens, freezers and grocery item scale, to assign IoT devices to</p>
-                        </a></div>
-                    <div class="col-md-5 feature-box"><i class="icon-screen-smartphone icon"></i><a class="stretched-link" href="/" style="text-decoration: none; color: black;">
-                            <h4>View Dashboards</h4>
-                            <p>View your sensor data in dashboards</p>
-                        </a></div>
-                    <div class="col-md-5 feature-box"><i class="icon-refresh icon"></i><a class="stretched-link" href="/" style="text-decoration: none; color: black;">
-                            <h4>Register API for Supplier</h4>
-                            <p>Create credentials for a supplier to use the APIs to keep track of stock and auto-replenish based on your thresholds</p>
-                        </a></div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <footer class="page-footer dark">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <h5>Get started</h5>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Sign up</a></li>
-                        <li><a href="#">Downloads</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-3">
-                    <h5>About us</h5>
-                    <ul>
-                        <li><a href="#">Company Information</a></li>
-                        <li><a href="#">Contact us</a></li>
-                        <li><a href="#">Reviews</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-3">
-                    <h5>Support</h5>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Help desk</a></li>
-                        <li><a href="#">Forums</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-3">
-                    <h5>Legal</h5>
-                    <ul>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Terms of Use</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <p>© 2022 Copyright Text</p>
-        </div>
-    </footer>
-    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-    <script src="{{ url_for('static', filename='js/vanilla-zoom.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
-</body>
+{% endblock %}
 
-</html>
+{% block body %}
+
+<section class="clean-block features">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Take control of your Kitchen!</h2>
+            <p>Top tip: You can tell your IoT devices to change their behaviour from right here! Go to Manage devices, select the device and tell it what you want...</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-5 feature-box"><i class="icon-puzzle icon"></i><a class="stretched-link, a_nostyle_blacktext" href="/" style="text-decoration: none; color: black;">
+                    <h4>Manage Devices</h4>
+                    <p>Assign devices to locations and digital twins you create of your kitchen</p>
+                </a></div>
+            <div class="col-md-5 feature-box"><i class="icon-pencil icon"></i><a class="stretched-link" href="/" style="text-decoration: none; color: black;">
+                    <h4>Kitchen Digital Twin</h4>
+                    <p>Create Digital Twins of your kitchens, such as ovens, freezers and grocery item scale, to assign IoT devices to</p>
+                </a></div>
+            <div class="col-md-5 feature-box"><i class="icon-screen-smartphone icon"></i><a class="stretched-link" href="/" style="text-decoration: none; color: black;">
+                    <h4>View Dashboards</h4>
+                    <p>View your sensor data in dashboards</p>
+                </a></div>
+            <div class="col-md-5 feature-box"><i class="icon-refresh icon"></i><a class="stretched-link" href="/" style="text-decoration: none; color: black;">
+                    <h4>Register API for Supplier</h4>
+                    <p>Create credentials for a supplier to use the APIs to keep track of stock and auto-replenish based on your thresholds</p>
+                </a></div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+{% endblock %}

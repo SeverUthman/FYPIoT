@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-</head>
-<body>
-    <h1>Microsoft Identity Python Web App</h1>
+{% extends 'base.html' %}
 
-    <li><a href='{{ auth_url }}'>Sign In using Azure</a></li>
+{% block head %}
 
-    {% if config.get("B2C_RESET_PASSWORD_AUTHORITY") %}
-    <li><a href='{{_build_auth_code_flow(authority=config["B2C_RESET_PASSWORD_AUTHORITY"])["auth_uri"]}}'>Reset Password</a></li>
-    {% endif %}
+{% endblock %}
 
-    <hr>
-    <footer style="text-align: right">Powered by MSAL Python {{ version }}</footer>
-</body>
-</html>
+{% block body %}
 
+<section class="clean-block clean-form dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Log In</h2>
+            <p>You have not yet signed in, please click the button below to log in using your Microsoft Account<br><br><button class="btn btn-primary" onclick="window.location.href='{{ auth_url }}';">Log In</button></p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block beforefooter %}
+{% endblock %}
