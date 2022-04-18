@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <!-- ATTRIBUTION REQUIRED FOR IMAGES HERE
+    "https://www.flaticon.com/free-icons/oven"
+    "https://www.flaticon.com/free-icons/kitchen"
+    "https://www.flaticon.com/free-icons/fridge"
+    "https://www.flaticon.com/free-icons/weighing-scale"
+    END ATTRIBUTION -->
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block features">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Register a new Kitchen or Appliances</h2>
+            <p>You can register multiple kitchens, each kitchen can have multiple appliances such as Ovens, Fridges and Scales. You can also create appliances here to go in the kitchens.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-5 feature-box">
+                <div class="row">
+                    <div class="col col-2"><img class="col-12" src="{{ url_for('static', filename='images/kitchen.png') }}"></div>
+                    <div class="col col-10"><a class="stretched-link, a_nostyle_blacktext" href="/createkitchen" style="text-decoration: none; color: black;">
+                            <h4>Register a new Kitchen</h4>
+                            <p>Register a kitchen location to assign appliances to</p>
+                        </a></div>
+                </div>
+            </div>
+            <div class="col-md-5 feature-box">
+                <div class="row">
+                    <div class="col col-2"><img class="col-12" src="{{ url_for('static', filename='images/oven.png') }}"></div>
+                    <div class="col col-10"><a class="stretched-link, a_nostyle_blacktext" href="/" style="text-decoration: none; color: black;">
+                            <h4>Create an Oven Appliance</h4>
+                        </a>
+                        <p>Create a Digital Twin of your Ovens in a kitchen</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 feature-box">
+                <div class="row">
+                    <div class="col col-2"><img class="col-12" src="{{ url_for('static', filename='images/fridge.png') }}"></div>
+                    <div class="col col-10"><a class="stretched-link, a_nostyle_blacktext" href="/" style="text-decoration: none; color: black;">
+                            <h4>Create a Fridge Appliance</h4>
+                            <p>Create a Digital Twin of your Fridges in a kitchen<br></p>
+                        </a></div>
+                </div>
+            </div>
+            <div class="col-md-5 feature-box">
+                <div class="row">
+                    <div class="col col-2"><img class="col-12" src="{{ url_for('static', filename='images/scale.png') }}"></div>
+                    <div class="col col-10"><a class="stretched-link, a_nostyle_blacktext" href="/" style="text-decoration: none; color: black;">
+                            <h4>Create a Scale Appliance</h4>
+                        </a>
+                        <p>If you have one of our scales, register it here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+{% endblock %}
