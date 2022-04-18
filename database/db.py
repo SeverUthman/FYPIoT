@@ -5,6 +5,9 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
+def IsUserRegistered():
+    return False
+
 class user(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     is_admin = db.Column(db.Boolean)

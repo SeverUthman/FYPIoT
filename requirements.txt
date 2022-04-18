@@ -8,6 +8,7 @@ CacheLib
 Flask-SQLAlchemy==2.5.1
 PyMySQL
 flask_sqlalchemy_session
+objectpath
 #Flask>=2,<3
 
 #werkzeug>=1,<2

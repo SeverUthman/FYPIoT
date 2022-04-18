@@ -1,9 +1,11 @@
 # Microsoft provides a python library for authentication called MSAL (Microsoft Authentication Library) upon which the code below was built
 # Documentation for the MSAl can be found here: https://msal-python.readthedocs.io/en/latest/?badge=latest
-from functools import wraps
 import app_config
 import msal
 import requests
+import objectpath
+from functools import wraps
+from tabnanny import check
 from flask import Flask, jsonify, make_response, render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
 
@@ -44,6 +46,7 @@ def authorized():
         session["user"] = result.get("id_token_claims") # store the user token details in the session cache so it can be picked up later if needed
         session.modified = True
         saveAppCache(cache) # update the msal cache 
+        checkUserIsAdmin()
     except ValueError:  # not sure why but sometimes an error happens
         pass  # we can ignore this error and let the code run
     print("about to redirect to " + url_for("home.index"))
@@ -155,3 +158,30 @@ def admin_required(f):
             # if a problem occurs during the check for admin, assume the user is not an admin and route need permissions page.
             return redirect(url_for("azauth.needadminperm"))
     return decorator
+
+
+# This method will check if the user logging in is an administrator
+# if they are an administrator, then add a session cookie so the custom decorator
+# can check against the cookie and allow the user through to any view or functions that need elevated permissions
+def checkUserIsAdmin():
+    # this is the token created when the user logs in, needed to authenticate against the Microsoft Graph API
+    token = getTokenFromCache(app_config.SCOPE)
+    # if there is no token, then presume the user has not logged in and therefore redirect to login page
+    if not token:
+        return redirect(url_for("login"))
+    # use HTTP GET call on the Microsoft Graph API with an Endpoint (URL) for the group membership
+    groupMembership = requests.get( 
+        app_config.MEMBEROFENDPOINT, # the endpoint URL for Group Membership on Graph API
+        headers={'Authorization': 'Bearer ' + token['access_token']}, # Need to pass the bearer token for authentication
+        ).json() # format the returned results as JSON
+    
+    # The returned results will be a list of groups and details of the groups from Azure Active Directory in JSON format
+    # Use the ObjectPath library to search against the returned results
+    treeObject = objectpath.Tree(groupMembership)
+    result = tuple(treeObject.execute("$.value[@.displayName is '"+app_config.KITCHENCONTROLADMINGROUPNAME+"']"))
+
+    # if we find the user is a member of the admin group
+    if result:
+        session["isadmin"] = True # set the session cookie for isadmin to true
+    for entry in result: # development / debug code
+        print(entry)

@@ -14,11 +14,6 @@ home = Blueprint("home", __name__, static_folder="../static/", template_folder="
 @home.route('/', methods=['POST', 'GET'])
 @login_required
 def index():
-    # check if the user has been logged in by checking session cookie for user tokens
-    # if user is not logged in, then reroute them to the login page
-    #if not session.get("user"):
-    #    try:
-    #        return redirect(url_for("azauth.login"))
-    #    except Exception as e:
-    #        return traceback.print_tb(e.__traceback__, limit=None, file=None)
     return render_template('index.html', user=session["user"], version=msal.__version__)
+
+
