@@ -1,9 +1,10 @@
 # Microsoft provides a python library for authentication called MSAL (Microsoft Authentication Library) upon which the code below was built
 # Documentation for the MSAl can be found here: https://msal-python.readthedocs.io/en/latest/?badge=latest
+from functools import wraps
 import app_config
 import msal
 import requests
-from flask import Flask, render_template, session, request, redirect, url_for
+from flask import Flask, jsonify, make_response, render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
 
 # Register this file as a Blueprint to be used in the application
@@ -36,21 +37,12 @@ def authorized():
         cache = loadSessionCache()
         # get an instance of the confidential client application and call the acquire token by auth code flow method to retieve an
         # authorisation code. 
-        print("In MSAL result = buildAzureMSALApp")
         result = buildAzureMSALApp(cache=cache).acquire_token_by_auth_code_flow(
             session.get("flow", {}), request.args)
-        print("printing result " + str(result))
-        print("In MSAL  if 'error' in result:")
         if "error" in result:
             return render_template("login_failure.html", result=result) # cleanly redirect to an error page if we hit a problem with the authentication
-        print("In MSAL  session['user'] = result.get -------------------" + str(result.get("id_token_claims")))
         session["user"] = result.get("id_token_claims") # store the user token details in the session cache so it can be picked up later if needed
-        session["userisloggedin"] = "true"
         session.modified = True
-        print("ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-        print(str(session.get("user")))
-        print("ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-        print("In MSAL  saveAppCache(cache)")
         saveAppCache(cache) # update the msal cache 
     except ValueError:  # not sure why but sometimes an error happens
         pass  # we can ignore this error and let the code run
@@ -96,12 +88,6 @@ def saveAppCache(cache):
 # This method creates an instance of a Confidential client application that represents
 # the Azure App Registration application and will be used to manage credentials and tokens
 def buildAzureMSALApp(cache=None, authority=None):
-    print("IN BUILDAZUREMSALAPP")
-    print(str(app_config.CLIENT_ID))
-    print(str(authority or app_config.AUTHORITY))
-    print(str(app_config.CLIENT_SECRET))
-    print(str(cache))
-    print("FINISHED BUILDAZUREMSALAPP PRINTS")
     return msal.ConfidentialClientApplication(
         app_config.CLIENT_ID, authority=authority or app_config.AUTHORITY, client_credential=app_config.CLIENT_SECRET, token_cache=cache)
 
@@ -109,10 +95,10 @@ def buildAzureMSALApp(cache=None, authority=None):
 # then it will initiate the authentication flow and passing along any scopes (i/e details we want to get about the user from Azure Active Directory)
 # and where to send the web browser once authentication has completed.
 def _build_auth_code_flow(authority=None, scopes=None):
-    print("IN _build_auth_code_flow")
-    print(str(scopes or []))
-    print(str(url_for("azauth.authorized", _external=True, _scheme='https')))
-    print("FINISHED _build_auth_code_flow")
+    # there is a bug in the MSAL code provided by Microsoft which does not offer the redirect_uri for the login to HTTPS (instead it gives HTTP)
+    # this causes problems with Azure App Registration because 1. We must use SSL as basic security requirement and 2. Even if we don't want to use SSL, App Registration does not let us register an HTTP redirect URI.
+    # This code checks if we are in local development (therefore don't need HTTPS) or deployed on a server. If deployed on server then ensure the URI generated is SSL (i/e with an HTTPS schema) to match the Azure App Registration redirect URI
+    # effectively forcing any HTTP URI to be replaced with HTTPS
     if("localhost" in url_for("azauth.authorized", _external=True)):
         urlfor = url_for("azauth.authorized", _external=True)
     else:
@@ -133,3 +119,39 @@ def getTokenFromCache(scope=None):
         result = confidentialClientApplication.acquire_token_silent(scope, account=accounts[0]) # get any existing tokens for the user account that are in the msal cache
         saveAppCache(cache) # save any updates for the user tokens to the cache
         return result
+
+# Custom authentication decorator that can be used to check if the logged in user has already logged in and authenticated successfully
+# by checking the session["user"] server session cookie which is set when a user is logged in and cleared when a user logs out.
+# If the user is not logged in, then they cannot see the website and will be rerouted to the login page.
+def login_required(f):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        try:
+            # ensure the user has already authenticated by checking for tokens in the user session cookie
+            if not session["user"]:
+                # if user is not authenticated, redirect to the login page
+                return redirect(url_for("azauth.login"))
+            # Otherwise the user is authenticated and can proceed
+            return f(*args, **kwargs)
+        except Exception as e:
+            # if a problem occurs during the check for authentication, assume the user is not authenticated and route to log in page.
+            return redirect(url_for("azauth.login"))
+    return decorator
+
+# Custom authorization decorator that can be used to limit access to functionality on the website to administrators only.
+# It works by checking for a value on the session["isadmin"] server cookie which is set when an administrator user
+# logs in, and is cleared when a user logs out.
+def admin_required(f):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        try:
+            # ensure the user is an administrator
+            if not session["isadmin"]:
+                # if user is not an administrator
+                return redirect(url_for("azauth.login"))
+            # Otherwise the user is an administrator and can proceed
+            return f(*args, **kwargs)
+        except Exception as e:
+            # if a problem occurs during the check for admin, assume the user is not an admin and route need permissions page.
+            return redirect(url_for("azauth.needadminperm"))
+    return decorator
