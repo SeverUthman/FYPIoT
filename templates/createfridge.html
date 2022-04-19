@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block clean-form dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Create an Oven Digital Twin </h2>
+            <h2 class="text-info">for your Fridge</h2>
+            <p>If you have already registered a kitchen, you can cerate and associate a Fridge for your kitchen here</p>
+        </div>
+        <form>
+            <div class="mb-3"><label class="form-label" for="name">Name</label><input class="form-control" type="text" id="name" name="name"></div>
+            <div class="mb-3"><label class="form-label" for="subject">Kitchen</label>
+                <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
+                    <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+                </div>
+            </div>
+            <div class="mb-3"></div>
+            <div class="mb-3"></div>
+            <div class="mb-3"></div>
+            <div class="mb-3"></div><button class="btn btn-primary" type="submit">Save</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+{% endblock %}

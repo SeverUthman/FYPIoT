@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block clean-form dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Create an Oven Digital Twin </h2>
+            <h2 class="text-info">for your Kitchen</h2>
+            <p>If you have already registered a kitchen, you can cerate and associate an Oven for your kitchen here</p>
+        </div>
+        <form method='POST' action='/kitchenmanagement/createoven'>
+            <div class="mb-3"><label class="form-label" for="name">Name</label><input class="form-control" type="text" id="name" name="name"></div>
+            <div class="mb-3"><label class="form-label" for="subject">Kitchen</label>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    {% for kitchen in kitchens %}
+                        <option value="{{ kitchen.id }}">{{ kitchen.nickname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3"></div>
+            <div class="mb-3"></div>
+            <div class="mb-3"></div>
+            <div class="mb-3"></div><button class="btn btn-primary" type="submit">Save</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+{% endblock %}
