@@ -4,6 +4,7 @@ from flask import Flask, render_template, session, request, redirect, url_for
 from flask_session import Session
 from auth.azauth import azauth
 from views.home import home
+from kitchen.kitchenmanagement import kitchenmanagement
 
 import app_config
 
@@ -30,6 +31,8 @@ def create_app():
     app.register_blueprint(azauth, url_prefix="/auth")
     # register the home/index blueprint
     app.register_blueprint(home, url_prefix="")
+    # register the kitchen management blueprint
+    app.register_blueprint(kitchenmanagement, url_prefix="/kitchenmanagement")
     
     db.db.init_app(app)
     return app

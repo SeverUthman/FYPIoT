@@ -21,10 +21,10 @@ def index():
 def registerkap():
     return render_template('registerkitchenandappliance.html')
 
-@home.route('/createkitchen', methods=['POST', 'GET'])
+"""@home.route('/createkitchen', methods=['POST', 'GET'])
 @login_required
 def createkitchen():
     if request.method == 'POST':
         pass
     else:
-        return render_template('createkitchen.html')
+        return render_template('registerkitchen.html')"""

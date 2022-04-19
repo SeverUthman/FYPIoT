@@ -5,13 +5,12 @@ import msal
 import requests
 import objectpath
 from functools import wraps
-from tabnanny import check
-from flask import Flask, jsonify, make_response, render_template, session, request, redirect, url_for
+from flask import render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
 
 # Register this file as a Blueprint to be used in the application
 azauth = Blueprint("azauth", __name__, static_folder="../static/", template_folder="../templates/")
-
+from database import db
 
 @azauth.route("/login")
 def login():
@@ -44,12 +43,28 @@ def authorized():
         if "error" in result:
             return render_template("login_failure.html", result=result) # cleanly redirect to an error page if we hit a problem with the authentication
         session["user"] = result.get("id_token_claims") # store the user token details in the session cache so it can be picked up later if needed
+        uoid = result.get("id_token_claims").get("oid")
+        session["user_id"] = uoid # store the user object id in a separate session cookie for ease of use
         session.modified = True
         saveAppCache(cache) # update the msal cache 
-        checkUserIsAdmin()
-    except ValueError:  # not sure why but sometimes an error happens
+
+        # check if this is a new user or a returning user
+        currentuserindb = db.user.query.filter_by(user_az_id=uoid).first()
+        try:
+            if not currentuserindb: # if this is a new user
+                basicdetails = getUserBasicDetails() # get their basic details to create a DB record for them
+                fname = basicdetails[0]
+                lname = basicdetails[1]
+                email = '' if basicdetails[2] is None else basicdetails[2]
+                isadmin = checkUserIsAdmin() # check if they are part of the administrator group in active directory to automatically assign them administrator roles
+                newuser = db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin) # create a new user database record
+                db.db.session.add(newuser) # add the new record to the database
+                db.db.session.commit() # commit the database change
+        except Exception as e:
+            return render_template("errorpage.html", errorstack=e) # reroute the error page if something goes wrong with DB interaction
+
+    except ValueError:  # not sure why but sometimes an error happens, believe it's a bug with the MSAL library
         pass  # we can ignore this error and let the code run
-    print("about to redirect to " + url_for("home.index"))
     return redirect(url_for("home.index")) # once user has been authenticated, redirect the browser to the home page
 
 # This method removes the user credentials from the session to effectively "log out" the user
@@ -160,15 +175,34 @@ def admin_required(f):
     return decorator
 
 
+def getUserBasicDetails():
+    # this is the token created when the user logs in, needed to authenticate against the Microsoft Graph API
+    token = getTokenFromCache(app_config.SCOPE)
+    if not token:
+        return redirect(url_for("azauth.login"))
+    # use HTTP GET call on the Microsoft Graph API with an Endpoint (URL) for the group membership
+    basicdetails = requests.get( 
+        app_config.USERENDPOINT, # the endpoint URL for User details on Graph API
+        headers={'Authorization': 'Bearer ' + token['access_token']}, # Need to pass the bearer token for authentication
+        ).json() # format the returned results as JSON
+    
+    firstname = basicdetails.get('givenName')
+    lastname = basicdetails.get('surname')
+    email = basicdetails.get('mail')
+
+    return firstname,lastname,email
+
+
 # This method will check if the user logging in is an administrator
 # if they are an administrator, then add a session cookie so the custom decorator
 # can check against the cookie and allow the user through to any view or functions that need elevated permissions
 def checkUserIsAdmin():
+    userisadmin = False
     # this is the token created when the user logs in, needed to authenticate against the Microsoft Graph API
     token = getTokenFromCache(app_config.SCOPE)
     # if there is no token, then presume the user has not logged in and therefore redirect to login page
     if not token:
-        return redirect(url_for("login"))
+        return redirect(url_for("azauth.login"))
     # use HTTP GET call on the Microsoft Graph API with an Endpoint (URL) for the group membership
     groupMembership = requests.get( 
         app_config.MEMBEROFENDPOINT, # the endpoint URL for Group Membership on Graph API
@@ -183,5 +217,8 @@ def checkUserIsAdmin():
     # if we find the user is a member of the admin group
     if result:
         session["isadmin"] = True # set the session cookie for isadmin to true
+        userisadmin = True
     for entry in result: # development / debug code
         print(entry)
+
+    return userisadmin

@@ -18,7 +18,7 @@ SCOPE = ["User.ReadBasic.All", "Directory.Read.All"]
 # Microsoft Graph API has different Endpoints that can be called to get details about the user from Azure Active Directory
 MEMBEROFENDPOINT = 'https://graph.microsoft.com/v1.0/me/memberof'  # Retrieves the groups the user is a part of
 ENDPOINT = 'https://graph.microsoft.com/v1.0/users'  # Retrieves all users in Active Directory
-
+USERENDPOINT = 'https://graph.microsoft.com/v1.0/me/' # Retrieves information about the current user in Active Directory
 SESSION_TYPE = "filesystem"  # Specifies the token cache should be stored in server-side session
 
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://kcwebapp:123456789@kitchencontroldb.mysql.database.azure.com/kcdb?ssl_ca=database/DigiCertGlobalRootCA.crt.pem'
