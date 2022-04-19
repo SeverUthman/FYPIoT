@@ -26,6 +26,48 @@
             </form>
         </div>
     </section>
+
+    <section class="clean-block clean-form dark">
+
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Ovens at this Kitchen</h2>
+            <form>
+                {% for oven in ovens %}
+                    <a href="{{url_for('kitchenmanagement.showoven', ovenid=oven.kitchen_appliance_id)}}">{{oven.nickname}}</a>
+                {% endfor %}
+            </form>
+        </div>
+        
+    </section>
+
+    <section class="clean-block clean-form dark">
+
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Fridges at this Kitchen</h2>
+            <form>
+                {% for fridge in fridges %}
+                    <a href="{{url_for('kitchenmanagement.showfridge', fridgeid=fridge.kitchen_appliance_id)}}">{{fridge.nickname}}</a>
+                {% endfor %}
+            </form>
+        </div>
+        
+    </section>
+
+    <section class="clean-block clean-form dark">
+
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Scales at this Kitchen</h2>
+            <form>
+                {% for scale in scales %}
+                    <a href="{{url_for('kitchenmanagement.showscale', scaleid=scale.kitchen_appliance_id)}}">{{scale.nickname}}</a>
+                {% endfor %}
+            </form>
+        </div>
+        
+    </section>
 </main>
 
 {% endblock %}

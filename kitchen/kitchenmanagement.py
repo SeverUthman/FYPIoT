@@ -48,13 +48,17 @@ def registerkitchen():
 def showkitchen(kitchid):
     try:
         kitchen = db.kitchen.query.filter_by(kitchen_id=kitchid).first()
+        kitchenappliances = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid).all()
+        kitchenovens = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=1).all()
+        kitchenfridges = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=2).all()
+        kitchenscales = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=3).all()
         #user = db.user.query.filter_by(user_az_id=session['user_id'])
         #query = 'SELECT * from user_kitchen where kitchen_id = {} AND user_id = {}'.format(kitchid, user.user_id)
         #stuff = db.db.session.execute(query)
         #kitchenuser = db.kitchen.query.join(db.user_kitchen).join(db.kitchen).filter((db.user_kitchen.c.kitchen_id==kitchid)).all()
         if not kitchen:
             return redirect('/')
-        return render_template("showkitchen.html", kitchen=kitchen)#, kitchenuser=kitchenuser)
+        return render_template("showkitchen.html", kitchen=kitchen, ovens=kitchenovens, fridges=kitchenfridges, scales=kitchenscales)#, kitchenuser=kitchenuser)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
@@ -73,5 +77,78 @@ def createoven():
             kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.c.user_id==2).all()
             return render_template("createoven.html", kitchens=kitchens)
 
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+@kitchenmanagement.route("/showoven/<int:ovenid>", methods=['POST', 'GET'])
+def showoven(ovenid):
+    try:
+        if request.method == 'POST':
+            pass
+        else:
+            oven = db.kitchen_appliance.query.filter_by(kitchen_appliance_id=ovenid).first()
+            kitchen = db.kitchen.query.filter_by(kitchen_id=oven.kitchen_id).first()
+            return render_template("showoven.html", ovendetails=oven, kitchendetails=kitchen)
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+
+@kitchenmanagement.route("/createfridge", methods=['POST', 'GET'])
+def createfridge():
+    try:
+        if request.method == 'POST':
+            name = request.form['name']
+            selectedkitchen = request.form.get('kitchenid')
+            new_fridge = db.kitchen_appliance(nickname=name, kitchen_id=selectedkitchen, kitchen_appliance_type_id=2)
+            db.db.session.add(new_fridge)
+            db.db.session.commit()
+            return redirect(url_for('kitchenmanagement.showkitchen', kitchid=selectedkitchen))
+        else:
+            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.c.user_id==2).all()
+            return render_template("createfridge.html", kitchens=kitchens)
+
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+@kitchenmanagement.route("/showfridge/<int:fridgeid>", methods=['POST', 'GET'])
+def showfridge(fridgeid):
+    try:
+        if request.method == 'POST':
+            pass
+        else:
+            oven = db.kitchen_appliance.query.filter_by(kitchen_appliance_id=fridgeid).first()
+            kitchen = db.kitchen.query.filter_by(kitchen_id=oven.kitchen_id).first()
+            return render_template("showfridge.html", fridgedetails=oven, kitchendetails=kitchen)
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+
+@kitchenmanagement.route("/createscale", methods=['POST', 'GET'])
+def createscale():
+    try:
+        if request.method == 'POST':
+            name = request.form['name']
+            selectedkitchen = request.form.get('kitchenid')
+            new_scale = db.kitchen_appliance(nickname=name, kitchen_id=selectedkitchen, kitchen_appliance_type_id=3)
+            db.db.session.add(new_scale)
+            db.db.session.commit()
+            return redirect(url_for('kitchenmanagement.showkitchen', kitchid=selectedkitchen))
+        else:
+            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.c.user_id==2).all()
+            return render_template("createscale.html", kitchens=kitchens)
+
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+
+@kitchenmanagement.route("/showscale/<int:scaleid>", methods=['POST', 'GET'])
+def showscale(scaleid):
+    try:
+        if request.method == 'POST':
+            pass
+        else:
+            scale = db.kitchen_appliance.query.filter_by(kitchen_appliance_id=scaleid).first()
+            kitchen = db.kitchen.query.filter_by(kitchen_id=scale.kitchen_id).first()
+            return render_template("showfridge.html", scaledetails=scale, kitchendetails=kitchen)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)

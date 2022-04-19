@@ -9,15 +9,20 @@
 <section class="clean-block clean-form dark">
     <div class="container">
         <div class="block-heading">
-            <h2 class="text-info">Create an Oven Digital Twin </h2>
-            <h2 class="text-info">for your Scale</h2>
+            <h2 class="text-info">Create a Scale Digital Twin </h2>
+            <h2 class="text-info">for your Kitchen</h2>
             <p>If you have already registered a kitchen, you can cerate and associate a Scale for your kitchen here</p>
         </div>
-        <form>
+        <form method='POST' action='/kitchenmanagement/createscale'>
             <div class="mb-3"><label class="form-label" for="name">Name</label><input class="form-control" type="text" id="name" name="name"></div>
+            <input class="form-control" type="text" id="kitchenid" name="kitchenid" hidden value="">
             <div class="mb-3"><label class="form-label" for="subject">Kitchen</label>
                 <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
-                    <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+                    <div class="dropdown-menu">
+                        {% for kitchen in kitchens %}
+                        <a value="{{kitchen.kitchen_id}}" class="dropdown-item" href="#">{{ kitchen.nickname }}</a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <div class="mb-3"></div>
@@ -31,4 +36,14 @@
 {% endblock %}
 
 {% block beforefooter %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.dropdown-menu a').click(function(){
+                    var selText = $(this).attr('value');
+                    console.log("-----------------" + selText);
+                    $('#kitchenid').val(selText);
+            });
+        });
+    </script>
 {% endblock %}
