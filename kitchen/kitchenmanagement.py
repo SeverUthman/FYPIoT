@@ -43,6 +43,7 @@ def registerkitchen():
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
+
 @kitchenmanagement.route("/showkitchen/<string:kitchid>", methods=['GET'])
 def showkitchen(kitchid):
     try:
@@ -57,11 +58,17 @@ def showkitchen(kitchid):
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
+
 @kitchenmanagement.route("/createoven", methods=['POST', 'GET'])
 def createoven():
     try:
         if request.method == 'POST':
-            pass
+            name = request.form['name']
+            selectedkitchen = request.form.get('kitchenid')
+            new_oven = db.kitchen_appliance(nickname=name, kitchen_id=selectedkitchen, kitchen_appliance_type_id=1)
+            db.db.session.add(new_oven)
+            db.db.session.commit()
+            return redirect(url_for('kitchenmanagement.showkitchen', kitchid=selectedkitchen))
         else:
             kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.c.user_id==2).all()
             return render_template("createoven.html", kitchens=kitchens)
