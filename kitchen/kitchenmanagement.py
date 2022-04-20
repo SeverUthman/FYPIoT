@@ -1,7 +1,3 @@
-from turtle import pos
-import app_config
-import msal
-import requests
 from flask import Flask, jsonify, make_response, render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
 from database import db
