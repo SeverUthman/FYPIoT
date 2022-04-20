@@ -7,3 +7,4 @@ env.bak/
 venv.bak/
 flask_session
 */__pycache__/
+flask_session
