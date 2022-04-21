@@ -13,64 +13,61 @@
                 <h2 class="text-info">{{kitchen.nickname}}</h2>
                 <p>You can register a kitchen location here, once it's saved you can create appliances for the kitchen and attach IoT Devices to monitor those appliances.</p>
             </div>
-            <form method='POST' action='/kitchenmanagement/registerkitchen'>
-                <input class="form-control" type="text" id="kitchenid" name="name" readonly hidden value="{{kitchen.kitchenid}}">
-                <div class="mb-3"><label class="form-label" for="name">Name</label><input class="form-control" type="text" id="name" name="name" readonly value="{{kitchen.nickname}}"></div>
-                <div class="mb-3"><label class="form-label" for="addLine1">Address Line 1</label><input class="form-control" type="text" id="addLine1" name="addLine1" readonly value="{{kitchen.line1}}"></div>
-                <div class="mb-3"><label class="form-label" for="addLine2">Address Line 2</label><input class="form-control" type="text" id="addLine2" name="addLine2" readonly value="{{kitchen.line2}}"></div>
-                <div class="mb-3"><label class="form-label" for="city">City</label><input class="form-control" type="text" id="city" name="city" readonly value="{{kitchen.city}}"></div>
-                <div class="mb-3"><label class="form-label" for="postcode">Postcode</label><input class="form-control" type="text" id="postcode" name="postcode" readonly value="{{kitchen.postcode}}"></div>
-                <div class="mb-3"><label class="form-label" for="country">Country</label><input class="form-control" type="text" id="country" name="country" readonly value="{{kitchen.country}}"></div>
-                <div class="form-check"><input class="form-check-input" type="checkbox" id="defaultKitchen" name="defaultKitchen" ><label class="form-check-label" for="defaultKitchen" >Make default kitchen</label></div>
-                <div class="mb-3"><button class="btn btn-primary" type="submit">Save</button></div>
-            </form>
+            <div class="row">
+                <div class="col-md-6">
+                    <form method='POST' action='/kitchenmanagement/registerkitchen'>
+                        <input class="form-control" type="text" id="kitchenid" name="name" readonly hidden value="{{kitchen.kitchenid}}">
+                        <div class="mb-3"><label class="form-label" for="name">Name</label><input class="form-control" type="text" id="name" name="name" readonly value="{{kitchen.nickname}}"></div>
+                        <div class="mb-3"><label class="form-label" for="addLine1">Address Line 1</label><input class="form-control" type="text" id="addLine1" name="addLine1" readonly value="{{kitchen.line1}}"></div>
+                        <div class="mb-3"><label class="form-label" for="addLine2">Address Line 2</label><input class="form-control" type="text" id="addLine2" name="addLine2" readonly value="{{kitchen.line2}}"></div>
+                        <div class="mb-3"><label class="form-label" for="city">City</label><input class="form-control" type="text" id="city" name="city" readonly value="{{kitchen.city}}"></div>
+                        <div class="mb-3"><label class="form-label" for="postcode">Postcode</label><input class="form-control" type="text" id="postcode" name="postcode" readonly value="{{kitchen.postcode}}"></div>
+                        <div class="mb-3"><label class="form-label" for="country">Country</label><input class="form-control" type="text" id="country" name="country" readonly value="{{kitchen.country}}"></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="defaultKitchen" name="defaultKitchen" {{"checked" if isdefaultkitchen==True}}><label class="form-check-label" for="defaultKitchen" >Default kitchen</label></div>
+                        <div class="mb-3"><button class="btn btn-primary" type="submit">Save</button></div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="block-heading">
+                            <h2 class="text-info">Ovens at this Kitchen</h2>
+                        <form>
+                            {% for oven in ovens %}
+                                <a href="{{url_for('kitchenmanagement.showoven', ovenid=oven.kitchen_appliance_id)}}">{{oven.nickname}}</a>
+                            {% endfor %}
+                        </form>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="block-heading">
+                            <h2 class="text-info">Fridges at this Kitchen</h2>
+                        <form>
+                            {% for fridge in fridges %}
+                                <a href="{{url_for('kitchenmanagement.showfridge', fridgeid=fridge.kitchen_appliance_id)}}">{{fridge.nickname}}</a>
+                            {% endfor %}
+                        </form>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="block-heading">
+                            <h2 class="text-info">Scales at this Kitchen</h2>
+                        <form>
+                            {% for scale in scales %}
+                                <a href="{{url_for('kitchenmanagement.showscale', scaleid=scale.kitchen_appliance_id)}}">{{scale.nickname}}</a>
+                            {% endfor %}
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="clean-block clean-form dark">
-
-        <div class="container">
-            <div class="block-heading">
-                <h2 class="text-info">Ovens at this Kitchen</h2>
-            <form>
-                {% for oven in ovens %}
-                    <a href="{{url_for('kitchenmanagement.showoven', ovenid=oven.kitchen_appliance_id)}}">{{oven.nickname}}</a>
-                {% endfor %}
-            </form>
-        </div>
-        
-    </section>
-
-    <section class="clean-block clean-form dark">
-
-        <div class="container">
-            <div class="block-heading">
-                <h2 class="text-info">Fridges at this Kitchen</h2>
-            <form>
-                {% for fridge in fridges %}
-                    <a href="{{url_for('kitchenmanagement.showfridge', fridgeid=fridge.kitchen_appliance_id)}}">{{fridge.nickname}}</a>
-                {% endfor %}
-            </form>
-        </div>
-        
-    </section>
-
-    <section class="clean-block clean-form dark">
-
-        <div class="container">
-            <div class="block-heading">
-                <h2 class="text-info">Scales at this Kitchen</h2>
-            <form>
-                {% for scale in scales %}
-                    <a href="{{url_for('kitchenmanagement.showscale', scaleid=scale.kitchen_appliance_id)}}">{{scale.nickname}}</a>
-                {% endfor %}
-            </form>
-        </div>
-        
-    </section>
+    
 </main>
 
 {% endblock %}
-
+    
 {% block beforefooter %}
+
 {% endblock %}

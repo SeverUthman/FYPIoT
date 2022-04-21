@@ -7,4 +7,3 @@ env.bak/
 venv.bak/
 flask_session/*
 */__pycache__/
-flask_session/2029240f6d1128be89ddc32729463129
