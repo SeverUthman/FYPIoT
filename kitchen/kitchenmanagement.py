@@ -25,10 +25,11 @@ def registerkitchen():
             #thing = db.user_kitchen(filter(lambda x: x.kitchen_id == new_kitchen.kitchen_id, currentuser.kitchen_associations)) #.query.filter_by(kitchen_id=new_kitchen.kitchen_id).first()
 
             if defaultkitchen:
-                notdefaultkitchen = db.db.session.query(db.user_kitchen).filter( 
+                removeasdefaultkitchen = db.db.session.query(db.user_kitchen).filter( 
                     db.user_kitchen.user_id == currentuser.user_id,
                     db.user_kitchen.is_default_kitchen == True).first()
-                notdefaultkitchen.is_default_kitchen = False
+                if removeasdefaultkitchen:
+                    removeasdefaultkitchen.is_default_kitchen = False
 
                 userkitchens = db.db.session.query(db.user_kitchen).filter(
                     db.user_kitchen.kitchen_id == new_kitchen.kitchen_id, 

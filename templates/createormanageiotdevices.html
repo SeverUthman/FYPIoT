@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block features">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Create or Manage your IoT Devices</h2>
+            <p>Register a new IoT Device on the IoT Hub or manage your existing devices</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-5 feature-box">
+                <div class="row">
+                    <div class="col col-2"><img class="col-12" src="{{ url_for('static', filename='images/iotdevice.png') }}"></div>
+                    <div class="col col-10">
+                        <a class="stretched-link, a_nostyle_blacktext" href="/iot/createdevice" style="text-decoration: none; color: black;">
+                            <h4>Create new IoT Device</h4>
+                            <p>Create a new IoT device in the IoT Hub to generate an identity for</p>
+                            <p>for your physical IoT sensor device in your kitchen. This will give you</p>
+                            <p>a connection string to use with your device so it can communicate to the server</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 feature-box">
+                <div class="row">
+                    <div class="col col-2"><img class="col-12" src="{{ url_for('static', filename='images/wrench.png') }}"></div>
+                    <div class="col col-10">
+                        <a class="stretched-link, a_nostyle_blacktext" href="/iot/managedevices" style="text-decoration: none; color: black;">
+                            <h4>Manage your existing devices</h4>
+                            <p>Send direct messages to your existing IoT devices or delete them from here</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+{% endblock %}

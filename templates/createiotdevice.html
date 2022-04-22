@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block clean-form dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Create an IoT Device </h2>
+            <h2 class="text-info">for your Kitchen</h2>
+            <p>If you have already registered a kitchen, you can create and associate an IoT device for your kitchen here</p>
+        </div>
+
+        <form method='POST' action='/iot/createdevice'>
+            <input class="form-control" type="text" id="kitchenid" name="kitchenid" hidden value="">
+            <input class="form-control" type="text" id="appliancetypeid" name="appliancetypeid" hidden value="">
+
+            <div class="mb-3"><label class="form-label" for="subject">For which Kitchen?</label>
+                <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button" id="kitchendd">Select... </button>
+                    <div class="dropdown-menu" id="kitchendropdown">
+                        {% for kitchen in kitchens %}
+                        <a value="{{kitchen.kitchen_id}}" class="dropdown-item" href="#">{{ kitchen.nickname }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3"><label class="form-label" for="subject">What kind of appliance?</label>
+                <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button" id="appliancedd">Select... </button>
+                    <div class="dropdown-menu" id="appliancetypedropdown">
+                        {% for appliance in appliancetypes %}
+                        <a value="{{appliance.kitchen_appliance_type_id}}" class="dropdown-item" href="#">{{ appliance.kitchen_appliance_type }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="container g-0">
+                <div class="row g-0">
+                    <label class="form-label" for="namept1">Device Name</label>
+                    <div class="col-md">
+                        <input class="form-control mb1" type="text" id="namept1" name="namept1" readonly>
+                    </div>
+                    <div class="col-md">
+                        <input class="form-control mb1" type="text" id="namept2" name="namept2" readonly>
+                    </div>
+                    <div class="col-md">
+                        <input class="form-control mb1" type="text" id="namept3" name="namept3" required>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            
+            <div class="mb-3"></div><button class="btn btn-primary" type="submit">Save</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#kitchendropdown a').click(function(){
+                    var selVal = $(this).attr('value');
+                    var selText = $(this).text()
+
+                    $('#kitchenid').val(selVal);
+                    $('#namept1').val(selText.split(" ").join(""));
+                    $('#kitchendd').text(selText);
+            });
+
+            $('#appliancetypedropdown a').click(function(){
+                    var selVal = $(this).attr('value');
+                    var selText = $(this).text()
+
+                    $('#appliancetypeid').val(selVal);
+                    $('#namept2').val(selText);
+                    $('#appliancedd').text(selText);
+            });
+        });
+    </script>
+{% endblock %}

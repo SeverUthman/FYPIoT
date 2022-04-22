@@ -77,7 +77,9 @@ class kitchen_appliance_type(db.Model):
 
 class iot_device(db.Model):
     iot_device_id = db.Column(db.Integer, primary_key=True)
+    device_etag = db.Column(db.String(12))
     nickname = db.Column(db.String(100))
+    connstring = db.Column(db.String(256))
     kitchen_appliance_type_id = db.Column('kitchen_appliance_type_id', db.Integer, db.ForeignKey('kitchen_appliance_type.kitchen_appliance_type_id'))
 
     def __repr__(self):

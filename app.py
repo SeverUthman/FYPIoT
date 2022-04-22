@@ -5,6 +5,7 @@ from flask_session import Session
 from auth.azauth import azauth
 from views.home import home
 from kitchen.kitchenmanagement import kitchenmanagement
+from iothub.iot import iot
 
 import app_config
 
@@ -33,7 +34,9 @@ def create_app():
     app.register_blueprint(home, url_prefix="")
     # register the kitchen management blueprint
     app.register_blueprint(kitchenmanagement, url_prefix="/kitchenmanagement")
-    
+    # register the IoT Hub blueprint
+    app.register_blueprint(iot, url_prefix="/iot")
+
     db.db.init_app(app)
     return app
 

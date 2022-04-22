@@ -26,3 +26,6 @@ SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://kcwebapp:123456789@kitchencontroldb.m
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 KITCHENCONTROLADMINGROUPNAME = "KitchenControlAdmin"
+
+IOTHUBHOSTNAME = 'KitchenControlHub.azure-devices.net'
+IOTHUBCONN = 'HostName=KitchenControlHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=3YTaq+xP4DrH2LBb/CjZTdPzryB4a8qCGXuCNYKnfkY='
