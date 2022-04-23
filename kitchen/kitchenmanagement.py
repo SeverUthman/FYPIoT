@@ -20,7 +20,7 @@ def registerkitchen():
             new_kitchen = db.kitchen(nickname=name, line1=firstline, line2=secondline, city=city, postcode=postcode, country=country)      
             db.db.session.add(new_kitchen)
 
-            currentuser = db.user.query.filter_by(user_az_id=session["user_id"]).first()
+            currentuser = db.user.query.filter_by(user_id=session["user_id"]).first()
             currentuser.kitchens.append(new_kitchen)
             #thing = db.user_kitchen(filter(lambda x: x.kitchen_id == new_kitchen.kitchen_id, currentuser.kitchen_associations)) #.query.filter_by(kitchen_id=new_kitchen.kitchen_id).first()
 
@@ -59,35 +59,40 @@ def registerkitchen():
         return render_template("errorpage.html", errorstack=e)
 
 
-@kitchenmanagement.route("/showkitchen/<string:kitchid>", methods=['GET'])
+@kitchenmanagement.route("/showkitchen/<string:kitchid>", methods=['GET', 'POST'])
 def showkitchen(kitchid):
     try:
-        kitchen = db.kitchen.query.filter_by(kitchen_id=kitchid).first()
-        kitchenappliances = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid).all()
-        kitchenovens = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=1).all()
-        kitchenfridges = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=2).all()
-        kitchenscales = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=3).all()
-        user = db.user.query.filter_by(user_az_id=session['user_id']).first()
-        print(user)
-        kid=kitchen.kitchen_id
-        uid=user.user_id
+        if request.method == 'POST':
+            kitchen = db.kitchen.query.filter_by(kitchen_id=kitchid).first()
+            defaultkitchen = request.form.get('defaultKitchen')
+            userkitchens = db.db.session.query(db.user_kitchen).filter(
+                db.user_kitchen.kitchen_id == kitchid, 
+                db.user_kitchen.user_id == session['user_id']).first()
+            if defaultkitchen:
+                userkitchens.is_default_kitchen = True
+            else:
+                userkitchens.is_default_kitchen = False
+            db.db.session.commit()
+            return redirect('/kitchenmanagement/showkitchen/'+kitchid)
+        else:
+            kitchen = db.kitchen.query.filter_by(kitchen_id=kitchid).first()
+            #kitchenappliances = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid).all()
+            kitchenovens = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=1).all()
+            kitchenfridges = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=2).all()
+            kitchenscales = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=3).all()
+            user = db.user.query.filter_by(user_id=session['user_id']).first()
 
-        query =  db.db.session.query(db.user_kitchen).filter(
-            db.user_kitchen.kitchen_id == kid, 
-            db.user_kitchen.user_id == uid)
+            kid=kitchen.kitchen_id
+            uid=user.user_id
+            
+            userkitchens = db.db.session.query(db.user_kitchen).filter(
+                db.user_kitchen.kitchen_id == kid, 
+                db.user_kitchen.user_id == uid).first()
 
-        print(query)
-        
-        userkitchens = db.db.session.query(db.user_kitchen).filter(
-            db.user_kitchen.kitchen_id == kid, 
-            db.user_kitchen.user_id == uid).first()
-        #query = 'SELECT * from user_kitchen where kitchen_id = {} AND user_id = {}'.format(kitchid, user.user_id)
-        #stuff = db.db.session.execute(query)
-        #kitchenuser = db.kitchen.query.join(db.user_kitchen).join(db.kitchen).filter((db.user_kitchen.c.kitchen_id==kitchid)).all()
-        if not kitchen:
-            return redirect('/')
-        isdefaultkitchen = userkitchens.is_default_kitchen
-        return render_template("showkitchen.html", kitchen=kitchen, isdefaultkitchen=isdefaultkitchen, ovens=kitchenovens, fridges=kitchenfridges, scales=kitchenscales)#, kitchenuser=kitchenuser)
+            if not kitchen:
+                return redirect('/')
+            isdefaultkitchen = userkitchens.is_default_kitchen
+            return render_template("showkitchen.html", kitchen=kitchen, isdefaultkitchen=isdefaultkitchen, ovens=kitchenovens, fridges=kitchenfridges, scales=kitchenscales)#, kitchenuser=kitchenuser)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
@@ -103,7 +108,8 @@ def createoven():
             db.db.session.commit()
             return redirect(url_for('kitchenmanagement.showkitchen', kitchid=selectedkitchen))
         else:
-            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.c.user_id==2).all()
+            
+            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.user_id==session["user_id"]).all()
             return render_template("createoven.html", kitchens=kitchens)
 
     except Exception as e:
@@ -133,7 +139,7 @@ def createfridge():
             db.db.session.commit()
             return redirect(url_for('kitchenmanagement.showkitchen', kitchid=selectedkitchen))
         else:
-            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.c.user_id==2).all()
+            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.user_id==session["user_id"]).all()
             return render_template("createfridge.html", kitchens=kitchens)
 
     except Exception as e:
@@ -163,7 +169,7 @@ def createscale():
             db.db.session.commit()
             return redirect(url_for('kitchenmanagement.showkitchen', kitchid=selectedkitchen))
         else:
-            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.c.user_id==2).all()
+            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.user_id==session["user_id"]).all()
             return render_template("createscale.html", kitchens=kitchens)
 
     except Exception as e:

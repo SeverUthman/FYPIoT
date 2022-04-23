@@ -11,13 +11,19 @@ iot = Blueprint("iot", __name__, static_folder="../static/", template_folder="..
 @iot.route("/alldevices", methods=['POST', 'GET'])
 def alldevices():
     try:
-        if request.method == 'POST':
-            pass
-        else:
-            devices = iothubhelper.getAllIOTDevices()
-            for device in devices.items:
-                print(device)
-            return jsonify(devices.items)
+        query = db.db.session.query(\
+                                db.iot_device.iot_device_id.label('iotid'),\
+                                db.iot_device.nickname.label('iotname'),\
+                                db.iot_device.kitchen_appliance_type_id.label('iotkitchenappid'),\
+                                db.kitchen_appliance_type.kitchen_appliance_type.label('kitchenappliancetype'),\
+                                db.kitchen_appliance.nickname.label('kitchenappliance'),\
+                                db.kitchen.nickname.label('kitchen'))\
+                                .select_from(db.iot_device)\
+                                .outerjoin(db.kitchen_appliance_type)\
+                                .outerjoin(db.kitchen_appliance)\
+                                .outerjoin(db.kitchen)
+        devices = query.all()
+        return render_template('alldevices.html', devices = devices)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
@@ -25,14 +31,15 @@ def alldevices():
 def createdevice():
     try:
         if request.method == 'POST':
-            pass
             devicename = request.form['namept1']+request.form['namept2']+request.form['namept3']
             appliancetypeid = request.form['appliancetypeid']
             newdevice, primarykey = iothubhelper.createIoTDevice(devicename)
             connstring = 'HostName={hostname};DeviceId={devicename};SharedAccessKey={accesskey}'.format(hostname=app_config.IOTHUBHOSTNAME, devicename=devicename, accesskey=primarykey)
 
             iotdevice = db.iot_device(device_etag=newdevice.etag, nickname=devicename, connstring=connstring, kitchen_appliance_type_id=appliancetypeid)
+            #kitchenappliance = db.db.session.query(db.kitchen_appliance).filter_by(db.kitchen_appliance.kitchen_appliance_id = ).first()
             db.db.session.add(iotdevice)
+
             db.db.session.commit()
             return "Your device is created, your shared access key is {connectionstring}".format(connectionstring=connstring)
         else:
@@ -41,6 +48,15 @@ def createdevice():
             return render_template("createiotdevice.html", kitchens=kitchens, appliancetypes=appliancetypes)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
+
+@iot.route("/applianceforkitchen/<string:kitchid>")
+def applianceforkitchen(kitchid):
+    kitchenappliances = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid).all()
+    dictappliances = []
+    for a in kitchenappliances:
+        dictappliances.append(a.__dict__)
+    return dictappliances
+
 
 @iot.route("/hub", methods=['GET'])
 def hub():

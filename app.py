@@ -3,7 +3,7 @@ import uuid
 from flask import Flask, render_template, session, request, redirect, url_for
 from flask_session import Session
 from auth.azauth import azauth
-from views.home import home
+from routes.home import home
 from kitchen.kitchenmanagement import kitchenmanagement
 from iothub.iot import iot
 

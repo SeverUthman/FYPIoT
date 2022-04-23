@@ -76,6 +76,18 @@
                     $('#kitchenid').val(selVal);
                     $('#namept1').val(selText.split(" ").join(""));
                     $('#kitchendd').text(selText);
+
+                    
+                    $.ajax({
+                        type : "GET",
+                        url : '/iot/applianceforkitchen/'+selVal,
+                        dataType: "json",
+                        data:"hi",
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function (data) {
+                            alert(data);
+                            }
+                    });
             });
 
             $('#appliancetypedropdown a').click(function(){

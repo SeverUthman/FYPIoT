@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block features">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">All IoT Devices</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Device Name</th>
+                                <th>Kitchen</th>
+                                <th>Appliance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for device in devices %}
+                            <tr>
+                                <td>{{device.iotname}}</td>
+                                <td>{{device.kitchen}}</td>
+                                <td>{{device.kitchenappliancetype}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+{% endblock %}

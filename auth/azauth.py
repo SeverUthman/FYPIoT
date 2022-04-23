@@ -44,7 +44,7 @@ def authorized():
             return render_template("login_failure.html", result=result) # cleanly redirect to an error page if we hit a problem with the authentication
         session["user"] = result.get("id_token_claims") # store the user token details in the session cache so it can be picked up later if needed
         uoid = result.get("id_token_claims").get("oid")
-        session["user_id"] = uoid # store the user object id in a separate session cookie for ease of use
+        session["user_az_id"] = uoid # store the user object id in a separate session cookie for ease of use
         session.modified = True
         saveAppCache(cache) # update the msal cache 
 
@@ -60,6 +60,9 @@ def authorized():
                 newuser = db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin) # create a new user database record
                 db.db.session.add(newuser) # add the new record to the database
                 db.db.session.commit() # commit the database change
+                session["user_id"] = newuser.user_id
+            else:
+                session["user_id"] = currentuserindb.user_id
         except Exception as e:
             return render_template("errorpage.html", errorstack=e) # reroute the error page if something goes wrong with DB interaction
 
