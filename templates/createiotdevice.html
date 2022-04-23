@@ -16,7 +16,7 @@
 
         <form method='POST' action='/iot/createdevice'>
             <input class="form-control" type="text" id="kitchenid" name="kitchenid" hidden value="">
-            <input class="form-control" type="text" id="appliancetypeid" name="appliancetypeid" hidden value="">
+            <input class="form-control" type="text" id="applianceid" name="applianceid" hidden value="">
 
             <div class="mb-3"><label class="form-label" for="subject">For which Kitchen?</label>
                 <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button" id="kitchendd">Select... </button>
@@ -28,12 +28,11 @@
                 </div>
             </div>
 
-            <div class="mb-3"><label class="form-label" for="subject">What kind of appliance?</label>
+            <div class="mb-3"><label class="form-label" for="subject">For which appliance?</label>
                 <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button" id="appliancedd">Select... </button>
                     <div class="dropdown-menu" id="appliancetypedropdown">
-                        {% for appliance in appliancetypes %}
-                        <a value="{{appliance.kitchen_appliance_type_id}}" class="dropdown-item" href="#">{{ appliance.kitchen_appliance_type }}</a>
-                        {% endfor %}
+                        <!-- drop down will be empty on page loads and populated async once the user selects a kitchen -->
+                        <!-- by calling a route on the web app to get the appliances registered for that kitchen -->
                     </div>
                 </div>
             </div>
@@ -58,7 +57,7 @@
             </div>
             
             
-            <div class="mb-3"></div><button class="btn btn-primary" type="submit">Save</button>
+            <div class="mb-3"></div><button class="btn btn-primary" type="submit" id="savebutton" disabled>Save</button>
         </form>
     </div>
 </section>
@@ -67,37 +66,5 @@
 
 {% block beforefooter %}
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('#kitchendropdown a').click(function(){
-                    var selVal = $(this).attr('value');
-                    var selText = $(this).text()
-
-                    $('#kitchenid').val(selVal);
-                    $('#namept1').val(selText.split(" ").join(""));
-                    $('#kitchendd').text(selText);
-
-                    
-                    $.ajax({
-                        type : "GET",
-                        url : '/iot/applianceforkitchen/'+selVal,
-                        dataType: "json",
-                        data:"hi",
-                        contentType: 'application/json;charset=UTF-8',
-                        success: function (data) {
-                            alert(data);
-                            }
-                    });
-            });
-
-            $('#appliancetypedropdown a').click(function(){
-                    var selVal = $(this).attr('value');
-                    var selText = $(this).text()
-
-                    $('#appliancetypeid').val(selVal);
-                    $('#namept2').val(selText);
-                    $('#appliancedd').text(selText);
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/kitchencontrol.js')}}"></script>
 {% endblock %}

@@ -31,15 +31,19 @@ def alldevices():
 def createdevice():
     try:
         if request.method == 'POST':
-            devicename = request.form['namept1']+request.form['namept2']+request.form['namept3']
-            appliancetypeid = request.form['appliancetypeid']
+            applianceid = request.form['applianceid']
+            kitchenappliance = db.db.session.query(db.kitchen_appliance).filter_by(kitchen_appliance_id = applianceid).first()
+            appliancetypeid = kitchenappliance.kitchen_appliance_type_id
+
+            devicename = (request.form['namept1']+request.form['namept2']+request.form['namept3']).replace(" ", "")
             newdevice, primarykey = iothubhelper.createIoTDevice(devicename)
             connstring = 'HostName={hostname};DeviceId={devicename};SharedAccessKey={accesskey}'.format(hostname=app_config.IOTHUBHOSTNAME, devicename=devicename, accesskey=primarykey)
 
             iotdevice = db.iot_device(device_etag=newdevice.etag, nickname=devicename, connstring=connstring, kitchen_appliance_type_id=appliancetypeid)
-            #kitchenappliance = db.db.session.query(db.kitchen_appliance).filter_by(db.kitchen_appliance.kitchen_appliance_id = ).first()
             db.db.session.add(iotdevice)
+            db.db.session.commit()
 
+            kitchenappliance.iot_device_id = iotdevice.iot_device_id
             db.db.session.commit()
             return "Your device is created, your shared access key is {connectionstring}".format(connectionstring=connstring)
         else:
@@ -53,9 +57,10 @@ def createdevice():
 def applianceforkitchen(kitchid):
     kitchenappliances = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid).all()
     dictappliances = []
-    for a in kitchenappliances:
-        dictappliances.append(a.__dict__)
-    return dictappliances
+    for appliance in kitchenappliances:
+        dictresult = {'id': str(appliance.kitchen_appliance_id), 'name': appliance.nickname}
+        dictappliances.append(dictresult)
+    return jsonify(dictappliances)
 
 
 @iot.route("/hub", methods=['GET'])
