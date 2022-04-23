@@ -21,7 +21,7 @@ ENDPOINT = 'https://graph.microsoft.com/v1.0/users'  # Retrieves all users in Ac
 USERENDPOINT = 'https://graph.microsoft.com/v1.0/me/' # Retrieves information about the current user in Active Directory
 SESSION_TYPE = "filesystem"  # Specifies the token cache should be stored in server-side session
 
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://kcwebapp:123456789@kitchencontroldb.mysql.database.azure.com/kcdb?ssl_ca=database/DigiCertGlobalRootCA.crt.pem'
+SQLALCHEMY_DATABASE_URI = 'mssql+pyodbc://kitchencontroladmin:Manager99@kitchencontrolsql.database.windows.net/fyp-kitchencontrol-db?driver=SQL+Server'
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 

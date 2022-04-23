@@ -184,6 +184,6 @@ def showscale(scaleid):
         else:
             scale = db.kitchen_appliance.query.filter_by(kitchen_appliance_id=scaleid).first()
             kitchen = db.kitchen.query.filter_by(kitchen_id=scale.kitchen_id).first()
-            return render_template("showfridge.html", scaledetails=scale, kitchendetails=kitchen)
+            return render_template("showscale.html", scaledetails=scale, kitchendetails=kitchen)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)

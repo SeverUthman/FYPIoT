@@ -29,15 +29,21 @@ def IsUserRegistered():
             db.Column('user_id', db.Integer, db.ForeignKey('user.user_id'))
 ) """
 
-class user_kitchen(db.Model):
-    __tablename__ = "user_kitchen"
-    kitchen_id = db.Column(db.ForeignKey('kitchen.kitchen_id'), primary_key=True)
-    user_id = db.Column(db.ForeignKey('user.user_id'), primary_key=True)
-    is_default_kitchen = db.Column('is_default_kitchen', db.Boolean)
+class kitchen(db.Model):
+    __tablename__ = "kitchen"
+    kitchen_id = db.Column(db.Integer, primary_key=True)
+    nickname = db.Column(db.String(100))
+    line1 = db.Column(db.String(50))
+    line2 = db.Column(db.String(50))
+    city = db.Column(db.String(50))
+    postcode = db.Column(db.String(50))
+    country = db.Column(db.String(50))
 
-    kitchen = relationship("kitchen", backref="user_associations")
-    user = relationship("user", backref="kitchen_associations")
-
+    users = relationship("user", secondary="user_kitchen")
+    
+    def __repr__(self):
+        return '<kitchen %r>' % self.kitchen_id
+        
 
 class user(db.Model):
     __tablename__ = "user"
@@ -53,20 +59,16 @@ class user(db.Model):
     def __repr__(self):
         return '<user %r>' % self.user_id
 
-class kitchen(db.Model):
-    __tablename__ = "kitchen"
-    kitchen_id = db.Column(db.Integer, primary_key=True)
-    nickname = db.Column(db.String(100))
-    line1 = db.Column(db.String(50))
-    line2 = db.Column(db.String(50))
-    city = db.Column(db.String(50))
-    postcode = db.Column(db.String(50))
-    country = db.Column(db.String(50))
 
-    users = relationship("user", secondary="user_kitchen")
-    
-    def __repr__(self):
-        return '<kitchen %r>' % self.kitchen_id
+class user_kitchen(db.Model):
+    __tablename__ = "user_kitchen"
+    kitchen_id = db.Column(db.ForeignKey('kitchen.kitchen_id'), primary_key=True)
+    user_id = db.Column(db.ForeignKey('user.user_id'), primary_key=True)
+    is_default_kitchen = db.Column('is_default_kitchen', db.Boolean)
+
+    kitchen = relationship("kitchen", backref="user_associations")
+    user = relationship("user", backref="kitchen_associations")
+
 
 class kitchen_appliance_type(db.Model):
     kitchen_appliance_type_id = db.Column(db.Integer, primary_key=True)
@@ -74,6 +76,7 @@ class kitchen_appliance_type(db.Model):
 
     def __repr__(self):
         return '<kitchen_appliance_type %r>' % self.kitchen_appliance_type_id
+
 
 class iot_device(db.Model):
     iot_device_id = db.Column(db.Integer, primary_key=True)
