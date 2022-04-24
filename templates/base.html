@@ -28,15 +28,16 @@
                         <a class="nav-link active" href="/">Home</a>
                     </li>
                     
+                    {% if session['user_id'] %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             IoT Devices
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{{url_for('iot.hub')}}">IoT Device Menu</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('iot.alldevices')}}">Your Devices</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{url_for('iot.createdevice')}}">Create new IoT Device</a></li>
-                            <li><a class="dropdown-item" href="{{url_for('iot.alldevices')}}">Manage devices</a></li>                            
                         </ul>
                     </li>
 
@@ -46,15 +47,17 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{{url_for('home.registerkap')}}">Digital Twin Menu</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.allkitchens')}}">Your Kitchens</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.registerkitchen')}}">New Kitchen</a></li>
-                            <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.createoven')}}">New Oven</a></li>
-                            <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.createfridge')}}">New Fridge</a></li>
-                            <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.createscale')}}">New Scale</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.registerkitchen')}}">Create new Kitchen</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.createoven')}}">Create new Oven</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.createfridge')}}">Create new Fridge</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.createscale')}}">Create new Scale</a></li>
                         </ul>
                     </li>
                     
                     <li class="nav-item"><a class="nav-link" href="/auth/logout">Log Out</a></li>
+                    {% endif %}
                     <li class="nav-item"><a class="nav-link" href="contact-us.html">Support</a></li>
                 </ul>
             </div>

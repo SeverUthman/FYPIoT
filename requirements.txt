@@ -6,14 +6,13 @@ msal>=1.7,<2
 CacheLib
 Flask-SQLAlchemy==2.5.1
 pymssql
-PyMySQL
-pyodbc
 flask_sqlalchemy_session
 objectpath
 azure-iot-hub
 
 
-
+#PyMySQL
+#pyodbc
 #Flask>=2,<3
 #flask-session~=0.3.2
 #werkzeug>=1,<2

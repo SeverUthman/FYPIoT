@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, make_response, render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
+from sqlalchemy import func
 from database import db
 
 # Register this file as a Blueprint to be used in the application
@@ -96,6 +97,38 @@ def showkitchen(kitchid):
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
+
+@kitchenmanagement.route("/allkitchens", methods=['GET'])
+def allkitchens():
+    try:
+        '''userkitchens = db.db.session.query(db.kitchen)\
+        .join(db.user_kitchen)\
+        .join(db.kitchen_appliance)\
+        .join(db.kitchen_appliance_type)\
+        .with_entities(
+            db.kitchen.kitchen_id,
+            db.kitchen.nickname,
+            db.kitchen.line1,
+            db.kitchen.postcode,
+            db.kitchen_appliance.kitchen_id,
+            db.kitchen_appliance_type
+        )\
+        .filter(db.user_kitchen.user_id == session['user_id'])
+        print(userkitchens)
+        userkitchens.all()
+        things = userkitchens[0].kitchen_appliance'''
+        results = []
+        userkitchens = db.db.session.query(db.kitchen).filter(db.user_kitchen.user_id == session['user_id']).all()
+        for kitchen in userkitchens:
+            ovens = db.db.session.query(db.kitchen_appliance).filter(db.kitchen_appliance.kitchen_id == kitchen.kitchen_id, db.kitchen_appliance.kitchen_appliance_type_id == 1).count()
+            fridges = db.db.session.query(db.kitchen_appliance).filter(db.kitchen_appliance.kitchen_id == kitchen.kitchen_id, db.kitchen_appliance.kitchen_appliance_type_id == 2).count()
+            scales = db.db.session.query(db.kitchen_appliance).filter(db.kitchen_appliance.kitchen_id == kitchen.kitchen_id, db.kitchen_appliance.kitchen_appliance_type_id == 3).count()
+            results.append([kitchen, ovens, fridges, scales])
+
+
+        return render_template("allkitchens.html", kitchens=results)
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
 
 @kitchenmanagement.route("/createoven", methods=['POST', 'GET'])
 def createoven():
