@@ -84,6 +84,8 @@ class iot_device(db.Model):
     nickname = db.Column(db.String(100))
     connstring = db.Column(db.String(256))
     kitchen_appliance_type_id = db.Column('kitchen_appliance_type_id', db.Integer, db.ForeignKey('kitchen_appliance_type.kitchen_appliance_type_id'))
+    pollfrequency = db.Column(db.Integer)
+    alertthreshold = db.Column(db.Numeric(5,2))
 
     def __repr__(self):
         return '<iot_device %r>' % self.iot_device_id

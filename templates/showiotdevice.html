@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<section class="clean-block features">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">IoT Device Details</h2>
+            <p>View your device details, telemetry and send a message to your device to change it's behaviour </p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-5 feature-box">
+                <h4>Device Details</h4>
+                <p>You can see the Kitchen and Appliance this IoT Device is associated with</p>
+                <form>
+                    <div class="mb-3">
+                        <h4><label class="form-label" for="name">Device Name</label></h4>
+                        <div name="name">
+                            {{device.iotname}}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h4><label class="form-label" for="appliancetype">For Appliance Type</label></h4>
+                        <div name="appliancetype">
+                            {{device.appliancetype}}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h4><label class="form-label" for="appliancename">Appliance Name</label></h4>
+                        <div name="appliancename">
+                            {% if device.appliancetype == 'Oven' %}
+                                <a href="{{url_for('kitchenmanagement.showoven', ovenid=device.applianceid)}}">{{device.kitchenappliance}}</a>
+                            {% elif device.appliancetype == 'Fridge' %}
+                                <a href="{{url_for('kitchenmanagement.showfridge', fridgeid=device.applianceid)}}">{{device.kitchenappliance}}</a>  
+                            {% elif device.appliancetype == 'Scale' %}
+                                <a href="{{url_for('kitchenmanagement.showscale', scaleid=device.applianceid)}}">{{device.kitchenappliance}}</a>  
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h4><label class="form-label" for="kitchen">At Kitchen</label></h4>
+                        <div name="kitchen">
+                            <a href="{{url_for('kitchenmanagement.showkitchen', kitchid=device.kitchenid)}}">{{device.kitchen}}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-5 feature-box">
+                <h4>Latest telemetry from device</h4>
+                <p>The chart below shows the latest readings from the device</p>
+                <div id="chart_div"></div>
+                <h4 class="mt-3">Send Direct Message to Device</h4>
+                <p>Send a direct message to change device settings or configuration</p>
+                <form method='POST' action='/iot/updatedevicepolltime/{{device.iotid}}'>
+                    <div class="input-group"><span class="input-group-text device-min-width">Poll Frequency</span><input class="form-control" type="text" name="newpolltime" value="{{device.iotpollfrequency}}"><button class="btn btn-primary" type="submit">Update</button></div>
+                </form>
+                <form method='POST' action='/iot/updatedevicethreshold/{{device.iotid}}'>
+                    <div class="input-group"><span class="input-group-text device-min-width">Alert Threshold</span><input class="form-control" type="text" name="newthreshold" value="{{device.iotalertthreshold}}"><button class="btn btn-primary" type="submit">Update</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block beforefooter %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function BuildTelemetryForGoogleCharts()
+        {
+            var dataset = [];
+            {% for result in telemetry %}
+                resultarray = [];
+                resultarray.push({{result|safe}}[0]);
+                resultarray.push(parseFloat({{result|safe}}[1]));
+                resultarray.push(parseFloat({{result|safe}}[2]));
+
+                dataset.push(resultarray)
+
+
+            {% endfor %}
+            return dataset;
+        }
+        
+        function HandleTelemetryResponse(data)
+        {
+            var dataset = []
+            $.each(data, function(i, obj) {
+                console.log(obj[0])
+                resultarray = [];
+                resultarray.push(obj[0]);
+                resultarray.push(parseFloat(obj[1]));
+                resultarray.push(parseFloat(obj[2]));
+
+                dataset.push(resultarray)
+            });
+
+            var gdata = new google.visualization.DataTable();
+            gdata.addColumn('string', 'X');
+            gdata.addColumn('number', 'tempC');
+            gdata.addColumn('number', 'tempF');
+            gdata.addRows(dataset)
+
+            var options = {
+                hAxis: {
+                title: 'Time',
+                direction:-1, 
+                slantedText:true, 
+                slantedTextAngle:90
+                },
+                vAxis: {
+                title: 'Temperature'
+                },
+                legend: 'none'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(gdata, options);
+
+        }
+
+        function GetTelemetry()
+        {
+
+            $.ajax({
+            type : "GET",
+            url : '/iot/gettemptelemetry/1',
+            dataType: "json",
+            data:"hi",
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                HandleTelemetryResponse(data);
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            var tid = setInterval(GetTelemetry, ({{device.iotpollfrequency * 1000}}));
+        });
+
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        
+        function drawBasic() {
+
+            var dataset = BuildTelemetryForGoogleCharts()
+            
+            console.log(dataset)
+            
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'X');
+            data.addColumn('number', 'tempC');
+            data.addColumn('number', 'tempF');
+            data.addRows(dataset)
+
+            var options = {
+                hAxis: {
+                title: 'Time',
+                direction:-1, 
+                slantedText:true, 
+                slantedTextAngle:90
+                },
+                vAxis: {
+                title: 'Temperature'
+                },
+                legend: 'none'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+            }
+        </script>
+{% endblock %}

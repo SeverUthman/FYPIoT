@@ -1,5 +1,5 @@
 import app_config, string, random
-from azure.iot.hub import IoTHubRegistryManager
+from azure.iot.hub import IoTHubRegistryManager, DigitalTwinClient
 from azure.iot.hub.models import QuerySpecification
 
 
@@ -17,3 +17,31 @@ def createIoTDevice(device_id, status='enabled', iot_edge=False, status_reason='
     hub = IoTHubRegistryManager.from_connection_string(app_config.IOTHUBCONN)
     newdevice = hub.create_device_with_sas(device_id=device_id, primary_key=primary_key, secondary_key=secondary_key, status=status, iot_edge=iot_edge, status_reason=status_reason, device_scope=device_scope, parent_scopes=parent_scopes)
     return newdevice, primary_key
+
+def updatePollTimeOnDevice(newpolltime, devicename):
+    try:
+        twinclient = DigitalTwinClient.from_connection_string(app_config.IOTHUBCONN)
+        result = twinclient.invoke_command(
+            devicename, "ChangeReadFrequency", newpolltime, 3, 7
+        )
+
+        if result:
+            return True
+        else:
+            return False
+    except Exception as e:
+        return e
+
+def updateAlertThresholdOnDevice(newthreshold, devicename):
+    try:
+        twinclient = DigitalTwinClient.from_connection_string(app_config.IOTHUBCONN)
+        result = twinclient.invoke_command(
+            devicename, "ChangeAlertThreshold", newthreshold, 3, 7
+        )
+
+        if result:
+            return True
+        else:
+            return False
+    except Exception as e:
+        return e
