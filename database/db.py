@@ -100,29 +100,29 @@ class kitchen_appliance(db.Model):
 
 class oven_temp_history(db.Model):
     oven_temp_history_id = db.Column(db.Integer, primary_key=True)
-    tempC = db.Column(db.Numeric(5,2))
-    tempF = db.Column(db.Numeric(5,2))
-    reading_datetime = db.Column(db.TIMESTAMP)
+    reading_datetime = db.Column(db.DateTime, default=datetime.utcnow)
     iot_device_id = db.Column('iot_device_id', db.Integer, db.ForeignKey('iot_device.iot_device_id'))
+    tempC = db.Column(db.Numeric(5,2))
+    tempF = db.Column(db.Numeric(5,2)) 
 
     def __repr__(self):
         return '<oven_temp_history %r>' % self.oven_temp_history_id
 
 class fridge_temp_history(db.Model):
     fridge_temp_history_id = db.Column(db.Integer, primary_key=True)
+    reading_datetime = db.Column(db.DateTime, default=datetime.utcnow)
+    iot_device_id = db.Column('iot_device_id', db.Integer, db.ForeignKey('iot_device.iot_device_id'))
     tempC = db.Column(db.Numeric(5,2))
     tempF = db.Column(db.Numeric(5,2))
-    reading_datetime = db.Column(db.TIMESTAMP)
-    iot_device_id = db.Column('iot_device_id', db.Integer, db.ForeignKey('iot_device.iot_device_id'))
-
+    
     def __repr__(self):
         return '<fridge_temp_history %r>' % self.fridge_temp_history_id
 
 class scale_history(db.Model):
     scale_history_id = db.Column(db.Integer, primary_key=True)
-    weight = db.Column(db.Numeric(5,2))
-    reading_datetime = db.Column(db.TIMESTAMP)
+    reading_datetime = db.Column(db.DateTime, default=datetime.utcnow)
     iot_device_id = db.Column('iot_device_id', db.Integer, db.ForeignKey('iot_device.iot_device_id'))
+    weight = db.Column(db.Numeric(5,2))
 
     def __repr__(self):
         return '<scale_history %r>' % self.scale_history_id
