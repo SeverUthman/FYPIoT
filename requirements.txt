@@ -5,6 +5,7 @@ requests>=2,<3
 msal>=1.7,<2
 CacheLib
 Flask-SQLAlchemy==2.5.1
+pymssql
 PyMySQL
 pyodbc
 flask_sqlalchemy_session
