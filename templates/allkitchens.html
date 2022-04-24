@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block features">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">All Kitchens</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Kitchen Name</th>
+                                <th>First Line of Address</th>
+                                <th>Post Code</th>
+                                <th>Number of Ovens</th>
+                                <th>Number of Fridges</th>
+                                <th>Number of Scales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for kitchen in kitchens %}
+                            <tr>
+                                <td><a href="{{url_for('kitchenmanagement.showkitchen', kitchid=kitchen[0].kitchen_id)}}">{{kitchen[0].nickname}}</a></td>
+                                <td>{{kitchen[0].line1}}</td>
+                                <td>{{kitchen[0].postcode}}</td>
+                                <td>{{kitchen[1]}}</td>
+                                <td>{{kitchen[2]}}</td>
+                                <td>{{kitchen[3]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+{% endblock %}
