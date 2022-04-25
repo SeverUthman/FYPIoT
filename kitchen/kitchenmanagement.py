@@ -2,6 +2,7 @@ from flask import Flask, jsonify, make_response, render_template, session, reque
 from flask.blueprints import Blueprint
 from sqlalchemy import func
 from database import db
+from iothub.iot import getfridgetelemetry, getoventelemetry, getscaletelemetry
 
 # Register this file as a Blueprint to be used in the application
 kitchenmanagement = Blueprint("kitchenmanagement", __name__, static_folder="../static/", template_folder="../templates/")
@@ -76,12 +77,31 @@ def showkitchen(kitchid):
             db.db.session.commit()
             return redirect('/kitchenmanagement/showkitchen/'+kitchid)
         else:
+            oventelemetry = []
+            fridgetelemetry = []
+            scaletelemetry = []
+
             kitchen = db.kitchen.query.filter_by(kitchen_id=kitchid).first()
-            #kitchenappliances = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid).all()
             kitchenovens = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=1).all()
             kitchenfridges = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=2).all()
             kitchenscales = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=3).all()
             user = db.user.query.filter_by(user_id=session['user_id']).first()
+
+            for oven in kitchenovens:
+                telemetry = getoventelemetry(oven.iot_device_id)
+                if len(telemetry) > 0:
+                    oventelemetry.append(telemetry)
+
+            for fridge in kitchenfridges:
+                telemetry = getfridgetelemetry(oven.iot_device_id)
+                if len(telemetry) > 0:
+                    fridgetelemetry.append(telemetry)
+
+            for scale in kitchenscales:
+                telemetry = getscaletelemetry(scale.iot_device_id)
+                if len(telemetry) > 0:
+                    scaletelemetry.append(telemetry)
+
 
             kid=kitchen.kitchen_id
             uid=user.user_id
@@ -93,7 +113,7 @@ def showkitchen(kitchid):
             if not kitchen:
                 return redirect('/')
             isdefaultkitchen = userkitchens.is_default_kitchen
-            return render_template("showkitchen.html", kitchen=kitchen, isdefaultkitchen=isdefaultkitchen, ovens=kitchenovens, fridges=kitchenfridges, scales=kitchenscales)#, kitchenuser=kitchenuser)
+            return render_template("showkitchen.html", kitchen=kitchen, isdefaultkitchen=isdefaultkitchen, ovens=kitchenovens, fridges=kitchenfridges, scales=kitchenscales, oventelemetry=oventelemetry, fridgetelemetry=fridgetelemetry, scaletelemetry=scaletelemetry)#, kitchenuser=kitchenuser)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
@@ -101,22 +121,6 @@ def showkitchen(kitchid):
 @kitchenmanagement.route("/allkitchens", methods=['GET'])
 def allkitchens():
     try:
-        '''userkitchens = db.db.session.query(db.kitchen)\
-        .join(db.user_kitchen)\
-        .join(db.kitchen_appliance)\
-        .join(db.kitchen_appliance_type)\
-        .with_entities(
-            db.kitchen.kitchen_id,
-            db.kitchen.nickname,
-            db.kitchen.line1,
-            db.kitchen.postcode,
-            db.kitchen_appliance.kitchen_id,
-            db.kitchen_appliance_type
-        )\
-        .filter(db.user_kitchen.user_id == session['user_id'])
-        print(userkitchens)
-        userkitchens.all()
-        things = userkitchens[0].kitchen_appliance'''
         results = []
         userkitchens = db.db.session.query(db.kitchen).filter(db.user_kitchen.user_id == session['user_id']).all()
         for kitchen in userkitchens:

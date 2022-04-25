@@ -93,18 +93,38 @@ def showdevice(deviceid):
                             db.kitchen.kitchen_id.label('kitchenid')\
                         )\
                         .first()
-        telemetry = getDeviceTelemetry(deviceid)
+        telemetry = getDeviceTelemetry(deviceid, devicedetails.appliancetype)
         #device = db.iot_device.query().filter_by(iot_device_id=deviceid).first()
         return render_template("showiotdevice.html", device=devicedetails, telemetry=telemetry)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
-
 @iot.route("/gettemptelemetry/<int:deviceid>", methods=['GET'])
 def gettemptelemetry(deviceid):
     try:
-        dicttelemetry = getDeviceTelemetry(deviceid)
+        dicttelemetry = getDeviceTelemetry(deviceid, "Oven")
         return jsonify(dicttelemetry)
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+def getoventelemetry(deviceid):
+    try:
+        dicttelemetry = getDeviceTelemetry(deviceid, "Oven")
+        return dicttelemetry
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+def getfridgetelemetry(deviceid):
+    try:
+        dicttelemetry = getDeviceTelemetry(deviceid, "Fridge")
+        return dicttelemetry
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+def getscaletelemetry(deviceid):
+    try:
+        dicttelemetry = getDeviceTelemetry(deviceid, "Scale")
+        return dicttelemetry
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
@@ -134,16 +154,36 @@ def updatedevicethreshold(deviceid):
         return render_template("errorpage.html", errorstack=e)
 
 
-def getDeviceTelemetry(deviceid):
-    telemetry = db.db.session.query(db.oven_temp_history)\
-                                .filter(db.oven_temp_history.iot_device_id == deviceid)\
-                                .order_by(desc(db.oven_temp_history.reading_datetime))\
-                                .limit(15)\
-                                .all()
+def getDeviceTelemetry(deviceid, appliancetype):
+    if appliancetype == "Oven":
+        telemetry = db.db.session.query(db.oven_temp_history)\
+                                    .filter(db.oven_temp_history.iot_device_id == deviceid)\
+                                    .order_by(desc(db.oven_temp_history.reading_datetime))\
+                                    .limit(15)\
+                                    .all()
+    elif appliancetype == "Fridge":
+        telemetry = db.db.session.query(db.fridge_temp_history)\
+                                    .filter(db.fridge_temp_history.iot_device_id == deviceid)\
+                                    .order_by(desc(db.fridge_temp_history.reading_datetime))\
+                                    .limit(15)\
+                                    .all()
+    elif appliancetype == "Scale":
+        telemetry = db.db.session.query(db.scale_history)\
+                                    .filter(db.scale_history.iot_device_id == deviceid)\
+                                    .order_by(desc(db.scale_history.reading_datetime))\
+                                    .limit(15)\
+                                    .all()
+    else:
+        return Exception
+    
     dicttelemetry = []
     for result in telemetry:
-        telpoint = [result.reading_datetime.strftime("%m/%d/%Y, %H:%M:%S"), str(result.tempC), str(result.tempF)]
-        dicttelemetry.append(telpoint)
+        if appliancetype == "Oven" or "Fridge":
+            telpoint = [result.reading_datetime.strftime("%m/%d/%Y, %H:%M:%S"), str(result.tempC), str(result.tempF)]
+            dicttelemetry.append(telpoint)
+        elif appliancetype == "Scale":
+            telpoint = [result.reading_datetime.strftime("%m/%d/%Y, %H:%M:%S"), str(result.weight)]
+            dicttelemetry.append(telpoint)
     return dicttelemetry
 
 '''
