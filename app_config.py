@@ -29,3 +29,7 @@ KITCHENCONTROLADMINGROUPNAME = "KitchenControlAdmin"
 
 IOTHUBHOSTNAME = 'KitchenControlHub.azure-devices.net'
 IOTHUBCONN = 'HostName=KitchenControlHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=3YTaq+xP4DrH2LBb/CjZTdPzryB4a8qCGXuCNYKnfkY='
+
+OVEN_APPLIANCE_TYPE_ID = 1
+FRIDGE_APPLIANCE_TYPE_ID = 2
+SCALE_APPLIANCE_TYPE_ID = 3

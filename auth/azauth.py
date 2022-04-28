@@ -7,10 +7,10 @@ import objectpath
 from functools import wraps
 from flask import render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
+from database import dbhelper
 
 # Register this file as a Blueprint to be used in the application
 azauth = Blueprint("azauth", __name__, static_folder="../static/", template_folder="../templates/")
-from database import db
 
 @azauth.route("/login")
 def login():
@@ -49,7 +49,7 @@ def authorized():
         saveAppCache(cache) # update the msal cache 
 
         # check if this is a new user or a returning user
-        currentuserindb = db.user.query.filter_by(user_az_id=uoid).first()
+        currentuserindb = dbhelper.GetUserByAzureID(uoid)
         try:
             if not currentuserindb: # if this is a new user
                 basicdetails = getUserBasicDetails() # get their basic details to create a DB record for them
@@ -57,10 +57,8 @@ def authorized():
                 lname = basicdetails[1]
                 email = '' if basicdetails[2] is None else basicdetails[2]
                 isadmin = checkUserIsAdmin() # check if they are part of the administrator group in active directory to automatically assign them administrator roles
-                newuser = db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin) # create a new user database record
-                db.db.session.add(newuser) # add the new record to the database
-                db.db.session.commit() # commit the database change
-                session["user_id"] = newuser.user_id
+                newuser = dbhelper.CreateNewUserInDatabase(uoid, fname, lname, email, isadmin) # create a new user database record
+                session["user_id"] = newuser.user_id # store the user database ID in the session for ease of querying (saves us having to look up user by Azure ID then getting DB ID)
             else:
                 session["user_id"] = currentuserindb.user_id
         except Exception as e:
@@ -69,6 +67,9 @@ def authorized():
     except ValueError:  # not sure why but sometimes an error happens, believe it's a bug with the MSAL library
         pass  # we can ignore this error and let the code run
     return redirect(url_for("home.index")) # once user has been authenticated, redirect the browser to the home page
+
+
+
 
 # This method removes the user credentials from the session to effectively "log out" the user
 @azauth.route("/logout")

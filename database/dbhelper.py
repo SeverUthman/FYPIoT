@@ -151,3 +151,94 @@ Returns list of appliances that have been registered for a particular kitchen
 def GetAppliancesForKitchen(kitchid):
     kitchenappliances = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid).all()
     return kitchenappliances
+
+'''
+Create a new kitchen entry in the database
+'''
+def CreateNewKitchen(name, firstline, secondline, city, postcode, country):
+    new_kitchen = db.kitchen(nickname=name, line1=firstline, line2=secondline, city=city, postcode=postcode, country=country)      
+    db.db.session.add(new_kitchen)
+    db.db.session.commit()
+    return new_kitchen
+
+'''
+Adds the relationship between user and kitchen in the user_kitchens table
+'''
+def AssociateUserToKitchen(new_kitchen, userid):
+    currentuser = db.user.query.filter_by(user_id=userid).first()
+    currentuser.kitchens.append(new_kitchen)
+    return currentuser
+
+'''
+A user should only have one default kitchen associated to them.
+This method sets the default kitchen value. If it's true, it'll look for any existing kitchens
+which are set as the default, update their value so they are no longer the default kitchen and 
+finally set the passed kitchen identity as the default for the passed user
+'''
+def SetDefaultKitchenStatusForUser(isdefaultkitchen, kitchen, user):
+    if isdefaultkitchen:
+        olddefaultkitchen = db.db.session.query(db.user_kitchen).filter( 
+                    db.user_kitchen.user_id == user.user_id,
+                    db.user_kitchen.is_default_kitchen == True).first()
+        if olddefaultkitchen:
+            olddefaultkitchen.is_default_kitchen = False
+
+        userkitchens = db.db.session.query(db.user_kitchen).filter(
+                    db.user_kitchen.kitchen_id == kitchen.kitchen_id, 
+                    db.user_kitchen.user_id == user.user_id).first()
+        userkitchens.is_default_kitchen = True
+    else:
+        userkitchens = db.db.session.query(db.user_kitchen).filter(
+                    db.user_kitchen.kitchen_id == kitchen.kitchen_id, 
+                    db.user_kitchen.user_id == user.user_id).first()
+        userkitchens.is_default_kitchen = False
+    db.db.session.commit()
+
+'''
+Get Kitchen from ID
+'''
+def GetKitchen(kitchid):
+    return db.kitchen.query.filter_by(kitchen_id=kitchid).first()
+
+'''
+Fetch the User
+'''
+def GetUser(userid):
+    return db.user.query.filter_by(user_id=userid).first()
+
+'''
+Fetch User_Kitchen object
+'''
+def GetUser_KitchenObject(kid, uid):
+    return db.db.session.query(db.user_kitchen).filter(
+                db.user_kitchen.kitchen_id == kid, 
+                db.user_kitchen.user_id == uid).first()
+
+def GetScalesForKitchen(kitchid):
+    return db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=3).all()
+
+def GetFridgesForKitchen(kitchid):
+    return db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=2).all()
+
+def GetOvensForKitchen(kitchid):
+    return db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=1).all()
+
+def GetAllKitchensForUser(userid):
+    return db.db.session.query(db.kitchen).filter(db.user_kitchen.user_id == userid).all()
+
+def GetCountOfApplianceInKitchen(kitchen, appliancetypeid):
+    return db.db.session.query(db.kitchen_appliance).filter(db.kitchen_appliance.kitchen_id == kitchen.kitchen_id, db.kitchen_appliance.kitchen_appliance_type_id == appliancetypeid).count()
+
+def GetKitchenApplianceByID(applianceid):
+    return db.kitchen_appliance.query.filter_by(kitchen_appliance_id=applianceid).first()
+
+def CreateNewAppliance(name, selectedkitchen, appliancetypeid):
+    new_appliance = db.kitchen_appliance(nickname=name, kitchen_id=selectedkitchen, kitchen_appliance_type_id=appliancetypeid)
+    db.db.session.add(new_appliance)
+    db.db.session.commit()
+
+def GetUserByAzureID(uoid):
+    return db.user.query.filter_by(user_az_id=uoid).first()
+
+def CreateNewUserInDatabase(uoid, fname, lname, email, isadmin):
+    return db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin)

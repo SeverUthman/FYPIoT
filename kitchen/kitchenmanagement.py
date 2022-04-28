@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, make_response, render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
 from sqlalchemy import func
-from database import db
 from database import dbhelper
+import app_config
 
 # Register this file as a Blueprint to be used in the application
 kitchenmanagement = Blueprint("kitchenmanagement", __name__, static_folder="../static/", template_folder="../templates/")
@@ -19,41 +19,13 @@ def registerkitchen():
             postcode = request.form['postcode']
             country = request.form['country']
             defaultkitchen = request.form.get('defaultKitchen')
-            new_kitchen = db.kitchen(nickname=name, line1=firstline, line2=secondline, city=city, postcode=postcode, country=country)      
-            db.db.session.add(new_kitchen)
+            new_kitchen = dbhelper.CreateNewKitchen(name, firstline, secondline, city, postcode, country)
 
-            currentuser = db.user.query.filter_by(user_id=session["user_id"]).first()
-            currentuser.kitchens.append(new_kitchen)
-            #thing = db.user_kitchen(filter(lambda x: x.kitchen_id == new_kitchen.kitchen_id, currentuser.kitchen_associations)) #.query.filter_by(kitchen_id=new_kitchen.kitchen_id).first()
+            userid = session["user_id"]
+            currentuser = dbhelper.AssociateUserToKitchen(new_kitchen, userid)
 
-            if defaultkitchen:
-                removeasdefaultkitchen = db.db.session.query(db.user_kitchen).filter( 
-                    db.user_kitchen.user_id == currentuser.user_id,
-                    db.user_kitchen.is_default_kitchen == True).first()
-                if removeasdefaultkitchen:
-                    removeasdefaultkitchen.is_default_kitchen = False
+            dbhelper.SetDefaultKitchenStatusForUser(defaultkitchen, new_kitchen, currentuser)
 
-                userkitchens = db.db.session.query(db.user_kitchen).filter(
-                    db.user_kitchen.kitchen_id == new_kitchen.kitchen_id, 
-                    db.user_kitchen.user_id == currentuser.user_id).first()
-                userkitchens.is_default_kitchen = True
-            else:
-                userkitchens = db.db.session.query(db.user_kitchen).filter(
-                    db.user_kitchen.kitchen_id == new_kitchen.kitchen_id, 
-                    db.user_kitchen.user_id == currentuser.user_id).first()
-                userkitchens.is_default_kitchen = False
-
-            db.db.session.commit()
-            """
-            if defaultkitchen:
-                #currentdefaultkitchen = db.session.query(user_id = currentuser.user_id, is_default_kitchen=True)
-                #currentdefaultkitchen.is_default_kitchen = False
-                stuff = db.db.session.query(db.user_kitchen).all()
-                db.db.update(db.user_kitchen).where(db.user_kitchen.user_id == currentuser.user_id, db.user_kitchen.is_default_kitchen == True ).values(is_default_kitchen = False)
-                #newuserkitchen = db.db.user_kitchen.query.filter_by(user_id = currentuser.user_id, kitchen_id = new_kitchen.kitchen_id).first()
-                #newuserkitchen.is_default_kitchen = True
-                db.db.session.commit()
-            """
             return redirect(url_for('kitchenmanagement.showkitchen', kitchid=new_kitchen.kitchen_id))
         else:
             return render_template("registerkitchen.html")
@@ -61,81 +33,71 @@ def registerkitchen():
         return render_template("errorpage.html", errorstack=e)
 
 
+
 @kitchenmanagement.route("/showkitchen/<string:kitchid>", methods=['GET', 'POST'])
 def showkitchen(kitchid):
     try:
         if request.method == 'POST':
-            kitchen = db.kitchen.query.filter_by(kitchen_id=kitchid).first()
-            defaultkitchen = request.form.get('defaultKitchen')
-            userkitchens = db.db.session.query(db.user_kitchen).filter(
-                db.user_kitchen.kitchen_id == kitchid, 
-                db.user_kitchen.user_id == session['user_id']).first()
-            if defaultkitchen:
-                userkitchens.is_default_kitchen = True
-            else:
-                userkitchens.is_default_kitchen = False
-            db.db.session.commit()
+            kitchen = dbhelper.GetKitchen(kitchid)
+            isdefaultkitchen = request.form.get('defaultKitchen')   
+            user = dbhelper.GetUser(session['user_id'])
+            userkitchen = dbhelper.SetDefaultKitchenStatusForUser(isdefaultkitchen, kitchen, user)
             return redirect('/kitchenmanagement/showkitchen/'+kitchid)
         else:
             oventelemetry = []
             fridgetelemetry = []
             scaletelemetry = []
 
-            kitchen = db.kitchen.query.filter_by(kitchen_id=kitchid).first()
-            kitchenovens = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=1).all()
-            kitchenfridges = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=2).all()
-            kitchenscales = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=3).all()
-            user = db.user.query.filter_by(user_id=session['user_id']).first()
+            kitchen = dbhelper.GetKitchen(kitchid)
+            kitchenovens = dbhelper.GetOvensForKitchen(kitchid)
+            kitchenfridges = dbhelper.GetFridgesForKitchen(kitchid)
+            kitchenscales = dbhelper.GetScalesForKitchen(kitchid)
+            user = dbhelper.GetUser(session['user_id'])
 
             for oven in kitchenovens:
-                #telemetry = getoventelemetry(oven.iot_device_id)
                 telemetry = dbhelper.GetTop15DeviceTelemetry(oven.iot_device_id, "Oven")
                 if len(telemetry) > 0:
                     oventelemetry.append(telemetry)
 
             for fridge in kitchenfridges:
-                #telemetry = getfridgetelemetry(fridge.iot_device_id)
                 telemetry = dbhelper.GetTop15DeviceTelemetry(oven.iot_device_id, "Fridge")
                 if len(telemetry) > 0:
                     fridgetelemetry.append(telemetry)
 
             for scale in kitchenscales:
-                #telemetry = getscaletelemetry(scale.iot_device_id)
                 telemetry = dbhelper.GetTop15DeviceTelemetry(oven.iot_device_id, "Scale")
                 if len(telemetry) > 0:
                     scaletelemetry.append(telemetry)
 
-
             kid=kitchen.kitchen_id
             uid=user.user_id
             
-            userkitchens = db.db.session.query(db.user_kitchen).filter(
-                db.user_kitchen.kitchen_id == kid, 
-                db.user_kitchen.user_id == uid).first()
+            userkitchen = dbhelper.GetUser_KitchenObject(kid, uid)
 
             if not kitchen:
                 return redirect('/')
-            isdefaultkitchen = userkitchens.is_default_kitchen
+            isdefaultkitchen = userkitchen.is_default_kitchen
             return render_template("showkitchen.html", kitchen=kitchen, isdefaultkitchen=isdefaultkitchen, ovens=kitchenovens, fridges=kitchenfridges, scales=kitchenscales, oventelemetry=oventelemetry, fridgetelemetry=fridgetelemetry, scaletelemetry=scaletelemetry)#, kitchenuser=kitchenuser)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
+
 
 
 @kitchenmanagement.route("/allkitchens", methods=['GET'])
 def allkitchens():
     try:
         results = []
-        userkitchens = db.db.session.query(db.kitchen).filter(db.user_kitchen.user_id == session['user_id']).all()
+        userkitchens = dbhelper.GetAllKitchensForUser(session['user_id'])
         for kitchen in userkitchens:
-            ovens = db.db.session.query(db.kitchen_appliance).filter(db.kitchen_appliance.kitchen_id == kitchen.kitchen_id, db.kitchen_appliance.kitchen_appliance_type_id == 1).count()
-            fridges = db.db.session.query(db.kitchen_appliance).filter(db.kitchen_appliance.kitchen_id == kitchen.kitchen_id, db.kitchen_appliance.kitchen_appliance_type_id == 2).count()
-            scales = db.db.session.query(db.kitchen_appliance).filter(db.kitchen_appliance.kitchen_id == kitchen.kitchen_id, db.kitchen_appliance.kitchen_appliance_type_id == 3).count()
+            ovens = dbhelper.GetCountOfApplianceInKitchen(kitchen, app_config.OVEN_APPLIANCE_TYPE_ID)
+            fridges = dbhelper.GetCountOfApplianceInKitchen(kitchen, app_config.FRIDGE_APPLIANCE_TYPE_ID)
+            scales = dbhelper.GetCountOfApplianceInKitchen(kitchen, app_config.SCALE_APPLIANCE_TYPE_ID)
             results.append([kitchen, ovens, fridges, scales])
-
 
         return render_template("allkitchens.html", kitchens=results)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
+
 
 @kitchenmanagement.route("/createoven", methods=['POST', 'GET'])
 def createoven():
@@ -143,17 +105,15 @@ def createoven():
         if request.method == 'POST':
             name = request.form['name']
             selectedkitchen = request.form.get('kitchenid')
-            new_oven = db.kitchen_appliance(nickname=name, kitchen_id=selectedkitchen, kitchen_appliance_type_id=1)
-            db.db.session.add(new_oven)
-            db.db.session.commit()
+            dbhelper.CreateNewAppliance(name, selectedkitchen, app_config.OVEN_APPLIANCE_TYPE_ID)
             return redirect(url_for('kitchenmanagement.showkitchen', kitchid=selectedkitchen))
         else:
-            
-            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.user_id==session["user_id"]).all()
+            kitchens = dbhelper.GetAllKitchensForUser(session['user_id'])
             return render_template("createoven.html", kitchens=kitchens)
 
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
+
 
 @kitchenmanagement.route("/showoven/<int:ovenid>", methods=['POST', 'GET'])
 def showoven(ovenid):
@@ -161,8 +121,9 @@ def showoven(ovenid):
         if request.method == 'POST':
             pass
         else:
-            oven = db.kitchen_appliance.query.filter_by(kitchen_appliance_id=ovenid).first()
-            kitchen = db.kitchen.query.filter_by(kitchen_id=oven.kitchen_id).first()
+            oven = dbhelper.GetKitchenApplianceByID(ovenid)
+            kitchen = dbhelper.GetKitchen(oven.kitchen_id)
+            
             return render_template("showoven.html", ovendetails=oven, kitchendetails=kitchen)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
@@ -174,16 +135,16 @@ def createfridge():
         if request.method == 'POST':
             name = request.form['name']
             selectedkitchen = request.form.get('kitchenid')
-            new_fridge = db.kitchen_appliance(nickname=name, kitchen_id=selectedkitchen, kitchen_appliance_type_id=2)
-            db.db.session.add(new_fridge)
-            db.db.session.commit()
+            dbhelper.CreateNewAppliance(name, selectedkitchen, app_config.FRIDGE_APPLIANCE_TYPE_ID)
             return redirect(url_for('kitchenmanagement.showkitchen', kitchid=selectedkitchen))
         else:
-            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.user_id==session["user_id"]).all()
+            kitchens = dbhelper.GetAllKitchensForUser(session['user_id'])
             return render_template("createfridge.html", kitchens=kitchens)
 
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
+
+
 
 @kitchenmanagement.route("/showfridge/<int:fridgeid>", methods=['POST', 'GET'])
 def showfridge(fridgeid):
@@ -191,9 +152,9 @@ def showfridge(fridgeid):
         if request.method == 'POST':
             pass
         else:
-            oven = db.kitchen_appliance.query.filter_by(kitchen_appliance_id=fridgeid).first()
-            kitchen = db.kitchen.query.filter_by(kitchen_id=oven.kitchen_id).first()
-            return render_template("showfridge.html", fridgedetails=oven, kitchendetails=kitchen)
+            fridge = dbhelper.GetKitchenApplianceByID(fridgeid)
+            kitchen = dbhelper.GetKitchen(fridge.kitchen_id)
+            return render_template("showfridge.html", fridgedetails=fridge, kitchendetails=kitchen)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
@@ -204,12 +165,10 @@ def createscale():
         if request.method == 'POST':
             name = request.form['name']
             selectedkitchen = request.form.get('kitchenid')
-            new_scale = db.kitchen_appliance(nickname=name, kitchen_id=selectedkitchen, kitchen_appliance_type_id=3)
-            db.db.session.add(new_scale)
-            db.db.session.commit()
+            dbhelper.CreateNewAppliance(name, selectedkitchen, app_config.SCALE_APPLIANCE_TYPE_ID)
             return redirect(url_for('kitchenmanagement.showkitchen', kitchid=selectedkitchen))
         else:
-            kitchens = db.kitchen.query.join(db.user_kitchen).filter(db.user_kitchen.user_id==session["user_id"]).all()
+            kitchens = dbhelper.GetAllKitchensForUser(session['user_id'])
             return render_template("createscale.html", kitchens=kitchens)
 
     except Exception as e:
@@ -222,8 +181,8 @@ def showscale(scaleid):
         if request.method == 'POST':
             pass
         else:
-            scale = db.kitchen_appliance.query.filter_by(kitchen_appliance_id=scaleid).first()
-            kitchen = db.kitchen.query.filter_by(kitchen_id=scale.kitchen_id).first()
+            scale = dbhelper.GetKitchenApplianceByID(scaleid)
+            kitchen = dbhelper.GetKitchen(scale.kitchen_id)
             return render_template("showscale.html", scaledetails=scale, kitchendetails=kitchen)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
