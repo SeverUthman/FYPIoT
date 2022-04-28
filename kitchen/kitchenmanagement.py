@@ -2,7 +2,6 @@ from flask import Flask, jsonify, make_response, render_template, session, reque
 from flask.blueprints import Blueprint
 from sqlalchemy import func
 from database import db
-from iothub.iot import getfridgetelemetry, getoventelemetry, getscaletelemetry
 from database import dbhelper
 
 # Register this file as a Blueprint to be used in the application
