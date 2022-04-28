@@ -3,6 +3,7 @@ from flask.blueprints import Blueprint
 from sqlalchemy import func
 from database import db
 from iothub.iot import getfridgetelemetry, getoventelemetry, getscaletelemetry
+from database import dbhelper
 
 # Register this file as a Blueprint to be used in the application
 kitchenmanagement = Blueprint("kitchenmanagement", __name__, static_folder="../static/", template_folder="../templates/")
@@ -88,17 +89,20 @@ def showkitchen(kitchid):
             user = db.user.query.filter_by(user_id=session['user_id']).first()
 
             for oven in kitchenovens:
-                telemetry = getoventelemetry(oven.iot_device_id)
+                #telemetry = getoventelemetry(oven.iot_device_id)
+                telemetry = dbhelper.GetTop15DeviceTelemetry(oven.iot_device_id, "Oven")
                 if len(telemetry) > 0:
                     oventelemetry.append(telemetry)
 
             for fridge in kitchenfridges:
-                telemetry = getfridgetelemetry(oven.iot_device_id)
+                #telemetry = getfridgetelemetry(fridge.iot_device_id)
+                telemetry = dbhelper.GetTop15DeviceTelemetry(oven.iot_device_id, "Fridge")
                 if len(telemetry) > 0:
                     fridgetelemetry.append(telemetry)
 
             for scale in kitchenscales:
-                telemetry = getscaletelemetry(scale.iot_device_id)
+                #telemetry = getscaletelemetry(scale.iot_device_id)
+                telemetry = dbhelper.GetTop15DeviceTelemetry(oven.iot_device_id, "Scale")
                 if len(telemetry) > 0:
                     scaletelemetry.append(telemetry)
 
