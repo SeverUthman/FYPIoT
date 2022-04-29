@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.css">
 {% endblock %}
 
 {% block body %}
@@ -14,12 +14,15 @@
         <div class="row justify-content-center">
             <div class="col">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table id="iottable" class="table table-striped"
+                        data-toggle="table"
+                        data-search="true"
+                        data-show-columns="true">
                         <thead>
                             <tr>
-                                <th>Device Name</th>
-                                <th>Kitchen</th>
-                                <th>Appliance</th>
+                                <th data-sortable="true" data-field="device name">Device Name</th>
+                                <th data-sortable="true" data-field="kitchen">Kitchen</th>
+                                <th data-sortable="true" data-field="appliance">Appliance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,4 +49,12 @@
 {% endblock %}
 
 {% block beforefooter %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            ('#iottable').bootstrapTable()
+        });
+            
+    </script>
 {% endblock %}
