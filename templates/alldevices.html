@@ -25,7 +25,12 @@
                         <tbody>
                             {% for device in devices %}
                             <tr>
-                                <td><a href="{{url_for('iot.showdevice', deviceid=device.iotid)}}">{{device.iotname}}</a></td>
+                                {% if device.kitchenappliancetype == 'Oven' or 'Fridge'%}
+                                    <td><a href="{{url_for('iot.showdevice', deviceid=device.iotid)}}">{{device.iotname}}</a></td>
+                                {% elif device.kitchenappliancetype == 'Scale' %}
+                                    <td><a href="{{url_for('iot.showdevice', deviceid=device.iotid)}}">{{device.iotname}}</a></td>
+                                {% endif %}
+
                                 <td><a href="{{url_for('kitchenmanagement.showkitchen', kitchid=device.kitchenid)}}">{{device.kitchen}}</a></td>
                                 <td>{{device.kitchenappliancetype}}</td>
                             </tr>

@@ -60,12 +60,12 @@ def showkitchen(kitchid):
                     oventelemetry.append(telemetry)
 
             for fridge in kitchenfridges:
-                telemetry = dbhelper.GetTop15DeviceTelemetry(oven.iot_device_id, "Fridge")
+                telemetry = dbhelper.GetTop15DeviceTelemetry(fridge.iot_device_id, "Fridge")
                 if len(telemetry) > 0:
                     fridgetelemetry.append(telemetry)
 
             for scale in kitchenscales:
-                telemetry = dbhelper.GetTop15DeviceTelemetry(oven.iot_device_id, "Scale")
+                telemetry = dbhelper.GetTop15DeviceTelemetry(scale.iot_device_id, "Scale")
                 if len(telemetry) > 0:
                     scaletelemetry.append(telemetry)
 

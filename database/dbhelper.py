@@ -23,8 +23,11 @@ def GetAllIoTDevices():
                         db.kitchen.kitchen_id.label('kitchenid'))\
                         .select_from(db.iot_device)\
                         .join(db.kitchen_appliance)\
-                        .join(db.kitchen_appliance_type)\
-                        .join(db.kitchen)
+                        .join(db.kitchen_appliance_type, db.iot_device.kitchen_appliance_type_id == db.kitchen_appliance_type.kitchen_appliance_type_id)\
+                        .join(db.kitchen)\
+                        .join(db.user_kitchen)\
+                        .where(db.user_kitchen.user_id == 1)
+    print(str(query))
     devices = query.all()
     return devices
 
@@ -118,7 +121,7 @@ def GetTop15DeviceTelemetry(deviceid, appliancetype):
     
     dicttelemetry = []
     for result in telemetry:
-        if appliancetype == "Oven" or "Fridge":
+        if appliancetype == "Oven" or appliancetype == "Fridge":
             telpoint = [result.reading_datetime.strftime("%m/%d/%Y, %H:%M:%S"), str(result.tempC), str(result.tempF)]
             dicttelemetry.append(telpoint)
         elif appliancetype == "Scale":
@@ -215,16 +218,24 @@ def GetUser_KitchenObject(kid, uid):
                 db.user_kitchen.user_id == uid).first()
 
 def GetScalesForKitchen(kitchid):
-    return db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=3).all()
+    query = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=3)
+    print(str(query))
+    return query.all()
 
 def GetFridgesForKitchen(kitchid):
-    return db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=2).all()
+    query = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=2)
+    print(str(query))
+    return query.all()
 
 def GetOvensForKitchen(kitchid):
-    return db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=1).all()
+    query = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=1) 
+    print(str(query))
+    return query.all()
 
 def GetAllKitchensForUser(userid):
-    return db.db.session.query(db.kitchen).filter(db.user_kitchen.user_id == userid).all()
+    query = db.db.session.query(db.kitchen).join(db.user_kitchen).filter(db.user_kitchen.user_id == userid)
+    print(str(query)) 
+    return query.all()
 
 def GetCountOfApplianceInKitchen(kitchen, appliancetypeid):
     return db.db.session.query(db.kitchen_appliance).filter(db.kitchen_appliance.kitchen_id == kitchen.kitchen_id, db.kitchen_appliance.kitchen_appliance_type_id == appliancetypeid).count()
@@ -241,4 +252,6 @@ def GetUserByAzureID(uoid):
     return db.user.query.filter_by(user_az_id=uoid).first()
 
 def CreateNewUserInDatabase(uoid, fname, lname, email, isadmin):
-    return db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin)
+    newuser = db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin)
+    db.db.session.add(newuser) # add the new record to the database
+    db.db.session.commit() # commit the database change

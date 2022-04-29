@@ -32,9 +32,11 @@
                     <div id="ovenchart_div{{loop.index}}"></div>
                 {% endfor %}
                 {% for fridge in fridgetelemetry %}
+                    <h5>{{ fridges[loop.index-1].nickname }}</h5>
                     <div id="fridgechart_div{{loop.index}}"></div>
                 {% endfor %}
                 {% for scale in scaletelemetry %}
+                    <h5>{{ scales[loop.index-1].nickname }}</h5>
                     <div id="scalechart_div{{loop.index}}"></div>
                 {% endfor %}
             </div>
@@ -100,11 +102,28 @@
 		{% endfor %}
 		
 		{% for fridge in fridgetelemetry %}
-		
+            var dataset = [];
+			{% for result in fridge %}
+                    resultarray = [];
+                    resultarray.push({{result[0]|tojson|safe}});
+                    resultarray.push(parseFloat({{result[1]|tojson|safe}}));
+                    resultarray.push(parseFloat({{result[2]|tojson|safe}}));
+
+                    dataset.push(resultarray)
+			{% endfor %}
+            drawBasic(dataset, "fridgechart_div{{loop.index}}")
 		{% endfor %}
 		
 		{% for scale in scaletelemetry %}
-		
+            var dataset = [];
+			{% for result in scale %}
+                    resultarray = [];
+                    resultarray.push({{result[0]|tojson|safe}});
+                    resultarray.push(parseFloat({{result[1]|tojson|safe}}));
+
+                    dataset.push(resultarray)
+			{% endfor %}
+            drawBasic(dataset, "scalechart_div{{loop.index}}")
 		{% endfor %}
         
     }
@@ -112,28 +131,50 @@
     function drawBasic(datasets, divname) {
 
         var dataset = datasets
-        
         console.log(dataset)
-        
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'X');
-        data.addColumn('number', 'tempC');
-        data.addColumn('number', 'tempF');
-        data.addRows(dataset)
+        var options;
 
-        var options = {
-            hAxis: {
-            title: 'Time',
-            direction:-1, 
-            slantedText:true, 
-            slantedTextAngle:90
-            },
-            vAxis: {
-            title: 'Temperature'
-            },
-            legend: 'none'
-        };
+        if(divname.includes('scale'))
+        {
+            data.addColumn('string', 'X');
+            data.addColumn('number', 'weight');
+            data.addRows(dataset)
 
+            options = {
+                hAxis: {
+                title: 'Time',
+                direction:-1, 
+                slantedText:true, 
+                slantedTextAngle:90
+                },
+                vAxis: {
+                title: 'Weight'
+                },
+                legend: 'none'
+            };
+        }
+        else
+        {
+            data.addColumn('string', 'X');
+            data.addColumn('number', 'tempC');
+            data.addColumn('number', 'tempF');
+            data.addRows(dataset)
+
+            options = {
+                hAxis: {
+                title: 'Time',
+                direction:-1, 
+                slantedText:true, 
+                slantedTextAngle:90
+                },
+                vAxis: {
+                title: 'Temperature'
+                },
+                legend: 'none'
+            };
+        }
+        
         var chart = new google.visualization.LineChart(document.getElementById(divname));
 
         chart.draw(data, options);
