@@ -9,7 +9,8 @@ pymssql
 flask_sqlalchemy_session
 objectpath
 azure-iot-hub
-
+pytest
+mock
 
 #PyMySQL
 #pyodbc

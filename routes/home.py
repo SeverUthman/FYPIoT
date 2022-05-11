@@ -14,7 +14,7 @@ home = Blueprint("home", __name__, static_folder="../static/", template_folder="
 @home.route('/', methods=['POST', 'GET'])
 @login_required
 def index():
-    return render_template('index.html', user=session["user"], version=msal.__version__)
+    return render_template('index.html')
 
 @home.route('/registerkap', methods=['GET'])
 @login_required
