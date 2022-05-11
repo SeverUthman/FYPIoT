@@ -38,4 +38,23 @@ $(document).ready(function(){
             $('#appliancedd').text(selText);
             $('#savebutton').prop('disabled', false);
     });
+
+
+    
+    $('.dropdown-menu a').click(function(){
+        var selText = $(this).attr('value');
+        console.log("-----------------" + selText);
+        $('#kitchenid').val(selText);
+        });
+
+        // Need a delegated selector here because the elements of the appliance dropdow
+        // are created after the page loads and don't have an event trigger for click
+        $('#appliancedropdown').on("click", "a", function(){
+                var selVal = $(this).attr('value');
+                var selText = $(this).text()
+
+                $('#appliancedd').text(selText);
+
+        });
+
 });

@@ -170,7 +170,7 @@ def admin_required(f):
             # ensure the user is an administrator
             if not session["isadmin"]:
                 # if user is not an administrator
-                return redirect(url_for("azauth.login"))
+                return redirect(url_for("azauth.needadminperm"))
             # Otherwise the user is an administrator and can proceed
             return f(*args, **kwargs)
         except Exception as e:

@@ -17,7 +17,7 @@
             <div class="mb-3"><label class="form-label" for="name">Name</label><input class="form-control" type="text" id="name" name="name"></div>
             <input class="form-control" type="text" id="kitchenid" name="kitchenid" hidden value="">
             <div class="mb-3"><label class="form-label" for="subject">Kitchen</label>
-                <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
+                <div id="appliancedropdown" class="dropdown"><button id="appliancedd" class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
                     <div class="dropdown-menu">
                         {% for kitchen in kitchens %}
                         <a value="{{kitchen.kitchen_id}}" class="dropdown-item" href="#">{{ kitchen.nickname }}</a>
@@ -36,14 +36,5 @@
 {% endblock %}
 
 {% block beforefooter %}
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('.dropdown-menu a').click(function(){
-                    var selText = $(this).attr('value');
-                    console.log("-----------------" + selText);
-                    $('#kitchenid').val(selText);
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/kitchencontrol.js')}}"></script>
 {% endblock %}
