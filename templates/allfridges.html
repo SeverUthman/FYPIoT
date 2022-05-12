@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.css">
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block features">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">All Fridges</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="table-responsive">
+                    <table id="fridgestable" class="table table-striped"
+                        data-toggle="table"
+                        data-search="true"
+                        data-show-columns="true">
+                        <thead>
+                            <tr>
+                                <th data-sortable="true" data-field="fridge name">Fridge Name</th>
+                                <th data-sortable="true" data-field="kitchen">Kitchen</th>
+                                <th data-sortable="true" data-field="iot">IoT Device</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for fridge in fridges %}
+                            <tr>
+                                <td><a href="{{url_for('kitchenmanagement.showfridge', fridgeid=fridge.applianceid)}}">{{fridge.appliancename}}</a></td>
+                                <td><a href="{{url_for('kitchenmanagement.showkitchen', kitchid=fridge.kitchenid)}}">{{fridge.kitchenname}}</a></td>
+                                <td><a href="{{url_for('iot.showdevice', deviceid=fridge.iotid)}}">{{fridge.iotname}}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+    <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            ('#fridgestable').bootstrapTable()
+        });
+            
+    </script>
+{% endblock %}

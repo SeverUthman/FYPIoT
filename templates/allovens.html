@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.css">
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block features">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">All Ovens</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="table-responsive">
+                    <table id="ovenstable" class="table table-striped"
+                        data-toggle="table"
+                        data-search="true"
+                        data-show-columns="true">
+                        <thead>
+                            <tr>
+                                <th data-sortable="true" data-field="oven name">Oven Name</th>
+                                <th data-sortable="true" data-field="kitchen">Kitchen</th>
+                                <th data-sortable="true" data-field="iot">IoT Device</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for oven in ovens %}
+                            <tr>
+                                <td><a href="{{url_for('kitchenmanagement.showoven', ovenid=oven.applianceid)}}">{{oven.appliancename}}</a></td>
+                                <td><a href="{{url_for('kitchenmanagement.showkitchen', kitchid=oven.kitchenid)}}">{{oven.kitchenname}}</a></td>
+                                <td><a href="{{url_for('iot.showdevice', deviceid=oven.iotid)}}">{{oven.iotname}}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+    <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            ('#ovenstable').bootstrapTable()
+        });
+            
+    </script>
+{% endblock %}
