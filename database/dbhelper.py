@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import app, Flask
 from datetime import datetime
-from sqlalchemy import desc
+from sqlalchemy import and_, desc
 from sqlalchemy.orm import relationship
 #from flask_sqlalchemy_session import flask_scoped_session
 from sqlalchemy.ext.declarative import declarative_base
@@ -255,3 +255,73 @@ def CreateNewUserInDatabase(uoid, fname, lname, email, isadmin):
     newuser = db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin)
     db.db.session.add(newuser) # add the new record to the database
     db.db.session.commit() # commit the database change
+
+def GetAllOvensForUser(uid):
+    ovens = db.db.session.query(db.kitchen_appliance)\
+                        .join(db.kitchen_appliance_type, db.kitchen_appliance.kitchen_appliance_type_id == db.kitchen_appliance_type.kitchen_appliance_type_id)\
+                        .join(db.iot_device, db.kitchen_appliance.iot_device_id == db.iot_device.iot_device_id)\
+                        .join(db.kitchen, db.kitchen_appliance.kitchen_id == db.kitchen.kitchen_id)\
+                        .join(db.user_kitchen, db.kitchen.kitchen_id == db.user_kitchen.kitchen_id)\
+                        .with_entities(
+                            db.iot_device.iot_device_id.label('iotid'),\
+                            db.iot_device.nickname.label('iotname'),\
+                            db.kitchen_appliance.nickname.label('appliancename'),\
+                            db.kitchen_appliance.kitchen_appliance_id.label('applianceid'),\
+                            db.kitchen.nickname.label('kitchenname'),\
+                            db.kitchen.kitchen_id.label('kitchenid')
+                        )\
+                        .where(
+                            and_(
+                                db.kitchen_appliance_type.kitchen_appliance_type == 'Oven',
+                                db.user_kitchen.user_id == uid
+                            )
+                        ).all()
+    return ovens
+
+def GetAllFridgesForUser(uid):
+    ovens = db.db.session.query(db.kitchen_appliance)\
+                        .join(db.kitchen_appliance_type, db.kitchen_appliance.kitchen_appliance_type_id == db.kitchen_appliance_type.kitchen_appliance_type_id)\
+                        .join(db.iot_device, db.kitchen_appliance.iot_device_id == db.iot_device.iot_device_id)\
+                        .join(db.kitchen, db.kitchen_appliance.kitchen_id == db.kitchen.kitchen_id)\
+                        .join(db.user_kitchen, db.kitchen.kitchen_id == db.user_kitchen.kitchen_id)\
+                        .with_entities(
+                            db.iot_device.iot_device_id.label('iotid'),\
+                            db.iot_device.nickname.label('iotname'),\
+                            db.kitchen_appliance.nickname.label('appliancename'),\
+                            db.kitchen_appliance.kitchen_appliance_id.label('applianceid'),\
+                            db.kitchen.nickname.label('kitchenname'),\
+                            db.kitchen.kitchen_id.label('kitchenid')
+                        )\
+                        .where(
+                            and_(
+                                db.kitchen_appliance_type.kitchen_appliance_type == 'Fridge',
+                                db.user_kitchen.user_id == uid
+                            )
+                        ).all()
+    return ovens
+
+
+def GetAllScalesForUser(uid):
+    ovens = db.db.session.query(db.kitchen_appliance)\
+                        .join(db.kitchen_appliance_type, db.kitchen_appliance.kitchen_appliance_type_id == db.kitchen_appliance_type.kitchen_appliance_type_id)\
+                        .join(db.iot_device, db.kitchen_appliance.iot_device_id == db.iot_device.iot_device_id)\
+                        .join(db.kitchen, db.kitchen_appliance.kitchen_id == db.kitchen.kitchen_id)\
+                        .join(db.user_kitchen, db.kitchen.kitchen_id == db.user_kitchen.kitchen_id)\
+                        .with_entities(
+                            db.iot_device.iot_device_id.label('iotid'),\
+                            db.iot_device.nickname.label('iotname'),\
+                            db.kitchen_appliance.nickname.label('appliancename'),\
+                            db.kitchen_appliance.kitchen_appliance_id.label('applianceid'),\
+                            db.kitchen.nickname.label('kitchenname'),\
+                            db.kitchen.kitchen_id.label('kitchenid')
+                        )\
+                        .where(
+                            and_(
+                                db.kitchen_appliance_type.kitchen_appliance_type == 'Scale',
+                                db.user_kitchen.user_id == uid
+                            )
+                        )
+    print(ovens)
+    return ovens.all()
+
+

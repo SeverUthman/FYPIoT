@@ -16,11 +16,6 @@ home = Blueprint("home", __name__, static_folder="../static/", template_folder="
 def index():
     return render_template('index.html')
 
-@home.route('/registerkap', methods=['GET'])
-@login_required
-def registerkap():
-    return render_template('registerkitchenandappliance.html')
-
 """@home.route('/createkitchen', methods=['POST', 'GET'])
 @login_required
 def createkitchen():

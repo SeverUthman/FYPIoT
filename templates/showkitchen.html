@@ -11,8 +11,9 @@
             <h2 class="text-info">{{kitchen.nickname}}</h2>
             <p>You can register a kitchen location here, once it's saved you can create appliances for the kitchen and attach IoT Devices to monitor those appliances.</p>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-md-5 feature-box">
+        
+        <div class="row">
+            <div class="col-sm-6">
                 <form method='POST' action='/kitchenmanagement/showkitchen/{{kitchen.kitchen_id}}'>
                     <input class="form-control" type="text" id="kitchenid" name="name" readonly hidden value="{{kitchen.kitchenid}}">
                     <div class="mb-3"><label class="form-label" for="name">Name</label><input class="form-control" type="text" id="name" name="name" readonly value="{{kitchen.nickname}}"></div>
@@ -25,53 +26,73 @@
                     <div class="mb-3"><button class="btn btn-primary" type="submit">Update</button></div>
                 </form>
             </div>
-            <div class="col-md-5 feature-box">
-                <h3>Telemetry Dashboards</h3>
-                {% for oven in oventelemetry %}
-                    <h5>{{ ovens[loop.index-1].nickname }}</h5>
-                    <div id="ovenchart_div{{loop.index}}"></div>
-                {% endfor %}
-                {% for fridge in fridgetelemetry %}
-                    <h5>{{ fridges[loop.index-1].nickname }}</h5>
-                    <div id="fridgechart_div{{loop.index}}"></div>
-                {% endfor %}
-                {% for scale in scaletelemetry %}
-                    <h5>{{ scales[loop.index-1].nickname }}</h5>
-                    <div id="scalechart_div{{loop.index}}"></div>
-                {% endfor %}
-            </div>
-            <div class="row">
-                <div class="col-md-5 feature-box">
-                    <div class="block-heading">
+
+            <div class="col-sm-6">
                         <h2 class="text-info">Ovens at this Kitchen</h2>
-                    <form>
-                        {% for oven in ovens %}
-                            <a href="{{url_for('kitchenmanagement.showoven', ovenid=oven.kitchen_appliance_id)}}">{{oven.nickname}}</a>
-                        {% endfor %}
-                    </form>
-                    </div>
-                </div>
-                <div class="col-md-5 feature-box">
-                    <div class="block-heading">
+                        <div style="background-color: white; min-height:50px;max-width:500px;box-shadow:0px,2px,10px; padding-left:10px;padding-top:10px;">
+                            <row>
+                            {% for oven in ovens %}
+                                <div class="col-md-6">
+                                    <a href="{{url_for('kitchenmanagement.showoven', ovenid=oven.kitchen_appliance_id)}}">{{oven.nickname}}</a>
+                                </div>
+                            {% endfor %}
+                            </row>
+                        </div>
+
                         <h2 class="text-info">Fridges at this Kitchen</h2>
-                    <form>
-                        {% for fridge in fridges %}
-                            <a href="{{url_for('kitchenmanagement.showfridge', fridgeid=fridge.kitchen_appliance_id)}}">{{fridge.nickname}}</a>
-                        {% endfor %}
-                    </form>
-                    </div>
-                </div>
-                <div class="col-md-5 feature-box">
-                    <div class="block-heading">
+                        <div style="background-color: white; min-height:50px;max-width:500px;box-shadow:0px,2px,10px; padding-left:10px;padding-top:10px;">
+                            <row>
+                                {% for fridge in fridges %}
+                                <div class="col-md-6">
+                                    <a href="{{url_for('kitchenmanagement.showfridge', fridgeid=fridge.kitchen_appliance_id)}}">{{fridge.nickname}}</a>
+                                </div>
+                            {% endfor %}
+                            </row>
+                        </div>
+
                         <h2 class="text-info">Scales at this Kitchen</h2>
-                    <form>
-                        {% for scale in scales %}
-                            <a href="{{url_for('kitchenmanagement.showscale', scaleid=scale.kitchen_appliance_id)}}">{{scale.nickname}}</a>
-                        {% endfor %}
-                    </form>
-                    </div>
-                </div>
+                        <div style="background-color: white; min-height:50px;max-width:500px;box-shadow:0px,2px,10px; padding-left:10px;padding-top:10px;">
+                            <row>
+                                {% for scale in scales %}
+                                <div class="col-md-6">
+                                    <a href="{{url_for('kitchenmanagement.showscale', scaleid=scale.kitchen_appliance_id)}}">{{scale.nickname}}</a>
+                                </div>
+                            {% endfor %}
+                            </row>
+                        </div>
             </div>
+        </div>
+        
+        <h3>Telemetry Dashboards</h3>
+        
+        <div class="row">
+            
+                {% for oven in oventelemetry %}
+                    <div class="col">
+                        <h5>{{ ovens[loop.index-1].nickname }}</h5>
+                        <div id="ovenchart_div{{loop.index}}"></div>
+                    </div>
+                {% endfor %}
+        </div>
+
+        <div class="row">
+            
+                {% for fridge in fridgetelemetry %}
+                    <div class="col">
+                        <h5>{{ fridges[loop.index-1].nickname }}</h5>
+                        <div id="fridgechart_div{{loop.index}}"></div>
+                    </div> 
+                {% endfor %}
+        </div>
+
+        <div class="row">
+            
+                {% for scale in scaletelemetry %}
+                    <div class="col">
+                        <h5>{{ scales[loop.index-1].nickname }}</h5>
+                        <div id="scalechart_div{{loop.index}}"></div>
+                    </div>
+                {% endfor %}
         </div>
     </div>
 </section>

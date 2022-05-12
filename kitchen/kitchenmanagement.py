@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, make_response, render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
 from sqlalchemy import func
+from auth.azauth import login_required
 from database import dbhelper
 import app_config
 
@@ -184,5 +185,42 @@ def showscale(scaleid):
             scale = dbhelper.GetKitchenApplianceByID(scaleid)
             kitchen = dbhelper.GetKitchen(scale.kitchen_id)
             return render_template("showscale.html", scaledetails=scale, kitchendetails=kitchen)
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+
+@kitchenmanagement.route('/registertwinsmenu', methods=['GET'])
+@login_required
+def registertwinsmenu():
+    return render_template('registerkitchenandappliance.html')
+
+@kitchenmanagement.route('/viewtwinsmenu', methods=['GET'])
+@login_required
+def viewtwinsmenu():
+    return render_template('viewdigitaltwinmenu.html')
+
+
+@kitchenmanagement.route('/getovens', methods=['GET'])
+def getovens():
+    try:
+        kitchenovens = dbhelper.GetAllOvensForUser(session['user_id'])
+        return render_template('allovens.html', ovens=kitchenovens)
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+
+@kitchenmanagement.route('/getfridges', methods=['GET'])
+def getfridges():
+    try:
+        kitchenfridges = dbhelper.GetAllFridgesForUser(session['user_id'])
+        return render_template('allfridges.html', fridges=kitchenfridges)
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
+@kitchenmanagement.route('/getscales', methods=['GET'])
+def getscales():
+    try:
+        kitchenscales = dbhelper.GetAllScalesForUser(session['user_id'])
+        return render_template('allscales.html', scales=kitchenscales)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
