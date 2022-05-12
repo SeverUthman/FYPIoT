@@ -28,6 +28,7 @@
             </div>
 
             <div class="col-sm-6">
+                        {% if ovens|length > 0 %}
                         <h2 class="text-info">Ovens at this Kitchen</h2>
                         <div style="background-color: white; min-height:50px;max-width:500px;box-shadow:0px,2px,10px; padding-left:10px;padding-top:10px;">
                             <row>
@@ -38,7 +39,8 @@
                             {% endfor %}
                             </row>
                         </div>
-
+                        {% endif %}
+                        {% if fridges|length > 0 %}
                         <h2 class="text-info">Fridges at this Kitchen</h2>
                         <div style="background-color: white; min-height:50px;max-width:500px;box-shadow:0px,2px,10px; padding-left:10px;padding-top:10px;">
                             <row>
@@ -49,7 +51,8 @@
                             {% endfor %}
                             </row>
                         </div>
-
+                        {% endif %}
+                        {% if scales|length > 0 %}
                         <h2 class="text-info">Scales at this Kitchen</h2>
                         <div style="background-color: white; min-height:50px;max-width:500px;box-shadow:0px,2px,10px; padding-left:10px;padding-top:10px;">
                             <row>
@@ -60,15 +63,16 @@
                             {% endfor %}
                             </row>
                         </div>
+                        {% endif %}
             </div>
         </div>
         
-        <h3>Telemetry Dashboards</h3>
+        <h3 class="mt-3">Telemetry Dashboards</h3>
         
         <div class="row">
             
                 {% for oven in oventelemetry %}
-                    <div class="col">
+                    <div class="col mt-3">
                         <h5>{{ ovens[loop.index-1].nickname }}</h5>
                         <div id="ovenchart_div{{loop.index}}"></div>
                     </div>
@@ -78,7 +82,7 @@
         <div class="row">
             
                 {% for fridge in fridgetelemetry %}
-                    <div class="col">
+                    <div class="col mt-3">
                         <h5>{{ fridges[loop.index-1].nickname }}</h5>
                         <div id="fridgechart_div{{loop.index}}"></div>
                     </div> 
@@ -88,7 +92,7 @@
         <div class="row">
             
                 {% for scale in scaletelemetry %}
-                    <div class="col">
+                    <div class="col mt-3">
                         <h5>{{ scales[loop.index-1].nickname }}</h5>
                         <div id="scalechart_div{{loop.index}}"></div>
                     </div>
