@@ -6,6 +6,7 @@ from auth.azauth import azauth
 from routes.home import home
 from kitchen.kitchenmanagement import kitchenmanagement
 from iothub.iot import iot
+from admin.admin import admin
 
 import app_config
 
@@ -36,6 +37,8 @@ def create_app():
     app.register_blueprint(kitchenmanagement, url_prefix="/kitchenmanagement")
     # register the IoT Hub blueprint
     app.register_blueprint(iot, url_prefix="/iot")
+    # register the IoT Hub blueprint
+    app.register_blueprint(admin, url_prefix="/admin")
 
     db.db.init_app(app)
     return app
