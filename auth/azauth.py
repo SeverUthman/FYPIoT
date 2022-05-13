@@ -8,7 +8,7 @@ import msal
 import requests
 import objectpath
 from functools import wraps
-from flask import render_template, session, request, redirect, url_for
+from flask import jsonify, render_template, session, request, redirect, url_for
 from flask.blueprints import Blueprint
 from database import dbhelper
 
@@ -234,9 +234,9 @@ def checkUserIsAdmin():
 def CreateUser():
     token = getTokenFromCache(app_config.SCOPE)
     if not token:
-        print("OOOOOPS")
-        pass
-
+        return False
+    
+    userprincipalname = "autocreated@sevmirazuregmail.onmicrosoft.com"
     response = requests.post(
         app_config.ENDPOINT,
         headers={
@@ -247,7 +247,7 @@ def CreateUser():
                     "accountEnabled": True,
                     "displayName": "Auto",
                     "mailNickname": "Created",
-                    "userPrincipalName": "autocreated@sevmirazuregmail.onmicrosoft.com",
+                    "userPrincipalName": userprincipalname,
                     "passwordProfile" : 
                     {
                         "forceChangePasswordNextSignIn": True,
@@ -255,4 +255,36 @@ def CreateUser():
                     }
                 })
     )
-    return response
+
+    id = json.loads(response.text)['id']
+
+    updateresponse = requests.patch(
+        app_config.ENDPOINT+"/"+id,
+        headers={
+                    'Authorization': 'Bearer ' + token['access_token'],
+                    'Content-type': 'application/json'
+                }, 
+        data = json.dumps(
+            {
+                "mail" : "somerandom@gmail.com"
+            }
+        )
+
+    )
+    return response, updateresponse
+
+@azauth.route("/checkuserexists/<string:upn>")
+def checkusereixsts(upn):
+    token = getTokenFromCache(app_config.SCOPE)
+    if not token:
+        return False
+    
+    response = requests.get(
+        app_config.ENDPOINT+"/"+upn,
+        headers={
+                    'Authorization': 'Bearer ' + token['access_token'],
+                    'Content-type': 'application/json'
+                }
+    )
+
+    return response.text
