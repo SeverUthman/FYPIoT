@@ -13,12 +13,13 @@ REDIRECT_PATH = "/getmsaltoken" # Used for forming an absolute URL to your redir
 # https://docs.microsoft.com/en-us/graph/permissions-reference
 # The permissions to be requested / accepted by user when they first log in to the application
 # to delegate control and allow this web application to read the data as if it were the user
-SCOPE = ["User.ReadBasic.All", "Directory.Read.All"]
+SCOPE = ["User.ReadBasic.All", "Directory.ReadWrite.All"]
 
 # Microsoft Graph API has different Endpoints that can be called to get details about the user from Azure Active Directory
 MEMBEROFENDPOINT = 'https://graph.microsoft.com/v1.0/me/memberof'  # Retrieves the groups the user is a part of
 ENDPOINT = 'https://graph.microsoft.com/v1.0/users'  # Retrieves all users in Active Directory
 USERENDPOINT = 'https://graph.microsoft.com/v1.0/me/' # Retrieves information about the current user in Active Directory
+CREATEUSERENDPOINT = ''
 SESSION_TYPE = "filesystem"  # Specifies the token cache should be stored in server-side session
 
 SQLALCHEMY_DATABASE_URI = 'mssql+pymssql://kitchencontroladmin:Manager99@kitchencontrolsql.database.windows.net/fyp-kitchencontrol-db?charset=utf8'

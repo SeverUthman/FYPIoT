@@ -1,5 +1,8 @@
 # Microsoft provides a python library for authentication called MSAL (Microsoft Authentication Library) upon which the code below was built
 # Documentation for the MSAl can be found here: https://msal-python.readthedocs.io/en/latest/?badge=latest
+import json
+from pickle import TRUE
+
 import app_config
 import msal
 import requests
@@ -226,3 +229,30 @@ def checkUserIsAdmin():
         print(entry)
 
     return userisadmin
+
+
+def CreateUser():
+    token = getTokenFromCache(app_config.SCOPE)
+    if not token:
+        print("OOOOOPS")
+        pass
+
+    response = requests.post(
+        app_config.ENDPOINT,
+        headers={
+                    'Authorization': 'Bearer ' + token['access_token'],
+                    'Content-type': 'application/json'
+                }, 
+        data = json.dumps({
+                    "accountEnabled": True,
+                    "displayName": "Auto",
+                    "mailNickname": "Created",
+                    "userPrincipalName": "autocreated@sevmirazuregmail.onmicrosoft.com",
+                    "passwordProfile" : 
+                    {
+                        "forceChangePasswordNextSignIn": True,
+                        "password": "xWwvJ]6NMw+bWH-d"
+                    }
+                })
+    )
+    return response
