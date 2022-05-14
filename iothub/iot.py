@@ -70,6 +70,14 @@ def gettemptelemetry(deviceid):
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
+@iot.route("/getlatesttelemetry/<int:deviceid>/<string:appliancetype>", methods=['GET'])
+def getlatesttelemetry(deviceid, appliancetype):
+    try:
+        dicttelemetry = dbhelper.GetTop15DeviceTelemetry(deviceid, appliancetype)
+        return jsonify(dicttelemetry)
+    except Exception as e:
+        return render_template("errorpage.html", errorstack=e)
+
 
 @iot.route("/updatedevicepolltime/<int:deviceid>", methods=['POST'])
 def updatedevicepolltime(deviceid):

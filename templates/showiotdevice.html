@@ -74,53 +74,92 @@
         function BuildTelemetryForGoogleCharts()
         {
             var dataset = [];
-            {% for result in telemetry %}
-                resultarray = [];
-                resultarray.push({{result|safe}}[0]);
-                resultarray.push(parseFloat({{result|safe}}[1]));
-                resultarray.push(parseFloat({{result|safe}}[2]));
+            
+            {% if "Scale" in device.appliancetype%}
+                {% for result in telemetry %}
+                        resultarray = [];
+                        resultarray.push({{result[0]|tojson|safe}});
+                        resultarray.push(parseFloat({{result[1]|tojson|safe}}));
 
-                dataset.push(resultarray)
+                        dataset.push(resultarray)
+                {% endfor %}
+            {% else %}
+                 {% for result in telemetry %}
+                    resultarray = [];
+                    resultarray.push({{result|safe}}[0]);
+                    resultarray.push(parseFloat({{result|safe}}[1]));
+                    resultarray.push(parseFloat({{result|safe}}[2]));
 
+                    dataset.push(resultarray)
+                {% endfor %}
+            {% endif %}
 
-            {% endfor %}
             return dataset;
         }
         
         function HandleTelemetryResponse(data)
         {
             var dataset = []
-            $.each(data, function(i, obj) {
-                console.log(obj[0])
-                resultarray = [];
-                resultarray.push(obj[0]);
-                resultarray.push(parseFloat(obj[1]));
-                resultarray.push(parseFloat(obj[2]));
-
-                dataset.push(resultarray)
-            });
-
             var gdata = new google.visualization.DataTable();
-            gdata.addColumn('string', 'X');
-            gdata.addColumn('number', 'tempC');
-            gdata.addColumn('number', 'tempF');
-            gdata.addRows(dataset)
+			var goptions
+			
+            {% if "Scale" in device.appliancetype%}
+                $.each(data, function(i, obj) {
+                    resultarray = [];
+                        resultarray.push(obj[0]);
+                        resultarray.push(parseFloat(obj[1]));
+                        dataset.push(resultarray)
+                })
 
-            var options = {
-                hAxis: {
-                title: 'Time',
-                direction:-1, 
-                slantedText:true, 
-                slantedTextAngle:90
-                },
-                vAxis: {
-                title: 'Temperature'
-                },
-                legend: 'none'
-            };
+				gdata.addColumn('string', 'X');
+				gdata.addColumn('number', 'weight');
+				gdata.addRows(dataset)
+
+				goptions = {
+					hAxis: {
+					title: 'Time',
+					direction:-1, 
+					slantedText:true, 
+					slantedTextAngle:90
+					},
+					vAxis: {
+					title: 'Weight'
+					},
+					legend: 'none'
+				};
+			{% else %}
+                $.each(data, function(i, obj) {
+                    console.log(obj[0])
+                    resultarray = [];
+                    resultarray.push(obj[0]);
+                    resultarray.push(parseFloat(obj[1]));
+                    resultarray.push(parseFloat(obj[2]));
+
+                    dataset.push(resultarray)
+                });
+
+				gdata.addColumn('string', 'X');
+				gdata.addColumn('number', 'tempC');
+				gdata.addColumn('number', 'tempF');
+				gdata.addRows(dataset)
+
+				goptions = {
+					hAxis: {
+					title: 'Time',
+					direction:-1, 
+					slantedText:true, 
+					slantedTextAngle:90
+					},
+					vAxis: {
+					title: 'Temperature'
+					},
+					legend: 'none'
+				};
+			
+			{% endif %}
 
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-            chart.draw(gdata, options);
+            chart.draw(gdata, goptions);
 
         }
 
@@ -129,9 +168,8 @@
 
             $.ajax({
             type : "GET",
-            url : '/iot/gettemptelemetry/1',
+            url : '/iot/getlatesttelemetry/{{device.iotid}}/{{device.appliancetype}}',
             dataType: "json",
-            data:"hi",
             contentType: 'application/json;charset=UTF-8',
             success: function (data) {
                 HandleTelemetryResponse(data);
@@ -157,12 +195,52 @@
             console.log(dataset)
             
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'X');
+			var options;
+            /*data.addColumn('string', 'X');
             data.addColumn('number', 'tempC');
             data.addColumn('number', 'tempF');
-            data.addRows(dataset)
+            data.addRows(dataset)*/
+			
+			
+			{% if "Scale" in device.appliancetype%}
+				data.addColumn('string', 'X');
+				data.addColumn('number', 'weight');
+				data.addRows(dataset)
 
-            var options = {
+				options = {
+					hAxis: {
+					title: 'Time',
+					direction:-1, 
+					slantedText:true, 
+					slantedTextAngle:90
+					},
+					vAxis: {
+					title: 'Weight'
+					},
+					legend: 'none'
+				};
+			{% else %}
+				data.addColumn('string', 'X');
+				data.addColumn('number', 'tempC');
+				data.addColumn('number', 'tempF');
+				data.addRows(dataset)
+
+				options = {
+					hAxis: {
+					title: 'Time',
+					direction:-1, 
+					slantedText:true, 
+					slantedTextAngle:90
+					},
+					vAxis: {
+					title: 'Temperature'
+					},
+					legend: 'none'
+				};
+			
+			{% endif %}
+
+            /*var options = {
                 hAxis: {
                 title: 'Time',
                 direction:-1, 
@@ -173,7 +251,7 @@
                 title: 'Temperature'
                 },
                 legend: 'none'
-            };
+            };*/
 
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
