@@ -4,10 +4,10 @@ GO
 INSERT INTO [dbo].[user]
            ([user_az_id],[is_admin],[is_enabled],[first_name],[last_name],[email])
      VALUES
-           ('37439413-4c05-4429-8182-33e917800b13', 1 ,1,'Test1' ,'Admin' ,'testadmin1@sevmirazuregmail.onmicrosoft.com'),
-		   ('thisisatestguid2', 1 ,1,'Test2' ,'Admin' ,'testadmin2@sevmirazuregmail.onmicrosoft.com'),
-		   ('thisisatestguid3', 0 ,1,'Test3' ,'Notadmin' ,'testnotadmin3@sevmirazuregmail.onmicrosoft.com'),
-		   ('thisisatestguid4', 0 ,1,'Test4' ,'Notadmin' ,'testnotadmin4@sevmirazuregmail.onmicrosoft.com')
+           ('37439413-4c05-4429-8182-33e917800b13', 1 ,1,'Test1' ,'Admin' ,'testadmin1@sevmirazure.onmicrosoft.com'),
+		   ('thisisatestguid2', 1 ,1,'Test2' ,'Admin' ,'testadmin2@sevmirazure.onmicrosoft.com'),
+		   ('thisisatestguid3', 0 ,1,'Test3' ,'Notadmin' ,'testnotadmin3@sevmirazure.onmicrosoft.com'),
+		   ('thisisatestguid4', 0 ,1,'Test4' ,'Notadmin' ,'testnotadmin4@sevmirazure.onmicrosoft.com')
 GO
 
 

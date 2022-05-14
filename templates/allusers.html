@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.css">
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block features">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">All Users</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="table-responsive">
+                    <table id="userstable" class="table table-striped"
+                        data-toggle="table"
+                        data-search="true"
+                        data-show-columns="true">
+                        <thead>
+                            <tr>
+                                <th data-sortable="true" data-field="username">Display Name</th>
+                                <th data-sortable="true" data-field="azid">Azure ID</th>
+                                <th data-sortable="true" data-field="email">Email</th>
+                                <th data-sortable="true" data-field="isadmin">Is Admin</th>
+                                <th data-sortable="true" data-field="isenabled">Is Enabled</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td><a href="{{url_for('admin.showuser', userid=user.user_id)}}">{{user.first_name}} {{user.last_name}}</a></td>
+                                <td>{{user.user_az_id}}</td>
+                                <td><a href="mailto:{{user.email}}">{{user.email}}</a></td>
+                                <td>{% if user.is_admin == True %} True {% else %} False {% endif %}</td>
+                                <td>{% if user.is_enabled == True %} True {% else %} False {% endif %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block beforefooter %}
+    <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            ('#userstable').bootstrapTable()
+        });
+            
+    </script>
+{% endblock %}

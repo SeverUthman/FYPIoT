@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+<main class="page create-kitchen-page">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Create a new User</h2>
+                <p>Create a new user in Azure Active Directory to allow others access to the site</p>
+            </div>
+            <form method='POST' action='/admin/createuser'>
+                <div class="mb-3"><label class="form-label" for="fname">First Name</label><input class="form-control" type="text" id="fname" name="fname"></div>
+                <div class="mb-3"><label class="form-label" for="lname">Last Name</label><input class="form-control" type="text" id="lname" name="lname"></div>
+                
+                <div class="row mb-3">
+                    <label class="form-label" for="upn">User Principle name</label>
+                    <div class="mb-2 col-10">
+                        <input class="form-control" type="text" id="upn" name="upn" readonly>
+                    </div>
+                    <div id="spinner" class="mb-2 col-2" style="display:none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only"></span>
+                        </div>
+                    </div>
+                    <label id="checkuserexistslabel" class="form-label" style="display: none; color: black">Checking if user exists....</label>
+                    <label id="userdoesnotexist" class="form-label" style="display: none; color: green">Details look good</label>
+                    <label id="userdoesexist" class="form-label" style="display: none; color: red">This user already exists....</label>
+                </div>        
+
+                <div class="mb-3"><label class="form-label" for="email">Email</label><input class="form-control" type="text" id="email" name="email"></div>
+                <div class="mb-3"><label class="form-label" for="temppw">Temporary Password</label><input class="form-control" type="text" id="temppw" name="temppw"></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="isadmin" name="isadmin"><label class="form-check-label" for="isadmin">Is this user an administrator?</label></div>
+                <div class="mb-3"><button id="savebtn" class="btn btn-primary" type="submit" disabled>Save</button></div>
+            </form>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
+
+{% block beforefooter %}
+    <script type="text/javascript" src="{{url_for('static', filename='js/createuser.js')}}"></script>
+{% endblock %}

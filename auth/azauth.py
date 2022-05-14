@@ -60,6 +60,7 @@ def authorized():
                 lname = basicdetails[1]
                 email = '' if basicdetails[2] is None else basicdetails[2]
                 isadmin = checkUserIsAdmin() # check if they are part of the administrator group in active directory to automatically assign them administrator roles
+                isenabled = True
                 newuser = dbhelper.CreateNewUserInDatabase(uoid, fname, lname, email, isadmin) # create a new user database record
                 session["user_id"] = newuser.user_id # store the user database ID in the session for ease of querying (saves us having to look up user by Azure ID then getting DB ID)
             else:

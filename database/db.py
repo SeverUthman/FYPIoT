@@ -50,6 +50,7 @@ class user(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     user_az_id = db.Column(db.String(100))
     is_admin = db.Column(db.Boolean)
+    is_enabled = db.Column(db.Boolean)
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
     email = db.Column(db.String(50))

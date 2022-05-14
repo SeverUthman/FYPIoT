@@ -1,7 +1,8 @@
+from faulthandler import is_enabled
 from flask_sqlalchemy import SQLAlchemy
 from flask import app, Flask
 from datetime import datetime
-from sqlalchemy import and_, desc
+from sqlalchemy import and_, desc, not_
 from sqlalchemy.orm import relationship
 #from flask_sqlalchemy_session import flask_scoped_session
 from sqlalchemy.ext.declarative import declarative_base
@@ -167,9 +168,10 @@ def CreateNewKitchen(name, firstline, secondline, city, postcode, country):
 '''
 Adds the relationship between user and kitchen in the user_kitchens table
 '''
-def AssociateUserToKitchen(new_kitchen, userid):
+def AssociateUserToKitchen(kitchen, userid):
     currentuser = db.user.query.filter_by(user_id=userid).first()
-    currentuser.kitchens.append(new_kitchen)
+    currentuser.kitchens.append(kitchen)
+    db.db.session.commit()
     return currentuser
 
 '''
@@ -251,8 +253,8 @@ def CreateNewAppliance(name, selectedkitchen, appliancetypeid):
 def GetUserByAzureID(uoid):
     return db.user.query.filter_by(user_az_id=uoid).first()
 
-def CreateNewUserInDatabase(uoid, fname, lname, email, isadmin):
-    newuser = db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin)
+def CreateNewUserInDatabase(uoid, fname, lname, email, isadmin, isenabled=True):
+    newuser = db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin, is_enabled=isenabled)
     db.db.session.add(newuser) # add the new record to the database
     db.db.session.commit() # commit the database change
 
@@ -325,3 +327,30 @@ def GetAllScalesForUser(uid):
     return ovens.all()
 
 
+def GetAllViableKitchensForUser(userkitchens):
+    ukitchenids = []
+    for ukitchen in userkitchens:
+        ukitchenids.append(ukitchen.kitchen_id)
+    
+    viablekitchens = db.db.session.query(db.kitchen)\
+                                    .where(
+                                        not_(db.kitchen.kitchen_id.in_(ukitchenids))
+                                    ).all()
+    return viablekitchens
+
+def RemoveKitchenFromUser(kitchen, user):
+    user.kitchens.remove(kitchen)
+    db.db.session.commit()
+
+def GetAllUsers():
+    return db.db.session.query(db.user).all()
+
+def DisableUser(userid):
+    user = db.db.session.query(db.user).where(db.user.user_id == userid).first()
+    user.is_enabled = False
+    db.db.session.commit()
+
+def EnableUser(userid):
+    user = db.db.session.query(db.user).where(db.user.user_id == userid).first()
+    user.is_enabled = True
+    db.db.session.commit()

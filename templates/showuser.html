@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+<main class="page create-kitchen-page">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">User</h2>
+                <p>See the user details, manage their kitchens or delete the user</p>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <form method='POST' action='/admin/showuser'>
+                        <div class="mb-3"><label class="form-label" for="fname">First Name</label><input class="form-control" type="text" id="fname" name="fname" readonly value="{{user.first_name}}"></div>
+                        <div class="mb-3"><label class="form-label" for="lname">Last Name</label><input class="form-control" type="text" id="lname" name="lname" readonly value="{{user.last_name}}"></div>
+                        <div class="mb-3"><label class="form-label" for="email">Email</label><input class="form-control" type="text" id="email" name="email" readonly value="{{user.email}}"></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="isadmin" name="isadmin" {{"checked" if user.is_admin==True}}><label class="form-check-label" for="isadmin">Is this user an administrator?</label></div>
+                        <div class="mb-3"><button id="savebtn" class="btn btn-primary" type="submit">Save</button></div>
+                    </form>
+                </div>
+
+                <div class="col-sm-6">
+                    <div style="background-color: white; min-height:50px;max-width:500px;box-shadow:0px,2px,10px; padding-left:10px;padding-top:10px;">
+                        <row id="userkitchens">
+                            {% for kitchen in kitchens %}
+                            <div class="col-md-6">
+                                <a href="{{url_for('kitchenmanagement.showkitchen', kitchid=kitchen.kitchen_id)}}">{{kitchen.nickname}}</a>
+                            </div>
+                            {% endfor %}
+                        </row>
+                        <row>
+                            <div class="mt-4">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                                    Add Kitchens to User
+                                </button>
+                            </div>
+                            <div class="mt-4">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeKitchensModal">
+                                    Remove Kitchens from User
+                                </button>
+                            </div>
+                        </row>
+                        <hr/>
+                        <row>
+                            <div class="mt-4">
+                                {% if user.is_enabled == True %}
+                                <form style="border:0; padding:0;box-shadow:0" method="POST" action="/admin/disableuser/{{user.user_id}}">
+                                    <button type="submit" class="btn btn-danger">
+                                        Disable User Account
+                                    </button>
+                                </form>
+                                {% else %}
+                                <form style="border:0; padding:0;box-shadow:0" method="POST" action="/admin/enableuser/{{user.user_id}}">
+                                    <button type="submit" class="btn btn-success" >
+                                        Enable User Account
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </row>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </section>
+
+    <!-- Add Kitchens Modal Dialog -->
+    <div class="modal fade" id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="modalLongTitle">Kitchens for User</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="container w-auto" >
+                    <select class="form-select  h-100 w-100" id="kitchenOptionsSelect" multiple="multiple">
+                        {% for viablekitchen in viablekitchens %}
+                            <option value="{{viablekitchen.kitchen_id}}">{{viablekitchen.nickname}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="modalSaveBtn">Save</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+    <!-- Remove Kitchens Modal Dialog -->
+    <div class="modal fade" id="removeKitchensModal" tabindex="-1" role="dialog" aria-labelledby="removeKitchensModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="removeKitchensModalLongTitle">Remove Kitchens</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="container w-auto">
+                    <select class="form-select  h-100 w-100" id="removeKitchenOptionsSelect" multiple="multiple">
+                        {% for kitchen in kitchens %}
+                            <option value="{{kitchen.kitchen_id}}">{{kitchen.nickname}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" id="removeKitchenModalSaveBtn">Remove</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}
+
+{% block beforefooter %}
+    <script>
+        $(document).ready(function(){
+            $('#modalSaveBtn').click(function(){
+                $('#modalCenter').modal('toggle');
+                $.ajax({
+                    type : "POST",
+                    url : '/admin/addkitchenstouser/'+$('#kitchenOptionsSelect').val()+"/"+{{user.user_id}},
+                    dataType: "json",
+                    contentType: 'application/json;charset=UTF-8',
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+
+
+            });
+
+
+            $('#removeKitchenModalSaveBtn').click(function(){
+                $('#removeKitchensModal').modal('toggle');
+                $.ajax({
+                    type : "POST",
+                    url : '/admin/removekitchensfromuser/'+$('#removeKitchenOptionsSelect').val()+"/"+{{user.user_id}},
+                    dataType: "json",
+                    contentType: 'application/json;charset=UTF-8',
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+
+
+            });
+
+
+        });
+
+    </script>
+{% endblock %}
