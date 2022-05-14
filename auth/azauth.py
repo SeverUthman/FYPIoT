@@ -63,8 +63,10 @@ def authorized():
                 isenabled = True
                 newuser = dbhelper.CreateNewUserInDatabase(uoid, fname, lname, email, isadmin) # create a new user database record
                 session["user_id"] = newuser.user_id # store the user database ID in the session for ease of querying (saves us having to look up user by Azure ID then getting DB ID)
+                session["is_admin"] = isadmin
             else:
                 session["user_id"] = currentuserindb.user_id
+                session["is_admin"] = currentuserindb.is_admin
         except Exception as e:
             return render_template("errorpage.html", errorstack=e) # reroute the error page if something goes wrong with DB interaction
 

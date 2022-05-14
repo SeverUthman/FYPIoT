@@ -56,6 +56,18 @@
                             <li><a class="dropdown-item" href="{{url_for('kitchenmanagement.createscale')}}">Create new Scale</a></li>
                         </ul>
                     </li>
+
+                    {% if session['is_admin'] %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{url_for('admin.allusers')}}">All Users</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('admin.createuser')}}">Create User</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
                     
                     <li class="nav-item"><a class="nav-link" href="/auth/logout">Log Out</a></li>
                     {% endif %}

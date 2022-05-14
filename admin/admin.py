@@ -14,7 +14,7 @@ from database import dbhelper
 admin = Blueprint("admin", __name__, static_folder="../static/", template_folder="../templates/")
 
 @admin.route("createuser",  methods=['POST', 'GET'])
-def CreateUser():
+def createuser():
     try:
         if request.method == 'POST':
             token = getTokenFromCache(app_config.SCOPE)
@@ -133,7 +133,6 @@ def showuser(userid):
             return render_template('showuser.html', user=user, kitchens=kitchens, viablekitchens=viablekitchens)
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
-
 
 @admin.route("/addkitchenstouser/<string:kitchenids>/<string:userid>", methods=["POST"])
 def addkitchenstouser(kitchenids, userid):
