@@ -1,0 +1,2354 @@
+{
+  "id": "68b2c072-42b6-490b-97af-695e5302db69",
+  "version": "2.0",
+  "name": "FYP_KitchenControl",
+  "url": "https://kitchencontrol.azurewebsites.net",
+  "tests": [{
+    "id": "514ad640-9f0c-4c58-af22-ad523bcf2e84",
+    "name": "01.Log In",
+    "commands": [{
+      "id": "2f2262d3-f549-4903-b1e4-4cbd436ee8e3",
+      "comment": "",
+      "command": "open",
+      "target": "/auth/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "38bbf09a-d14e-4c84-b59c-f7d7222d0f43",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1294x1400",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "15c5957b-777b-41aa-a2ca-df42898f3c9b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@onclick=\"window.location.href='https://login.microsoftonline.com/4c57b01d-709a-46da-bb58-e79a9a2f3335/oauth2/v2.0/authorize?client_id=a7bdf031-d1b4-49fa-b06c-a2f82a2cd1ac&response_type=code&redirect_uri=https%3A%2F%2Fkitchencontrol.azurewebsites.net%2Fauth%2Fgetmsaltoken&scope=Directory.ReadWrite.All+User.ReadBasic.All+offline_access+openid+profile&state=utZOsrNpelwaCDhA&code_challenge=ElDlykfOZh6TdjQwsaNNUWJ_i6qNeTNEU1BLS6Oh9Hc&code_challenge_method=S256&nonce=77335abc2c3c10ef1f174c68f5400bdabd233b1e8fe23c15d60ca5dd06813166&client_info=1';\"]", "xpath:attributes"],
+        ["xpath=//p/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Log In')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c6f4c181-5462-4f8c-b9dd-90a4b89b56dc",
+      "comment": "",
+      "command": "click",
+      "target": "id=otherTileText",
+      "targets": [
+        ["id=otherTileText", "id"],
+        ["css=#otherTileText", "css:finder"],
+        ["xpath=//div[@id='otherTileText']", "xpath:attributes"],
+        ["xpath=//div[@id='otherTile']/div/div[2]/div", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6a09e3bf-c14c-4651-bb7e-e635f64ba77e",
+      "comment": "",
+      "command": "type",
+      "target": "id=i0116",
+      "targets": [
+        ["id=i0116", "id"],
+        ["name=loginfmt", "name"],
+        ["css=#i0116", "css:finder"],
+        ["xpath=//input[@id='i0116']", "xpath:attributes"],
+        ["xpath=//div[@id='lightbox']/div[3]/div/div/div/div[2]/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "chrisgreen@sevmirazuregmail.onmicrosoft.com"
+    }, {
+      "id": "94e732c6-cd8d-4ae1-9b34-8d6822034c58",
+      "comment": "",
+      "command": "type",
+      "target": "id=i0118",
+      "targets": [
+        ["id=i0118", "id"],
+        ["name=passwd", "name"],
+        ["css=#i0118", "css:finder"],
+        ["xpath=//input[@id='i0118']", "xpath:attributes"],
+        ["xpath=//div[@id='lightbox']/div[3]/div/div/div/div[2]/div[2]/div/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Finalyearproject2!"
+    }, {
+      "id": "2036bebd-f64b-4cb8-9573-8b86b110ac87",
+      "comment": "",
+      "command": "type",
+      "target": "id=i0116",
+      "targets": [
+        ["id=i0116", "id"],
+        ["name=loginfmt", "name"],
+        ["css=#i0116", "css:finder"],
+        ["xpath=//input[@id='i0116']", "xpath:attributes"],
+        ["xpath=//div[@id='lightbox']/div[3]/div/div/div/div[2]/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "sevmirazure@gmail.com"
+    }, {
+      "id": "bf296136-d479-4d7b-a46d-24c00a06a65b",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=i0116",
+      "targets": [
+        ["id=i0116", "id"],
+        ["name=loginfmt", "name"],
+        ["css=#i0116", "css:finder"],
+        ["xpath=//input[@id='i0116']", "xpath:attributes"],
+        ["xpath=//div[@id='lightbox']/div[3]/div/div/div/div[2]/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "69b73324-786b-4db3-995a-4be8d7d21f6d",
+      "comment": "",
+      "command": "type",
+      "target": "id=i0118",
+      "targets": [
+        ["id=i0118", "id"],
+        ["name=passwd", "name"],
+        ["css=#i0118", "css:finder"],
+        ["xpath=//input[@id='i0118']", "xpath:attributes"],
+        ["xpath=//div[@id='lightbox']/div[3]/div/div[2]/div/div[3]/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Finalyearproject!"
+    }, {
+      "id": "5afa8bb5-fcd4-4be0-a5bb-7658cdc6af30",
+      "comment": "",
+      "command": "click",
+      "target": "id=i0118",
+      "targets": [
+        ["id=i0118", "id"],
+        ["name=passwd", "name"],
+        ["css=#i0118", "css:finder"],
+        ["xpath=//input[@id='i0118']", "xpath:attributes"],
+        ["xpath=//div[@id='lightbox']/div[3]/div/div[2]/div/div[3]/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f6336dc3-f254-4dcf-b3aa-443283cab061",
+      "comment": "",
+      "command": "type",
+      "target": "id=i0118",
+      "targets": [
+        ["id=i0118", "id"],
+        ["name=passwd", "name"],
+        ["css=#i0118", "css:finder"],
+        ["xpath=//input[@id='i0118']", "xpath:attributes"],
+        ["xpath=//div[@id='lightbox']/div[3]/div/div[2]/div/div[3]/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Finalyearproject!"
+    }, {
+      "id": "3b665023-57dc-44f3-9908-f8e153fc8917",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=i0118",
+      "targets": [
+        ["id=i0118", "id"],
+        ["name=passwd", "name"],
+        ["css=#i0118", "css:finder"],
+        ["xpath=//input[@id='i0118']", "xpath:attributes"],
+        ["xpath=//div[@id='lightbox']/div[3]/div/div[2]/div/div[3]/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "d5c5ba5f-f04a-4ecd-8ce3-5f0bf7d448fa",
+      "comment": "",
+      "command": "click",
+      "target": "id=idBtn_Back",
+      "targets": [
+        ["id=idBtn_Back", "id"],
+        ["css=#idBtn_Back", "css:finder"],
+        ["xpath=//input[@id='idBtn_Back']", "xpath:attributes"],
+        ["xpath=//div[@id='lightbox']/div[3]/div/div[2]/div/div[3]/div[2]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ae89c73b-28b6-4e80-ade1-1cdb701c9714",
+    "name": "02.Manage Devices",
+    "commands": [{
+      "id": "eaf63576-5ba4-456f-8797-55690ff2ef0e",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7daa7e3b-7073-4e8a-b34f-dad4b77b504f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1294x1400",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5fa908d8-833c-441b-8980-230068b65f09",
+      "comment": "",
+      "command": "click",
+      "target": "css=.stretched-link\\, > h4",
+      "targets": [
+        ["css=.stretched-link\\, > h4", "css:finder"],
+        ["xpath=//h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'Manage Devices')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ee9aaa9-18ed-4b71-a17c-06ee9b0e3943",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-5:nth-child(2) h4",
+      "targets": [
+        ["css=.col-md-5:nth-child(2) h4", "css:finder"],
+        ["xpath=//div[2]/div/div[2]/a/h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'Manage your existing devices')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f9d1d740-17ed-4cf3-8134-8bf2261c988e",
+      "comment": "",
+      "command": "click",
+      "target": "css=th:nth-child(2) > .th-inner",
+      "targets": [
+        ["css=th:nth-child(2) > .th-inner", "css:finder"],
+        ["xpath=//table[@id='iottable']/thead/tr/th[2]/div", "xpath:idRelative"],
+        ["xpath=//th[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "20e511c3-18c1-4f5d-b21d-2326d32fdf01",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='search']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "49ae015d-d730-4b5a-94ed-3d08fba65b5f",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='search']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "fridgesensor3"
+    }, {
+      "id": "79fa2b66-4d43-422c-8739-bd280f8e68eb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col",
+      "targets": [
+        ["css=.col", "css:finder"],
+        ["xpath=//div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "24b7f8fd-350a-4d38-b878-7d8bc003691c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "466ca4b1-9495-4912-bd3f-99779f01a2b5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.dropdown-item:nth-child(3) > input",
+      "targets": [
+        ["css=.dropdown-item:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@value='2']", "xpath:attributes"],
+        ["xpath=//label[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "89ccd1f3-8d4f-443a-b268-87bb770bb9d3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.dropdown-item:nth-child(2) > input",
+      "targets": [
+        ["css=.dropdown-item:nth-child(2) > input", "css:finder"],
+        ["xpath=//input[@value='1']", "xpath:attributes"],
+        ["xpath=//label[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e8b4fe4d-6187-4879-b9b5-eaa09f884743",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1648b5b3-3a09-46d3-87ad-47c7061df5a6",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=iotfridgesensor3",
+      "targets": [
+        ["linkText=iotfridgesensor3", "linkText"],
+        ["css=td > a", "css:finder"],
+        ["xpath=//a[contains(text(),'iotfridgesensor3')]", "xpath:link"],
+        ["xpath=//table[@id='iottable']/tbody/tr/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/iot/showdevice/11')]", "xpath:href"],
+        ["xpath=//td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'iotfridgesensor3')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2f743242-fc0f-4219-b894-7467c276e954",
+      "comment": "",
+      "command": "click",
+      "target": "name=newpolltime",
+      "targets": [
+        ["name=newpolltime", "name"],
+        ["css=form:nth-child(6) .form-control", "css:finder"],
+        ["xpath=//input[@name='newpolltime']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e78f87ad-b0bd-467b-8164-dd26d9b4ec5e",
+      "comment": "",
+      "command": "click",
+      "target": "name=newpolltime",
+      "targets": [
+        ["name=newpolltime", "name"],
+        ["css=form:nth-child(6) .form-control", "css:finder"],
+        ["xpath=//input[@name='newpolltime']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee4f4b40-8f2d-4fb0-8437-efdbb8d06e7d",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "name=newpolltime",
+      "targets": [
+        ["name=newpolltime", "name"],
+        ["css=form:nth-child(6) .form-control", "css:finder"],
+        ["xpath=//input[@name='newpolltime']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "767a7838-ebcd-4877-98f4-e65a908cab8b",
+      "comment": "",
+      "command": "type",
+      "target": "name=newpolltime",
+      "targets": [
+        ["name=newpolltime", "name"],
+        ["css=form:nth-child(6) .form-control", "css:finder"],
+        ["xpath=//input[@name='newpolltime']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "25"
+    }, {
+      "id": "9c5d08b8-f122-4a54-a527-999baf46343d",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(6) .btn",
+      "targets": [
+        ["css=form:nth-child(6) .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Update')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a20a09b-98f5-4d12-b1cb-07a6ce4a7dda",
+      "comment": "",
+      "command": "click",
+      "target": "name=newthreshold",
+      "targets": [
+        ["name=newthreshold", "name"],
+        ["css=form:nth-child(7) .form-control", "css:finder"],
+        ["xpath=//input[@name='newthreshold']", "xpath:attributes"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "771cc5e1-ff5b-4acc-9b37-4f0389f3d1b5",
+      "comment": "",
+      "command": "click",
+      "target": "name=newthreshold",
+      "targets": [
+        ["name=newthreshold", "name"],
+        ["css=form:nth-child(7) .form-control", "css:finder"],
+        ["xpath=//input[@name='newthreshold']", "xpath:attributes"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "af3e01f8-3899-4d4d-af7a-37a2728f6b8f",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "name=newthreshold",
+      "targets": [
+        ["name=newthreshold", "name"],
+        ["css=form:nth-child(7) .form-control", "css:finder"],
+        ["xpath=//input[@name='newthreshold']", "xpath:attributes"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c2c26dc0-6ade-499e-96d2-2736c2dea6e7",
+      "comment": "",
+      "command": "type",
+      "target": "name=newthreshold",
+      "targets": [
+        ["name=newthreshold", "name"],
+        ["css=form:nth-child(7) .form-control", "css:finder"],
+        ["xpath=//input[@name='newthreshold']", "xpath:attributes"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "34724e3b-41bf-48dd-9f26-e7ebbc1b1c72",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(7) .btn",
+      "targets": [
+        ["css=form:nth-child(7) .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[2]/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "41ef73ef-10a6-4f64-ab41-9b8183cac55c",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarDropdown",
+      "targets": [
+        ["id=navbarDropdown", "id"],
+        ["css=.nav-item:nth-child(2) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'IoT Devices')]", "xpath:link"],
+        ["xpath=//a[@id='navbarDropdown']", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4b0a7f02-8da0-4109-93bf-029eaa331dc9",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Your Devices",
+      "targets": [
+        ["linkText=Your Devices", "linkText"],
+        ["css=.show > li:nth-child(2) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Your Devices')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[2]/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/iot/alldevices')]", "xpath:href"],
+        ["xpath=//li[2]/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Your Devices')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1cba1c64-cffd-45a6-88b9-59c73766ecef",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='search']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "45ae9188-8c26-46a4-8689-0e649fcc293a",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='search']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "sensor3"
+    }, {
+      "id": "217ebad7-4010-434a-9dd2-b4aae399990d",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b37669a4-209b-4d23-8a0a-00aafe7468f2",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=iotfridgesensor3",
+      "targets": [
+        ["linkText=iotfridgesensor3", "linkText"],
+        ["css=tr:nth-child(2) > td:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'iotfridgesensor3')]", "xpath:link"],
+        ["xpath=//table[@id='iottable']/tbody/tr[2]/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/iot/showdevice/11')]", "xpath:href"],
+        ["xpath=//tr[2]/td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'iotfridgesensor3')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d52b1588-32e1-4547-bb9d-ebee614e0c12",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(6) > .input-group",
+      "targets": [
+        ["css=form:nth-child(6) > .input-group", "css:finder"],
+        ["xpath=//div[2]/form/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "147ef296-d9d3-430b-945b-cd008e177c4b",
+      "comment": "",
+      "command": "type",
+      "target": "name=newpolltime",
+      "targets": [
+        ["name=newpolltime", "name"],
+        ["css=form:nth-child(6) .form-control", "css:finder"],
+        ["xpath=//input[@name='newpolltime']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "10"
+    }, {
+      "id": "84baa6cb-0a5c-4e5d-8550-93d4a7100f3a",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(6) .btn",
+      "targets": [
+        ["css=form:nth-child(6) .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Update')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e5f2c2b0-d923-483c-9c06-8d5d8f8472d7",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(7) > .input-group",
+      "targets": [
+        ["css=form:nth-child(7) > .input-group", "css:finder"],
+        ["xpath=//form[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e44ca86f-9d35-4efb-86d6-82e60ce60fad",
+      "comment": "",
+      "command": "type",
+      "target": "name=newthreshold",
+      "targets": [
+        ["name=newthreshold", "name"],
+        ["css=form:nth-child(7) .form-control", "css:finder"],
+        ["xpath=//input[@name='newthreshold']", "xpath:attributes"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "25"
+    }, {
+      "id": "0be465f4-e478-4420-9327-40a7e1cac3d2",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(7) .btn",
+      "targets": [
+        ["css=form:nth-child(7) .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[2]/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0cfcf473-ad10-43a4-a499-a39001e44315",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarDropdown",
+      "targets": [
+        ["id=navbarDropdown", "id"],
+        ["css=.nav-item:nth-child(2) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'IoT Devices')]", "xpath:link"],
+        ["xpath=//a[@id='navbarDropdown']", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "153c42c3-9b4e-49d8-9cbc-82ec24c5a19f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Your Devices",
+      "targets": [
+        ["linkText=Your Devices", "linkText"],
+        ["css=.show > li:nth-child(2) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Your Devices')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[2]/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/iot/alldevices')]", "xpath:href"],
+        ["xpath=//li[2]/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Your Devices')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7d72742d-c76b-4440-bbdc-8c011ef3bd7d",
+    "name": "03.Create new IoT Device",
+    "commands": [{
+      "id": "207b8fc7-7370-4d1d-94ec-2508f8df4f1d",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d2acdae1-e458-4b62-b371-3122925ac610",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1294x1400",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fc26864e-dd49-4527-a971-d9cee55b815a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.stretched-link\\, > p",
+      "targets": [
+        ["css=.stretched-link\\, > p", "css:finder"],
+        ["xpath=//a/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Assign devices to locations and digital twins you create of your kitchen')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f193a81-91f4-406b-ac92-a6eea96de0fb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-5:nth-child(1) p:nth-child(2)",
+      "targets": [
+        ["css=.col-md-5:nth-child(1) p:nth-child(2)", "css:finder"],
+        ["xpath=//a/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Create a new IoT device in the IoT Hub to generate an identity for')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d29c7c22-8cb6-4c17-a87d-ede392f4a217",
+      "comment": "",
+      "command": "click",
+      "target": "id=kitchendd",
+      "targets": [
+        ["id=kitchendd", "id"],
+        ["css=#kitchendd", "css:finder"],
+        ["xpath=//button[@id='kitchendd']", "xpath:attributes"],
+        ["xpath=//div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select... ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d8064677-4e79-4461-969a-3783edd04b44",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test Kitchen 1",
+      "targets": [
+        ["linkText=Test Kitchen 1", "linkText"],
+        ["css=#kitchendropdown > .dropdown-item:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Test Kitchen 1')]", "xpath:link"],
+        ["xpath=//a[@value='1']", "xpath:attributes"],
+        ["xpath=//div[@id='kitchendropdown']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[4]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test Kitchen 1')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1282facc-d0ec-4517-9974-3105db2f99bd",
+      "comment": "",
+      "command": "click",
+      "target": "id=appliancedd",
+      "targets": [
+        ["id=appliancedd", "id"],
+        ["css=#appliancedd", "css:finder"],
+        ["xpath=//button[@id='appliancedd']", "xpath:attributes"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select... ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6e6fc9e1-3714-4929-aea1-8b28a698eccb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=kitchen1oven1",
+      "targets": [
+        ["linkText=kitchen1oven1", "linkText"],
+        ["css=#appliancetypedropdown > .dropdown-item:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'kitchen1oven1')]", "xpath:link"],
+        ["xpath=(//a[@value='1'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='appliancetypedropdown']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[9]", "xpath:href"],
+        ["xpath=//div[2]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'kitchen1oven1')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "37b11d69-323e-4349-9db9-b0d997ed78c3",
+      "comment": "",
+      "command": "click",
+      "target": "id=namept3",
+      "targets": [
+        ["id=namept3", "id"],
+        ["name=namept3", "name"],
+        ["css=#namept3", "css:finder"],
+        ["xpath=//input[@id='namept3']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee1d020b-d0b4-40f4-bd44-a3cbec20658f",
+      "comment": "",
+      "command": "type",
+      "target": "id=namept3",
+      "targets": [
+        ["id=namept3", "id"],
+        ["name=namept3", "name"],
+        ["css=#namept3", "css:finder"],
+        ["xpath=//input[@id='namept3']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "SeleniumIntegrationTest"
+    }, {
+      "id": "31131283-33a3-4e14-a350-ce49e949e672",
+      "comment": "",
+      "command": "click",
+      "target": "id=savebutton",
+      "targets": [
+        ["id=savebutton", "id"],
+        ["css=#savebutton", "css:finder"],
+        ["xpath=//button[@id='savebutton']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a3199721-56a9-4488-9d54-715f161ca96c",
+    "name": "04.Digital Twin",
+    "commands": [{
+      "id": "abe6e592-59e9-4229-8368-7daf4d0d3304",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "601a2310-37e4-4289-9633-54f4bf2992d8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1294x1400",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "157c5f02-eca7-4d6e-aecb-b1096ab25d4f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-5:nth-child(2) > .stretched-link",
+      "targets": [
+        ["css=.col-md-5:nth-child(2) > .stretched-link", "css:finder"],
+        ["xpath=(//a[contains(@href, '/kitchenmanagement/registertwinsmenu')])[2]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "665f5d27-7e6c-495f-bc57-4992c791998e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-5:nth-child(1) h4",
+      "targets": [
+        ["css=.col-md-5:nth-child(1) h4", "css:finder"],
+        ["xpath=//h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'Register a new Kitchen')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "38a619a8-16a0-4eee-9cdb-7f9c32a6396d",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c03f9d94-4925-49be-90a3-c7f42ce6595e",
+      "comment": "",
+      "command": "type",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "New Selenium Integration Test Kitchen"
+    }, {
+      "id": "c7e61d79-397b-4010-b42b-2d781847ddcf",
+      "comment": "",
+      "command": "type",
+      "target": "id=addLine1",
+      "targets": [
+        ["id=addLine1", "id"],
+        ["name=addLine1", "name"],
+        ["css=#addLine1", "css:finder"],
+        ["xpath=//input[@id='addLine1']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Selenium"
+    }, {
+      "id": "f4bebad8-401c-45fb-8e4f-29a1c4d38aee",
+      "comment": "",
+      "command": "type",
+      "target": "id=addLine2",
+      "targets": [
+        ["id=addLine2", "id"],
+        ["name=addLine2", "name"],
+        ["css=#addLine2", "css:finder"],
+        ["xpath=//input[@id='addLine2']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "Integration Test"
+    }, {
+      "id": "26deb09c-7f3a-4b6e-92df-16cec7d7373f",
+      "comment": "",
+      "command": "type",
+      "target": "id=city",
+      "targets": [
+        ["id=city", "id"],
+        ["name=city", "name"],
+        ["css=#city", "css:finder"],
+        ["xpath=//input[@id='city']", "xpath:attributes"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "London"
+    }, {
+      "id": "6a2b93c7-83c9-4e1c-bfb1-f724bfda62b9",
+      "comment": "",
+      "command": "type",
+      "target": "id=postcode",
+      "targets": [
+        ["id=postcode", "id"],
+        ["name=postcode", "name"],
+        ["css=#postcode", "css:finder"],
+        ["xpath=//input[@id='postcode']", "xpath:attributes"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": "SW1"
+    }, {
+      "id": "eb4b4341-3595-4135-9b8a-c351adccb9b9",
+      "comment": "",
+      "command": "type",
+      "target": "id=country",
+      "targets": [
+        ["id=country", "id"],
+        ["name=country", "name"],
+        ["css=#country", "css:finder"],
+        ["xpath=//input[@id='country']", "xpath:attributes"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": "UK"
+    }, {
+      "id": "17a6d866-702b-49f0-8d63-ca77f195ec7d",
+      "comment": "",
+      "command": "click",
+      "target": "id=defaultKitchen",
+      "targets": [
+        ["id=defaultKitchen", "id"],
+        ["name=defaultKitchen", "name"],
+        ["css=#defaultKitchen", "css:finder"],
+        ["xpath=//input[@id='defaultKitchen']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f429a1f2-88f2-4423-afa5-9ffd2200b3e8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[8]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "37394ba4-b398-43fd-ac23-934ca224f0ef",
+      "comment": "",
+      "command": "click",
+      "target": "id=defaultKitchen",
+      "targets": [
+        ["id=defaultKitchen", "id"],
+        ["name=defaultKitchen", "name"],
+        ["css=#defaultKitchen", "css:finder"],
+        ["xpath=//input[@id='defaultKitchen']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "81e79975-4557-4598-bb60-18c0c42ed4ae",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[8]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Update')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5da6a868-874c-4298-b7c3-8a7a2e9cef5f",
+      "comment": "",
+      "command": "click",
+      "target": "id=defaultKitchen",
+      "targets": [
+        ["id=defaultKitchen", "id"],
+        ["name=defaultKitchen", "name"],
+        ["css=#defaultKitchen", "css:finder"],
+        ["xpath=//input[@id='defaultKitchen']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f8a49fa0-f807-4655-9522-0c317687c07d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[8]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Update')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffdbc6b3-a0a0-4a7d-aba5-32fb353fa755",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Digital Twin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7b995412-d838-429b-80f5-aecfa465a161",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Digital Twin Menu",
+      "targets": [
+        ["linkText=Digital Twin Menu", "linkText"],
+        ["css=.show > li:nth-child(1) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Digital Twin Menu')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/viewtwinsmenu')]", "xpath:href"],
+        ["xpath=//li[3]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Digital Twin Menu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "84107914-dc17-486e-97c9-08341f868a1c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-5:nth-child(1) h4",
+      "targets": [
+        ["css=.col-md-5:nth-child(1) h4", "css:finder"],
+        ["xpath=//h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'See your Kitchens')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a308ed8f-f48b-4cac-948e-aec7db2242f7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=New Selenium Integration Test Kitchen",
+      "targets": [
+        ["linkText=New Selenium Integration Test Kitchen", "linkText"],
+        ["css=tr:nth-child(6) a", "css:finder"],
+        ["xpath=//a[contains(text(),'New Selenium Integration Test Kitchen')]", "xpath:link"],
+        ["xpath=//table[@id='kitchenstable']/tbody/tr[6]/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/showkitchen/10')]", "xpath:href"],
+        ["xpath=//tr[6]/td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'New Selenium Integration Test Kitchen')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "19fc73fb-1a8f-4203-95ea-003e8e757829",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Digital Twin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e63ab515-eec5-4235-b1b9-30995237f75b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Register Digital Twins",
+      "targets": [
+        ["linkText=Register Digital Twins", "linkText"],
+        ["css=.show > li:nth-child(4) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Register Digital Twins')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/registertwinsmenu')]", "xpath:href"],
+        ["xpath=//li[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Register Digital Twins')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f74e695f-6dc9-4d81-a027-0c9ef975a012",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-5:nth-child(2) h4",
+      "targets": [
+        ["css=.col-md-5:nth-child(2) h4", "css:finder"],
+        ["xpath=//div[2]/div/div[2]/a/h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'Create an Oven Appliance')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7ed7379-e25e-4c63-bb56-e4dd5a820a70",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d46e4dda-007b-4141-b1ac-3da33306749b",
+      "comment": "",
+      "command": "type",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Selenium Oven"
+    }, {
+      "id": "4d4d508a-0ccf-40c2-8b74-40377eae6abc",
+      "comment": "",
+      "command": "click",
+      "target": "id=appliancedd",
+      "targets": [
+        ["id=appliancedd", "id"],
+        ["css=#appliancedd", "css:finder"],
+        ["xpath=//button[@id='appliancedd']", "xpath:attributes"],
+        ["xpath=//div[@id='appliancedropdown']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Dropdown ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "50596ca8-7927-492c-8b9f-7606e45bc273",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test Kitchen 1",
+      "targets": [
+        ["linkText=Test Kitchen 1", "linkText"],
+        ["css=.dropdown-menu > .dropdown-item:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Test Kitchen 1')]", "xpath:link"],
+        ["xpath=//a[@value='1']", "xpath:attributes"],
+        ["xpath=//div[@id='appliancedropdown']/div/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[4]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test Kitchen 1')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "abfa0e35-20e7-48e3-8b8d-64d953bfc48d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(8)",
+      "targets": [
+        ["css=.btn:nth-child(8)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "18776839-750a-4566-92aa-b8774b199ff6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Digital Twin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "38e2c8b8-0d75-4317-a3c0-c51564bc0848",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Register Digital Twins",
+      "targets": [
+        ["linkText=Register Digital Twins", "linkText"],
+        ["css=.show > li:nth-child(4) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Register Digital Twins')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/registertwinsmenu')]", "xpath:href"],
+        ["xpath=//li[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Register Digital Twins')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d94610b-379f-4b95-858f-33e3bc6a4bec",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-5:nth-child(3) h4",
+      "targets": [
+        ["css=.col-md-5:nth-child(3) h4", "css:finder"],
+        ["xpath=//div[3]/div/div[2]/a/h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'Create a Fridge Appliance')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f685ab69-0563-44ec-b7bb-4ec854886be0",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a53b9b5-7238-4379-9b46-614a11ceaff9",
+      "comment": "",
+      "command": "type",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Selenium Fridge"
+    }, {
+      "id": "d5245129-b1d1-4750-b676-984a3bbb6a57",
+      "comment": "",
+      "command": "click",
+      "target": "id=appliancedd",
+      "targets": [
+        ["id=appliancedd", "id"],
+        ["css=#appliancedd", "css:finder"],
+        ["xpath=//button[@id='appliancedd']", "xpath:attributes"],
+        ["xpath=//div[@id='appliancedropdown']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Dropdown ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4ad9a5c3-6caf-4c3c-8574-a650fe9fae1b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test Kitchen 2",
+      "targets": [
+        ["linkText=Test Kitchen 2", "linkText"],
+        ["css=.dropdown-item:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Test Kitchen 2')]", "xpath:link"],
+        ["xpath=//a[@value='2']", "xpath:attributes"],
+        ["xpath=//div[@id='appliancedropdown']/div/a[2]", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[5]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Test Kitchen 2')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9b690747-4b2c-4b44-8c3a-eb6f7d6e99a7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(8)",
+      "targets": [
+        ["css=.btn:nth-child(8)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f3e5d5e8-73ff-4d92-a189-610a6a71e766",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Digital Twin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "191d0cd6-2773-4c60-87ae-4644b4312b3d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Register Digital Twins",
+      "targets": [
+        ["linkText=Register Digital Twins", "linkText"],
+        ["css=.show > li:nth-child(4) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Register Digital Twins')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/registertwinsmenu')]", "xpath:href"],
+        ["xpath=//li[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Register Digital Twins')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "819a6c2a-326d-40d0-ac32-4453fecd917f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-5:nth-child(4) .col-10",
+      "targets": [
+        ["css=.col-md-5:nth-child(4) .col-10", "css:finder"],
+        ["xpath=//div[4]/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "848241d1-dbf2-4716-ae13-40eeddbbcee4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-5:nth-child(4) h4",
+      "targets": [
+        ["css=.col-md-5:nth-child(4) h4", "css:finder"],
+        ["xpath=//div[4]/div/div[2]/a/h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'Create a Scale Appliance')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "174fef19-daae-40b4-9609-1817550585f2",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "83d00aa0-c915-438f-872c-100cf2827431",
+      "comment": "",
+      "command": "type",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Selenium Scale"
+    }, {
+      "id": "445c9e2d-6315-48fb-9bfd-414a26f7542a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mb-3:nth-child(3)",
+      "targets": [
+        ["css=.mb-3:nth-child(3)", "css:finder"],
+        ["xpath=//div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "30be2cde-b973-410e-a094-fb98de90d089",
+      "comment": "",
+      "command": "click",
+      "target": "id=appliancedd",
+      "targets": [
+        ["id=appliancedd", "id"],
+        ["css=#appliancedd", "css:finder"],
+        ["xpath=//button[@id='appliancedd']", "xpath:attributes"],
+        ["xpath=//div[@id='appliancedropdown']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Dropdown ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "44ae292f-f06b-42a6-9ead-55868006bd1b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test Kitchen 3",
+      "targets": [
+        ["linkText=Test Kitchen 3", "linkText"],
+        ["css=.dropdown-item:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Test Kitchen 3')]", "xpath:link"],
+        ["xpath=//a[@value='3']", "xpath:attributes"],
+        ["xpath=//div[@id='appliancedropdown']/div/a[3]", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[6]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Test Kitchen 3')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a15508b-78fd-4b15-88f4-f5c524724f81",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(8)",
+      "targets": [
+        ["css=.btn:nth-child(8)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ba9b4db8-723f-4417-a85d-ac7cdbe73c66",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,400)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4c74a875-1b82-44b1-a4f5-48a77b05a8cc",
+      "comment": "",
+      "command": "click",
+      "target": "css=#fridgechart_div1 svg > g > rect",
+      "targets": [
+        ["css=#fridgechart_div1 svg > g > rect", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "5f284f9b-d0f3-473b-8152-4fe3d616d809",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Digital Twin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "12001cd9-d469-4cc2-a8fd-5f6a7cac4bb1",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create new Kitchen",
+      "targets": [
+        ["linkText=Create new Kitchen", "linkText"],
+        ["css=li:nth-child(5) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Create new Kitchen')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/ul/li[5]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/registerkitchen')]", "xpath:href"],
+        ["xpath=//li[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create new Kitchen')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "57a639df-6893-409b-89b4-394594860054",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Digital Twin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dd851416-52d0-4018-a934-93272c110bd2",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create new Oven",
+      "targets": [
+        ["linkText=Create new Oven", "linkText"],
+        ["css=li:nth-child(6) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Create new Oven')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/ul/li[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/createoven')]", "xpath:href"],
+        ["xpath=//li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create new Oven')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "457f5d36-88aa-4f0d-824d-67bb941387da",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Digital Twin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7df725bc-8fd5-4906-852f-e647143f7518",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create new Fridge",
+      "targets": [
+        ["linkText=Create new Fridge", "linkText"],
+        ["css=li:nth-child(7) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Create new Fridge')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/ul/li[7]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/createfridge')]", "xpath:href"],
+        ["xpath=//li[7]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create new Fridge')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4e39b8f9-af2f-4f6b-885a-dd213e90279a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Digital Twin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a9572116-be6c-465a-b74a-acbb2e813441",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create new Scale",
+      "targets": [
+        ["linkText=Create new Scale", "linkText"],
+        ["css=li:nth-child(8) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Create new Scale')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[3]/ul/li[8]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/createscale')]", "xpath:href"],
+        ["xpath=//li[8]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create new Scale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "e7cff270-be42-4d03-a9e7-e31de964ba88",
+    "name": "05.Admin",
+    "commands": [{
+      "id": "da3e6e31-43b2-4be7-9e2c-f95773a7d34a",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2409ddf0-171e-4562-8b0e-5e2c2d377ec6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1294x1400",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a33383a8-0f03-43df-a7fb-e03f3fb1c1dd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(4) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(4) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Admin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div/ul/li[4]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f041386-ad71-44bc-b82a-70e204047909",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=All Users",
+      "targets": [
+        ["linkText=All Users", "linkText"],
+        ["css=.show > li:nth-child(1) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'All Users')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/allusers')]", "xpath:href"],
+        ["xpath=//li[4]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'All Users')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4fdfe08c-9f44-4435-9ffc-76c337fcf27f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test1 Admin",
+      "targets": [
+        ["linkText=Test1 Admin", "linkText"],
+        ["css=tr:nth-child(1) > td:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Test1 Admin')]", "xpath:link"],
+        ["xpath=//table[@id='userstable']/tbody/tr/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/showuser/1')]", "xpath:href"],
+        ["xpath=//td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test1 Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b570286b-7ad6-4d56-bdc7-7700f85f8b90",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mt-4 > .btn-primary",
+      "targets": [
+        ["css=.mt-4 > .btn-primary", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//row[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Kitchens to User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9830ae18-d214-4658-9bc0-d8e04ab3625c",
+      "comment": "",
+      "command": "addSelection",
+      "target": "id=kitchenOptionsSelect",
+      "targets": [
+        ["id=kitchenOptionsSelect", "id"],
+        ["css=#kitchenOptionsSelect", "css:finder"],
+        ["xpath=//select[@id='kitchenOptionsSelect']", "xpath:attributes"],
+        ["xpath=//div[@id='modalCenter']/div/div/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": "label=Test Kitchen 5"
+    }, {
+      "id": "6f8a3a3c-c00d-4390-9662-15cc1c92afca",
+      "comment": "",
+      "command": "click",
+      "target": "id=modalSaveBtn",
+      "targets": [
+        ["id=modalSaveBtn", "id"],
+        ["css=#modalSaveBtn", "css:finder"],
+        ["xpath=//button[@id='modalSaveBtn']", "xpath:attributes"],
+        ["xpath=//div[@id='modalCenter']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "62513171-d865-4bff-9c01-9a40a707c2cb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test Kitchen 5",
+      "targets": [
+        ["linkText=Test Kitchen 5", "linkText"],
+        ["css=.col-md-6:nth-child(5) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Test Kitchen 5')]", "xpath:link"],
+        ["xpath=//row[@id='userkitchens']/div[5]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/showkitchen/5')]", "xpath:href"],
+        ["xpath=//div[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test Kitchen 5')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dbfbca5e-4196-4558-a73b-92558f01e0b2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(4) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(4) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Admin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div/ul/li[4]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b64a5c0-1823-4119-ad19-c4b3da143c19",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=All Users",
+      "targets": [
+        ["linkText=All Users", "linkText"],
+        ["css=.show > li:nth-child(1) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'All Users')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/allusers')]", "xpath:href"],
+        ["xpath=//li[4]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'All Users')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "18f0a278-ce00-47cf-89e0-8c520af9ee97",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test2 Admin",
+      "targets": [
+        ["linkText=Test2 Admin", "linkText"],
+        ["css=tr:nth-child(2) > td:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Test2 Admin')]", "xpath:link"],
+        ["xpath=//table[@id='userstable']/tbody/tr[2]/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/showuser/2')]", "xpath:href"],
+        ["xpath=//tr[2]/td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test2 Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bdc568c4-e806-430e-8912-84ddb8c62fdd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-check-label",
+      "targets": [
+        ["css=.form-check-label", "css:finder"],
+        ["xpath=//div[4]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Is this user an administrator?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1827c450-24b4-454b-b662-f5cd816675ea",
+      "comment": "",
+      "command": "click",
+      "target": "id=savebtn",
+      "targets": [
+        ["id=savebtn", "id"],
+        ["css=#savebtn", "css:finder"],
+        ["xpath=//button[@id='savebtn']", "xpath:attributes"],
+        ["xpath=//div[5]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "899fdd25-6a3d-4ee1-b5fa-faf81ef5dc5e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(4) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(4) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Admin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div/ul/li[4]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4726de08-69df-426d-917c-b5edb163b619",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=All Users",
+      "targets": [
+        ["linkText=All Users", "linkText"],
+        ["css=.show > li:nth-child(1) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'All Users')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/allusers')]", "xpath:href"],
+        ["xpath=//li[4]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'All Users')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7cf877f5-b391-4682-bcda-bfa6cabaa9db",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(2)",
+      "targets": [
+        ["css=tr:nth-child(2)", "css:finder"],
+        ["xpath=//table[@id='userstable']/tbody/tr[2]", "xpath:idRelative"],
+        ["xpath=//tr[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb9a65e6-8829-4c43-aa3e-56c6054cad5d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test2 Admin",
+      "targets": [
+        ["linkText=Test2 Admin", "linkText"],
+        ["css=tr:nth-child(2) > td:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Test2 Admin')]", "xpath:link"],
+        ["xpath=//table[@id='userstable']/tbody/tr[2]/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/showuser/2')]", "xpath:href"],
+        ["xpath=//tr[2]/td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test2 Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e68a9891-f128-4bf2-8aac-3e3149c52085",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-check-label",
+      "targets": [
+        ["css=.form-check-label", "css:finder"],
+        ["xpath=//div[4]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Is this user an administrator?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a3a9b39-5284-4a71-ac2a-efc6a22a9ed7",
+      "comment": "",
+      "command": "click",
+      "target": "id=savebtn",
+      "targets": [
+        ["id=savebtn", "id"],
+        ["css=#savebtn", "css:finder"],
+        ["xpath=//button[@id='savebtn']", "xpath:attributes"],
+        ["xpath=//div[5]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "948fa8e3-4a5c-438e-89e6-d8c8ce64d129",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mt-4 > .btn-primary",
+      "targets": [
+        ["css=.mt-4 > .btn-primary", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//row[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Kitchens to User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "10d0c073-d08a-42c8-a40f-dfec795ce084",
+      "comment": "",
+      "command": "addSelection",
+      "target": "id=kitchenOptionsSelect",
+      "targets": [
+        ["id=kitchenOptionsSelect", "id"],
+        ["css=#kitchenOptionsSelect", "css:finder"],
+        ["xpath=//select[@id='kitchenOptionsSelect']", "xpath:attributes"],
+        ["xpath=//div[@id='modalCenter']/div/div/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": "label=Test Kitchen 1"
+    }, {
+      "id": "3423ade5-a165-4248-85ed-6d8671c6af74",
+      "comment": "",
+      "command": "addSelection",
+      "target": "id=kitchenOptionsSelect",
+      "targets": [
+        ["id=kitchenOptionsSelect", "id"],
+        ["css=#kitchenOptionsSelect", "css:finder"],
+        ["xpath=//select[@id='kitchenOptionsSelect']", "xpath:attributes"],
+        ["xpath=//div[@id='modalCenter']/div/div/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": "label=Test Kitchen 3"
+    }, {
+      "id": "5ec3e4e0-fda6-4cb5-8af8-b7d287e5a4c7",
+      "comment": "",
+      "command": "click",
+      "target": "id=modalSaveBtn",
+      "targets": [
+        ["id=modalSaveBtn", "id"],
+        ["css=#modalSaveBtn", "css:finder"],
+        ["xpath=//button[@id='modalSaveBtn']", "xpath:attributes"],
+        ["xpath=//div[@id='modalCenter']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ea295b59-04fa-44d3-a6a7-ef26036e5495",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test Kitchen 5",
+      "targets": [
+        ["linkText=Test Kitchen 5", "linkText"],
+        ["css=.col-md-6:nth-child(5) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Test Kitchen 5')]", "xpath:link"],
+        ["xpath=//row[@id='userkitchens']/div[5]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/kitchenmanagement/showkitchen/5')]", "xpath:href"],
+        ["xpath=//div[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test Kitchen 5')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "df04497a-da7a-45aa-a146-6538aa0f009d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(4) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(4) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Admin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div/ul/li[4]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "427f3590-1dd6-4593-8d14-ac96bf08adcb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=All Users",
+      "targets": [
+        ["linkText=All Users", "linkText"],
+        ["css=.show > li:nth-child(1) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'All Users')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/allusers')]", "xpath:href"],
+        ["xpath=//li[4]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'All Users')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5c4d71e0-0d9c-4c87-bdbc-84c44a7bbaed",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test2 Admin",
+      "targets": [
+        ["linkText=Test2 Admin", "linkText"],
+        ["css=tr:nth-child(2) > td:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Test2 Admin')]", "xpath:link"],
+        ["xpath=//table[@id='userstable']/tbody/tr[2]/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/showuser/2')]", "xpath:href"],
+        ["xpath=//tr[2]/td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test2 Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7eaef4f4-12ba-4868-93b2-7aa566347c4a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mt-4 > .btn-danger",
+      "targets": [
+        ["css=.mt-4 > .btn-danger", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Remove Kitchens from User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2d9d26e9-6d73-479e-b258-d5b300b08a65",
+      "comment": "",
+      "command": "addSelection",
+      "target": "id=removeKitchenOptionsSelect",
+      "targets": [
+        ["id=removeKitchenOptionsSelect", "id"],
+        ["css=#removeKitchenOptionsSelect", "css:finder"],
+        ["xpath=//select[@id='removeKitchenOptionsSelect']", "xpath:attributes"],
+        ["xpath=//div[@id='removeKitchensModal']/div/div/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/select", "xpath:position"]
+      ],
+      "value": "label=Test Kitchen 1"
+    }, {
+      "id": "b5fab101-314e-420e-85cb-021bfb58e00a",
+      "comment": "",
+      "command": "addSelection",
+      "target": "id=removeKitchenOptionsSelect",
+      "targets": [
+        ["id=removeKitchenOptionsSelect", "id"],
+        ["css=#removeKitchenOptionsSelect", "css:finder"],
+        ["xpath=//select[@id='removeKitchenOptionsSelect']", "xpath:attributes"],
+        ["xpath=//div[@id='removeKitchensModal']/div/div/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/select", "xpath:position"]
+      ],
+      "value": "label=Test Kitchen 2"
+    }, {
+      "id": "b8b731cb-cc16-45b6-ba0f-1b33bd7c20b4",
+      "comment": "",
+      "command": "addSelection",
+      "target": "id=removeKitchenOptionsSelect",
+      "targets": [
+        ["id=removeKitchenOptionsSelect", "id"],
+        ["css=#removeKitchenOptionsSelect", "css:finder"],
+        ["xpath=//select[@id='removeKitchenOptionsSelect']", "xpath:attributes"],
+        ["xpath=//div[@id='removeKitchensModal']/div/div/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/select", "xpath:position"]
+      ],
+      "value": "label=Test Kitchen 3"
+    }, {
+      "id": "027fcd45-3bbd-47f8-9820-0fe4f7858c40",
+      "comment": "",
+      "command": "addSelection",
+      "target": "id=removeKitchenOptionsSelect",
+      "targets": [
+        ["id=removeKitchenOptionsSelect", "id"],
+        ["css=#removeKitchenOptionsSelect", "css:finder"],
+        ["xpath=//select[@id='removeKitchenOptionsSelect']", "xpath:attributes"],
+        ["xpath=//div[@id='removeKitchensModal']/div/div/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/select", "xpath:position"]
+      ],
+      "value": "label=Test Kitchen 4"
+    }, {
+      "id": "588d3d2c-0335-4ba3-8ad4-f3f264e36106",
+      "comment": "",
+      "command": "click",
+      "target": "id=removeKitchenModalSaveBtn",
+      "targets": [
+        ["id=removeKitchenModalSaveBtn", "id"],
+        ["css=#removeKitchenModalSaveBtn", "css:finder"],
+        ["xpath=//button[@id='removeKitchenModalSaveBtn']", "xpath:attributes"],
+        ["xpath=//div[@id='removeKitchensModal']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[3]/button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a29aa75d-7a0e-438e-9fb5-06f8bc086451",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-6 > div",
+      "targets": [
+        ["css=.col-sm-6 > div", "css:finder"],
+        ["xpath=//div[2]/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "93bf9979-5805-42c1-8d50-ba99d29a0d8d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-6 > div",
+      "targets": [
+        ["css=.col-sm-6 > div", "css:finder"],
+        ["xpath=//div[2]/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aa9c15d4-6ded-4034-94bc-366139fdbc9a",
+      "comment": "",
+      "command": "click",
+      "target": "css=form > .btn",
+      "targets": [
+        ["css=form > .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Disable User Account')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fea7ae19-7254-4b0b-b439-99a7de7ed05f",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(2) > td:nth-child(5)",
+      "targets": [
+        ["css=tr:nth-child(2) > td:nth-child(5)", "css:finder"],
+        ["xpath=//table[@id='userstable']/tbody/tr[2]/td[5]", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[5]", "xpath:position"],
+        ["xpath=//td[contains(.,'False')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4b4d2bc-e19a-464c-985f-d46fb930c129",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Test2 Admin",
+      "targets": [
+        ["linkText=Test2 Admin", "linkText"],
+        ["css=tr:nth-child(2) > td:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Test2 Admin')]", "xpath:link"],
+        ["xpath=//table[@id='userstable']/tbody/tr[2]/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/showuser/2')]", "xpath:href"],
+        ["xpath=//tr[2]/td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test2 Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "253e5aec-f653-494f-bb8e-f14dd07f6353",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Enable User Account')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "796e1ca2-4d20-49b3-a80c-8f790f9b0332",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(2)",
+      "targets": [
+        ["css=tr:nth-child(2)", "css:finder"],
+        ["xpath=//table[@id='userstable']/tbody/tr[2]", "xpath:idRelative"],
+        ["xpath=//tr[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c0415fd9-9628-42c7-8146-d5bb1ae473ad",
+      "comment": "",
+      "command": "click",
+      "target": "css=th:nth-child(2) > .th-inner",
+      "targets": [
+        ["css=th:nth-child(2) > .th-inner", "css:finder"],
+        ["xpath=//table[@id='userstable']/thead/tr/th[2]/div", "xpath:idRelative"],
+        ["xpath=//th[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "04d7759c-e34e-4401-b06c-f12f7698895a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.asc",
+      "targets": [
+        ["css=.asc", "css:finder"],
+        ["xpath=//table[@id='userstable']/thead/tr/th[2]/div", "xpath:idRelative"],
+        ["xpath=//th[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a8d9f93f-ae06-4a6b-b380-d861cae2f728",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='search']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e09ba603-a207-4f17-bec0-36fd7d69ce43",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='search']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "chris"
+    }, {
+      "id": "00d13493-ed7c-49d5-84a1-759dc32dd833",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Chris Green",
+      "targets": [
+        ["linkText=Chris Green", "linkText"],
+        ["css=td:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Chris Green')]", "xpath:link"],
+        ["xpath=//table[@id='userstable']/tbody/tr/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/showuser/4')]", "xpath:href"],
+        ["xpath=//td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Chris Green')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1cb99f99-aca2-4934-9045-6b5a1c5db942",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.mt-4 > .btn-primary",
+      "targets": [
+        ["css=.mt-4 > .btn-primary", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//row[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Kitchens to User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b861f6af-c992-425f-ae3a-f2539883cca1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mt-4 > .btn-primary",
+      "targets": [
+        ["css=.mt-4 > .btn-primary", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//row[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Kitchens to User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1330b104-5790-4309-a1d2-9c8a2af62776",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.mt-4 > .btn-primary",
+      "targets": [
+        ["css=.mt-4 > .btn-primary", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//row[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Kitchens to User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d5453044-4046-4cab-873a-c4fee0bd3cb4",
+      "comment": "",
+      "command": "addSelection",
+      "target": "id=kitchenOptionsSelect",
+      "targets": [
+        ["id=kitchenOptionsSelect", "id"],
+        ["css=#kitchenOptionsSelect", "css:finder"],
+        ["xpath=//select[@id='kitchenOptionsSelect']", "xpath:attributes"],
+        ["xpath=//div[@id='modalCenter']/div/div/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": "label=Test Kitchen 3"
+    }, {
+      "id": "c0ed249f-b7ac-43fe-b928-2cb03d687360",
+      "comment": "",
+      "command": "click",
+      "target": "id=modalSaveBtn",
+      "targets": [
+        ["id=modalSaveBtn", "id"],
+        ["css=#modalSaveBtn", "css:finder"],
+        ["xpath=//button[@id='modalSaveBtn']", "xpath:attributes"],
+        ["xpath=//div[@id='modalCenter']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "62c80197-3358-4741-af90-9f79860c6d09",
+    "name": "06.Create User",
+    "commands": [{
+      "id": "ab4f494b-9eac-4385-b0b0-d428b90b261c",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "80f4db13-a455-4d21-bbb4-bb74213d5c37",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1294x1400",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6825b402-90d1-46be-961d-a0c6fd4f1cb3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(4) > #navbarDropdown",
+      "targets": [
+        ["css=.nav-item:nth-child(4) > #navbarDropdown", "css:finder"],
+        ["xpath=//a[contains(text(),'Admin')]", "xpath:link"],
+        ["xpath=(//a[@id='navbarDropdown'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div/ul/li[4]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4eac892e-8907-48d5-98d2-ce8651e904ab",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create User",
+      "targets": [
+        ["linkText=Create User", "linkText"],
+        ["css=.show > li:nth-child(2) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Create User')]", "xpath:link"],
+        ["xpath=//div[@id='navcol-1']/ul/li[4]/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/createuser')]", "xpath:href"],
+        ["xpath=//li[4]/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a345b66-3028-470a-b3f9-b9647fe14542",
+      "comment": "",
+      "command": "click",
+      "target": "id=fname",
+      "targets": [
+        ["id=fname", "id"],
+        ["name=fname", "name"],
+        ["css=#fname", "css:finder"],
+        ["xpath=//input[@id='fname']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2855ab8-19ef-47f3-830f-e99c70f5175b",
+      "comment": "",
+      "command": "type",
+      "target": "id=fname",
+      "targets": [
+        ["id=fname", "id"],
+        ["name=fname", "name"],
+        ["css=#fname", "css:finder"],
+        ["xpath=//input[@id='fname']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Chris"
+    }, {
+      "id": "60118110-bbf8-4837-8d87-f1a31a7eb091",
+      "comment": "",
+      "command": "type",
+      "target": "id=lname",
+      "targets": [
+        ["id=lname", "id"],
+        ["name=lname", "name"],
+        ["css=#lname", "css:finder"],
+        ["xpath=//input[@id='lname']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Green"
+    }, {
+      "id": "dab85b02-8ec0-4958-a549-016c49ec4026",
+      "comment": "",
+      "command": "click",
+      "target": "id=userdoesexist",
+      "targets": [
+        ["id=userdoesexist", "id"],
+        ["css=#userdoesexist", "css:finder"],
+        ["xpath=//label[@id='userdoesexist']", "xpath:attributes"],
+        ["xpath=//label[4]", "xpath:position"],
+        ["xpath=//label[contains(.,'This user already exists....')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fe2b726b-4c92-43b1-a188-aaf317ab8d10",
+      "comment": "",
+      "command": "click",
+      "target": "css=.clean-block > .container",
+      "targets": [
+        ["css=.clean-block > .container", "css:finder"],
+        ["xpath=//section/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "40329adc-2baa-4669-a32f-352295ea8896",
+      "comment": "",
+      "command": "type",
+      "target": "id=fname",
+      "targets": [
+        ["id=fname", "id"],
+        ["name=fname", "name"],
+        ["css=#fname", "css:finder"],
+        ["xpath=//input[@id='fname']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Selenium"
+    }, {
+      "id": "97042e63-0925-4208-80bf-b2f3fa1bb461",
+      "comment": "",
+      "command": "type",
+      "target": "id=lname",
+      "targets": [
+        ["id=lname", "id"],
+        ["name=lname", "name"],
+        ["css=#lname", "css:finder"],
+        ["xpath=//input[@id='lname']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "AutoIntegrationTest"
+    }, {
+      "id": "c8116c93-6913-4005-9489-2a56faa39f8d",
+      "comment": "",
+      "command": "click",
+      "target": "id=userdoesnotexist",
+      "targets": [
+        ["id=userdoesnotexist", "id"],
+        ["css=#userdoesnotexist", "css:finder"],
+        ["xpath=//label[@id='userdoesnotexist']", "xpath:attributes"],
+        ["xpath=//label[3]", "xpath:position"],
+        ["xpath=//label[contains(.,'Details look good')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "48ed9e9f-9b88-4865-a7fb-208e8d6613f7",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce791448-a1a2-4bb6-8714-6acf6f1dfac6",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "selenium@sevmirgmail.onmicrosoft.com"
+    }, {
+      "id": "d8f66cb5-d20c-4cc8-9efc-f5edf7b7a7ce",
+      "comment": "",
+      "command": "type",
+      "target": "id=temppw",
+      "targets": [
+        ["id=temppw", "id"],
+        ["name=temppw", "name"],
+        ["css=#temppw", "css:finder"],
+        ["xpath=//input[@id='temppw']", "xpath:attributes"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": "123456!!22sdsa"
+    }, {
+      "id": "f020e72f-6345-48c3-99d8-cec172ae832c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-check-label",
+      "targets": [
+        ["css=.form-check-label", "css:finder"],
+        ["xpath=//div[6]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Is this user an administrator?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3e88068-9df8-4387-9eff-cdc8a66dddbf",
+      "comment": "",
+      "command": "click",
+      "target": "id=savebtn",
+      "targets": [
+        ["id=savebtn", "id"],
+        ["css=#savebtn", "css:finder"],
+        ["xpath=//button[@id='savebtn']", "xpath:attributes"],
+        ["xpath=//div[7]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "3d11a1f5-0d74-47ab-9603-17ce1d467d54",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://kitchencontrol.azurewebsites.net/"],
+  "plugins": []
+}

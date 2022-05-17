@@ -6,7 +6,15 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
+###############################################################
+########     This class is a model representation      ########
+########    of all the database tables.                ########
+########      It is used to create the SQL tables      ########
+########     and to query and manipulate the data      ########
+###############################################################
 """
+To build or destroy the database, use the commands below in a python shell.
+
 from app import create_app
 app = create_app()
 app.app_context().push()

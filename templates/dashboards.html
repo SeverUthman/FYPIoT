@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<section class="clean-block clean-form dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Your Dashboards</h2>
+            <p>All data available from your IoT Devices</p>
+        </div>
+
+
+        {% for kitchen in dataset %}
+        <h2 class="mt-5">{{kitchen.Kitchen.nickname}}</h2>
+            <div class="row">
+                
+                    {% for oven in kitchen.oventelemetry %}
+                        <div class="col mt-3">
+                            <h5>{{ oven.ApplianceName }}</h5>
+                            <div id="{{ oven.ApplianceName | replace(' ','') }}ovenchart_div{{loop.index}}"></div>
+                        </div>
+                    {% endfor %}
+            </div>
+
+            <div class="row">
+                
+                    {% for fridge in kitchen.fridgetelemetry %}
+                        <div class="col mt-3">
+                            <h5>{{ fridge.ApplianceName }}</h5>
+                            <div id="{{ fridge.ApplianceName | replace(' ','') }}fridgechart_div{{loop.index}}"></div>
+                        </div> 
+                    {% endfor %}
+            </div>
+
+            <div class="row">
+                
+                    {% for scale in kitchen.scaletelemetry %}
+                        <div class="col mt-3">
+                            <h5>{{ scale.ApplianceName }}</h5>
+                            <div id="{{ scale.ApplianceName | replace(' ','') }}scalechart_div{{loop.index}}"></div>
+                        </div>
+                    {% endfor %}
+            </div>
+        {% endfor %}
+
+    </div>
+</section>
+{% endblock %}
+    
+{% block beforefooter %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+	
+	function BuildTelemetryForGoogleCharts()
+    {
+        {% for kitchen in dataset %}
+			{% for item in kitchen.oventelemetry %}
+				var dataset = [];
+				{% for result in item.TelemetryData %}
+						resultarray = [];
+						resultarray.push({{result[0]|tojson|safe}});
+						resultarray.push(parseFloat({{result[1]|tojson|safe}}));
+						resultarray.push(parseFloat({{result[2]|tojson|safe}}));
+
+						dataset.push(resultarray)
+				{% endfor %}
+				drawBasic(dataset, "{{ item.ApplianceName | replace(' ','') }}ovenchart_div{{loop.index}}")
+			{% endfor %}
+			
+			{% for fridge in kitchen.fridgetelemetry %}
+				var dataset = [];
+				{% for result in fridge.TelemetryData %}
+						resultarray = [];
+						resultarray.push({{result[0]|tojson|safe}});
+						resultarray.push(parseFloat({{result[1]|tojson|safe}}));
+						resultarray.push(parseFloat({{result[2]|tojson|safe}}));
+
+						dataset.push(resultarray)
+				{% endfor %}
+				drawBasic(dataset, "{{ fridge.ApplianceName | replace(' ','') }}fridgechart_div{{loop.index}}")
+			{% endfor %}
+			
+			{% for scale in kitchen.scaletelemetry %}
+				var dataset = [];
+				{% for result in scale.TelemetryData %}
+						resultarray = [];
+						resultarray.push({{result[0]|tojson|safe}});
+						resultarray.push(parseFloat({{result[1]|tojson|safe}}));
+
+						dataset.push(resultarray)
+				{% endfor %}
+				drawBasic(dataset, "{{ scale.ApplianceName | replace(' ','') }}scalechart_div{{loop.index}}")
+			{% endfor %}
+        {% endfor %}
+    }
+
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(BuildTelemetryForGoogleCharts);
+    
+    function drawBasic(datasets, divname) {
+
+        var dataset = datasets
+        console.log(dataset)
+        var data = new google.visualization.DataTable();
+        var options;
+
+        if(divname.includes('scale'))
+        {
+            data.addColumn('string', 'X');
+            data.addColumn('number', 'weight');
+            data.addRows(dataset)
+
+            options = {
+                hAxis: {
+                title: 'Time',
+                direction:-1, 
+                slantedText:true, 
+                slantedTextAngle:90
+                },
+                vAxis: {
+                title: 'Weight'
+                },
+                legend: 'none'
+            };
+        }
+        else
+        {
+            data.addColumn('string', 'X');
+            data.addColumn('number', 'tempC');
+            data.addColumn('number', 'tempF');
+            data.addRows(dataset)
+
+            options = {
+                hAxis: {
+                title: 'Time',
+                direction:-1, 
+                slantedText:true, 
+                slantedTextAngle:90
+                },
+                vAxis: {
+                title: 'Temperature'
+                },
+                legend: 'none'
+            };
+        }
+        
+        var chart = new google.visualization.LineChart(document.getElementById(divname));
+
+        chart.draw(data, options);
+	}
+
+    $(document).ready(function(){
+        
+    });
+</script>
+{% endblock %}

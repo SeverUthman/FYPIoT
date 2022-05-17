@@ -1,0 +1,185 @@
+USE [fyp-kitchencontrol-db]
+GO
+
+INSERT INTO [dbo].[user]
+           ([user_az_id],[is_admin],[is_enabled],[first_name],[last_name],[email])
+     VALUES
+           ('37439413-4c05-4429-8182-33e917800b13', 1 ,1,'Test1' ,'Admin' ,'testadmin1@sevmirazuregmail.onmicrosoft.com'),
+		   ('thisisatestguid2', 1 ,1,'Test2' ,'Admin' ,'testadmin2@sevmirazuregmail.onmicrosoft.com'),
+		   ('thisisatestguid3', 0 ,1,'Test3' ,'Notadmin' ,'testnotadmin3@sevmirazuregmail.onmicrosoft.com'),
+		   ('thisisatestguid4', 0 ,1,'Test4' ,'Notadmin' ,'testnotadmin4@sevmirazuregmail.onmicrosoft.com')
+GO
+
+
+INSERT INTO [dbo].[kitchen]
+           ([nickname],[line1],[line2],[city],[postcode],[country])
+     VALUES
+           ('Test Kitchen 1','Test Street 1','Test Town 1','London','SW1','UK'),
+		   ('Test Kitchen 2','Test Street 2','Test Town 2','London','SW2','UK'),
+		   ('Test Kitchen 3','Test Street 3','Test Town 3','London','SW3','UK'),
+		   ('Test Kitchen 4','Test Street 4','Test Town 4','London','SW4','UK'),
+		   ('Test Kitchen 5','Test Street 5','Test Town 5','London','SW5','UK'),
+		   ('Test Kitchen 6','Test Street 6','Test Town 6','London','SW6','UK'),
+		   ('Test Kitchen 7','Test Street 7','Test Town 7','London','SW7','UK'),
+		   ('Test Kitchen 8','Test Street 8','Test Town 8','London','SW8','UK')
+GO
+
+
+INSERT INTO [dbo].[kitchen_appliance_type]
+           ([kitchen_appliance_type])
+     VALUES
+           ('Oven'),('Fridge'),('Scale')
+GO
+
+INSERT INTO [dbo].[user_kitchen]
+           ([kitchen_id],[user_id],[is_default_kitchen])
+     VALUES
+			/** Admins **/ 
+           (1,1,1),
+		   (2,1,0),
+		   (3,1,0),
+		   (4,1,0),
+		   (5,2,1),
+		   (6,2,0),
+		   (7,2,0),
+		   (8,2,0),
+		   /** Non Admins **/
+		   (1,3,1),
+		   (2,3,0),
+		   (3,3,0),
+		   (4,3,0),
+		   (5,3,0),
+		   (6,3,0),
+		   (7,4,0),
+		   (8,4,1)
+GO
+
+INSERT INTO [dbo].[iot_device]
+           ([device_etag],[nickname],[connstring],[kitchen_appliance_type_id],[pollfrequency],[alertthreshold])
+     VALUES
+           ('etag1','iotovensensor1','connectionstringiotovensensor1',1,10,25),
+		   ('etag2','iotovensensor2','connectionstringiotovensensor2',1,10,25),
+		   ('etag3','iotovensensor3','connectionstringiotovensensor3',1,10,25),
+		   ('etag4','iotovensensor4','connectionstringiotovensensor4',1,10,25),
+		   ('etag5','iotovensensor5','connectionstringiotovensensor5',1,10,25),
+		   ('etag6','iotovensensor6','connectionstringiotovensensor6',1,10,25),
+		   ('etag7','iotovensensor7','connectionstringiotovensensor7',1,10,25),
+		   ('etag8','iotovensensor8','connectionstringiotovensensor8',1,10,25),
+		   
+		   ('etag9','iotfridgesensor1','connectionstringiotfridgesensor1',2,10,25),
+		   ('etag10','iotfridgesensor2','connectionstringiotfridgesensor2',2,10,25),
+		   ('etag11','iotfridgesensor3','connectionstringiotfridgesensor3',2,10,25),
+		   ('etag12','iotfridgesensor4','connectionstringiotfridgesensor4',2,10,25),
+		   ('etag13','iotfridgesensor5','connectionstringiotfridgesensor5',2,10,25),
+		   ('etag14','iotfridgesensor6','connectionstringiotfridgesensor6',2,10,25),
+		   ('etag15','iotfridgesensor7','connectionstringiotfridgesensor7',2,10,25),
+		   ('etag16','iotfridgesensor8','connectionstringiotfridgesensor8',2,10,25),
+		   ('etag17','iotfridgesensor9','connectionstringiotfridgesensor9',2,10,25),
+		   ('etag18','iotfridgesensor10','connectionstringiotfridgesensor10',2,10,25),
+		   ('etag19','iotfridgesensor11','connectionstringiotfridgesensor11',2,10,25),
+		   ('etag20','iotfridgesensor12','connectionstringiotfridgesensor12',2,10,25),
+		   ('etag21','iotfridgesensor13','connectionstringiotfridgesensor13',2,10,25),
+		   ('etag22','iotfridgesensor14','connectionstringiotfridgesensor14',2,10,25),
+		   ('etag23','iotfridgesensor15','connectionstringiotfridgesensor15',2,10,25),
+		   ('etag24','iotfridgesensor16','connectionstringiotfridgesensor16',2,10,25),
+		   
+		   ('etag25','iotscalesensor1','connectionstringiotscalesensor1',3,10,25),
+		   ('etag26','iotscalesensor2','connectionstringiotscalesensor2',3,10,25),
+		   ('etag27','iotscalesensor3','connectionstringiotscalesensor3',3,10,25),
+		   ('etag28','iotscalesensor4','connectionstringiotscalesensor4',3,10,25),
+		   ('etag29','iotscalesensor5','connectionstringiotscalesensor5',3,10,25)
+GO
+
+INSERT INTO [dbo].[kitchen_appliance]
+           ([nickname],[kitchen_id],[kitchen_appliance_type_id],[iot_device_id])
+     VALUES
+           ('kitchen1oven1',1,1,1),
+		   ('kitchen2oven1',2,1,2),
+		   ('kitchen3oven1',3,1,3),
+		   ('kitchen4oven1',4,1,4),
+		   ('kitchen5oven1',5,1,5),
+		   ('kitchen6oven1',6,1,6),
+		   ('kitchen7oven1',7,1,7),
+		   ('kitchen8oven1',8,1,8),
+
+		   ('kitchen1fridge1',1,2,9),
+		   ('kitchen1fridge2',1,2,10),
+		   ('kitchen1fridge3',1,2,11),
+		   ('kitchen1fridge4',1,2,12),
+
+		   ('kitchen2fridge5',2,2,13),
+		   ('kitchen2fridge6',2,2,14),
+		   ('kitchen2fridge7',2,2,15),
+		   ('kitchen2fridge8',2,2,16),
+		   ('kitchen2fridge9',2,2,17),
+		   ('kitchen2fridge10',2,2,18),
+		   ('kitchen2fridge11',2,2,19),
+		   ('kitchen2fridge12',2,2,20),
+
+		   ('kitchen3fridge13',3,2,21),
+		   ('kitchen3fridge14',3,2,22),
+
+		   ('kitchen4fridge15',4,2,23),
+		   ('kitchen4fridge16',4,2,24),
+
+		   ('kitchen4scale1',4,3,25),
+		   ('kitchen5scale1',5,3,26),
+		   ('kitchen6scale1',6,3,27),
+		   ('kitchen7scale1',7,3,28),
+		   ('kitchen7scale2',7,3,29)
+GO
+
+/*
+update kitchen_appliance
+set kitchen_appliance_type_id = 3
+where nickname like '%scale%'
+
+select * from kitchen
+join 
+	kitchen_appliance on kitchen.kitchen_id = kitchen_appliance.kitchen_id
+join
+	iot_device on kitchen_appliance.iot_device_id = iot_device.iot_device_id
+join
+	scale_history on scale_history.iot_device_id = iot_device.iot_device_id
+where
+	kitchen.kitchen_id = 7
+order by kitchen.nickname
+
+
+SELECT 
+	*
+FROM 
+	kitchen_appliance 
+JOIN
+	kitchen ON kitchen.kitchen_id = kitchen_appliance.kitchen_id
+WHERE
+	kitchen_appliance.kitchen_appliance_type_id = 3 
+	AND 
+	kitchen.kitchen_id = 7
+order by kitchen.nickname desc 
+
+
+SELECT iot_device.iot_device_id AS iotid, iot_device.nickname AS iotname, iot_device.kitchen_appliance_type_id AS iotkitchenappid, kitchen_appliance_type.kitchen_appliance_type AS kitchenappliancetype, kitchen_appliance.nickname AS kitchenappliance, kitchen.nickname AS kitchen, kitchen.kitchen_id AS kitchenid
+FROM 
+	iot_device 
+JOIN 
+	kitchen_appliance ON iot_device.iot_device_id = kitchen_appliance.iot_device_id 
+JOIN 
+	kitchen_appliance_type ON iot_device.kitchen_appliance_type_id = kitchen_appliance_type.kitchen_appliance_type_id 
+JOIN 
+	kitchen ON kitchen.kitchen_id = kitchen_appliance.kitchen_id 
+JOIN 
+	user_kitchen ON kitchen.kitchen_id = user_kitchen.kitchen_id
+WHERE user_kitchen.user_id = 1
+
+
+SELECT iot_device.iot_device_id AS iotid, iot_device.nickname AS iotname, iot_device.kitchen_appliance_type_id AS iotkitchenappid, kitchen_appliance_type.kitchen_appliance_type AS kitchenappliancetype, kitchen_appliance.nickname AS kitchenappliance, kitchen.nickname AS kitchen, kitchen.kitchen_id AS kitchenid, user_kitchen.is_default_kitchen AS defaultkitchen
+FROM iot_device JOIN kitchen_appliance ON iot_device.iot_device_id = kitchen_appliance.iot_device_id JOIN kitchen_appliance_type ON iot_device.kitchen_appliance_type_id = kitchen_appliance_type.kitchen_appliance_type_id JOIN kitchen ON kitchen.kitchen_id = kitchen_appliance.kitchen_id JOIN user_kitchen ON kitchen.kitchen_id = user_kitchen.kitchen_id
+WHERE user_kitchen.user_id = 1
+
+select * from iot_device
+join kitchen_appliance on kitchen_appliance.iot_device_id = iot_device.iot_device_id
+join kitchen on kitchen.kitchen_id = kitchen_appliance.kitchen_id
+join user_kitchen on kitchen.kitchen_id = user_kitchen.kitchen_id
+where user_kitchen.user_id = 1
+*/

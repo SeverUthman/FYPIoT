@@ -2,7 +2,7 @@ from faulthandler import is_enabled
 from flask_sqlalchemy import SQLAlchemy
 from flask import app, Flask
 from datetime import datetime
-from sqlalchemy import and_, desc, not_
+from sqlalchemy import and_, desc, false, not_
 from sqlalchemy.orm import relationship
 #from flask_sqlalchemy_session import flask_scoped_session
 from sqlalchemy.ext.declarative import declarative_base
@@ -47,12 +47,13 @@ This should be called after a user creates a Digital Twin using the IoT Hub
 and we can store the details of the twin in our database for ease of use
 '''
 def RegisterIoTDeviceInDB(kitchenappliance, appliancetypeid, devicename, newdevice, connstring):
-    iotdevice = db.iot_device(device_etag=newdevice.etag, nickname=devicename, connstring=connstring, kitchen_appliance_type_id=appliancetypeid)
+    iotdevice = db.iot_device(device_etag=newdevice.etag, nickname=devicename, connstring=connstring, kitchen_appliance_type_id=appliancetypeid, pollfrequency=10, alertthreshold=25)
     db.db.session.add(iotdevice)
     db.db.session.commit()
 
     kitchenappliance.iot_device_id = iotdevice.iot_device_id
     db.db.session.commit()
+    return iotdevice
 
 '''
 Get all kitchens for a user
@@ -77,6 +78,7 @@ def GetIoTDeviceDetails(deviceid):
                         .with_entities(
                             db.iot_device.iot_device_id.label('iotid'),\
                             db.iot_device.nickname.label('iotname'),\
+                            db.iot_device.connstring.label('connstring'),\
                             db.iot_device.pollfrequency.label('iotpollfrequency'),\
                             db.iot_device.alertthreshold.label('iotalertthreshold'),\
                             db.iot_device.kitchen_appliance_type_id.label('iotkitchenappid'),\
@@ -218,47 +220,79 @@ def GetUser_KitchenObject(kid, uid):
     return db.db.session.query(db.user_kitchen).filter(
                 db.user_kitchen.kitchen_id == kid, 
                 db.user_kitchen.user_id == uid).first()
-
+'''
+Get The scales for a specific kitchen
+'''
 def GetScalesForKitchen(kitchid):
     query = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=3)
     print(str(query))
     return query.all()
 
+'''
+Get The fridges for a specific kitchen
+'''
 def GetFridgesForKitchen(kitchid):
     query = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=2)
     print(str(query))
     return query.all()
 
+'''
+Get The ovens for a specific kitchen
+'''
 def GetOvensForKitchen(kitchid):
     query = db.kitchen_appliance.query.filter_by(kitchen_id=kitchid, kitchen_appliance_type_id=1) 
     print(str(query))
     return query.all()
 
+'''
+Get all kitchens for a specific user
+'''
 def GetAllKitchensForUser(userid):
     query = db.db.session.query(db.kitchen).join(db.user_kitchen).filter(db.user_kitchen.user_id == userid)
     print(str(query)) 
     return query.all()
 
+'''
+Return a count of appliances for a kitchen, based on appliance type
+'''
 def GetCountOfApplianceInKitchen(kitchen, appliancetypeid):
     return db.db.session.query(db.kitchen_appliance).filter(db.kitchen_appliance.kitchen_id == kitchen.kitchen_id, db.kitchen_appliance.kitchen_appliance_type_id == appliancetypeid).count()
 
+'''
+Fetch a kitchen appliance by its ID
+'''
 def GetKitchenApplianceByID(applianceid):
     return db.kitchen_appliance.query.filter_by(kitchen_appliance_id=applianceid).first()
 
+'''
+Create a new appliance, based on the appliance type id
+'''
 def CreateNewAppliance(name, selectedkitchen, appliancetypeid):
     new_appliance = db.kitchen_appliance(nickname=name, kitchen_id=selectedkitchen, kitchen_appliance_type_id=appliancetypeid)
     db.db.session.add(new_appliance)
     db.db.session.commit()
 
+'''
+Find a user in the database, based on their azure ID
+often used to check if a logging in user is a returning user and therfore has a profile on the system
+or if they are a new user
+'''
 def GetUserByAzureID(uoid):
     return db.user.query.filter_by(user_az_id=uoid).first()
 
+'''
+Create a new user in the database
+'''
 def CreateNewUserInDatabase(uoid, fname, lname, email, isadmin, isenabled=True):
     newuser = db.user(user_az_id=uoid, first_name=fname, last_name=lname, email=email, is_admin=isadmin, is_enabled=isenabled)
     db.db.session.add(newuser) # add the new record to the database
     db.db.session.commit() # commit the database change
 
+'''
+For a specific user, get all the appliances of type oven
+'''
 def GetAllOvensForUser(uid):
+    # using SQL alchemy, we can build a complex SQL query that will join several tables, select columns and label them.
     ovens = db.db.session.query(db.kitchen_appliance)\
                         .join(db.kitchen_appliance_type, db.kitchen_appliance.kitchen_appliance_type_id == db.kitchen_appliance_type.kitchen_appliance_type_id)\
                         .join(db.iot_device, db.kitchen_appliance.iot_device_id == db.iot_device.iot_device_id)\
@@ -280,7 +314,11 @@ def GetAllOvensForUser(uid):
                         ).all()
     return ovens
 
+'''
+For a specific user, get all the appliances of type fridge
+'''
 def GetAllFridgesForUser(uid):
+    # using SQL alchemy, we can build a complex SQL query that will join several tables, select columns and label them.
     ovens = db.db.session.query(db.kitchen_appliance)\
                         .join(db.kitchen_appliance_type, db.kitchen_appliance.kitchen_appliance_type_id == db.kitchen_appliance_type.kitchen_appliance_type_id)\
                         .join(db.iot_device, db.kitchen_appliance.iot_device_id == db.iot_device.iot_device_id)\
@@ -302,8 +340,11 @@ def GetAllFridgesForUser(uid):
                         ).all()
     return ovens
 
-
+'''
+For a specific user, get all the appliances of type Scale
+'''
 def GetAllScalesForUser(uid):
+    # using SQL alchemy, we can build a complex SQL query that will join several tables, select columns and label them.
     ovens = db.db.session.query(db.kitchen_appliance)\
                         .join(db.kitchen_appliance_type, db.kitchen_appliance.kitchen_appliance_type_id == db.kitchen_appliance_type.kitchen_appliance_type_id)\
                         .join(db.iot_device, db.kitchen_appliance.iot_device_id == db.iot_device.iot_device_id)\
@@ -326,7 +367,10 @@ def GetAllScalesForUser(uid):
     print(ovens)
     return ovens.all()
 
-
+'''
+This method returns a list of kitchens that are not associated with the user
+and therefore are viable for association.
+'''
 def GetAllViableKitchensForUser(userkitchens):
     ukitchenids = []
     for ukitchen in userkitchens:
@@ -338,19 +382,42 @@ def GetAllViableKitchensForUser(userkitchens):
                                     ).all()
     return viablekitchens
 
+'''
+Remove the association between a kitchen and a user, effectively removing permissions from a user to a kitchen.
+'''
 def RemoveKitchenFromUser(kitchen, user):
     user.kitchens.remove(kitchen)
     db.db.session.commit()
 
+'''
+get all users in the database
+'''
 def GetAllUsers():
     return db.db.session.query(db.user).all()
 
+'''
+update the database record for a user to show they are disabled
+'''
 def DisableUser(userid):
     user = db.db.session.query(db.user).where(db.user.user_id == userid).first()
     user.is_enabled = False
     db.db.session.commit()
 
+'''
+update the database record for a user to show they are enabled
+'''
 def EnableUser(userid):
     user = db.db.session.query(db.user).where(db.user.user_id == userid).first()
     user.is_enabled = True
+    db.db.session.commit()
+
+'''
+update the database record for a user to toggle whether or not they are an admin user.
+'''
+def UpdateUserAdmin(userid, isadmin):
+    user = db.db.session.query(db.user).where(db.user.user_id == userid).first()
+    userisadmin = False
+    if isadmin:
+        userisadmin = True
+    user.is_admin = userisadmin
     db.db.session.commit()

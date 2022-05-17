@@ -9,6 +9,10 @@ import app_config
 kitchenmanagement = Blueprint("kitchenmanagement", __name__, static_folder="../static/", template_folder="../templates/")
 
 
+'''
+this route will read the form submission if it is posted to and create new kitchen digital twin
+or render a page showing the form to fill in to registered a digital twin kitchen
+'''
 @kitchenmanagement.route("/registerkitchen", methods=['POST', 'GET'])
 def registerkitchen():
     try:
@@ -34,7 +38,12 @@ def registerkitchen():
         return render_template("errorpage.html", errorstack=e)
 
 
-
+'''
+This method will show a kitchen if it is requested via a Get method.
+If it is posted to, it will be because of a form submission which only has the "default" option available
+so the poster is looking to toggle the default kitchen setting.
+This route returns a set of dynamic data to the view to enable dynamic building of web content, i/e data driven application
+'''
 @kitchenmanagement.route("/showkitchen/<string:kitchid>", methods=['GET', 'POST'])
 def showkitchen(kitchid):
     try:
@@ -45,16 +54,19 @@ def showkitchen(kitchid):
             userkitchen = dbhelper.SetDefaultKitchenStatusForUser(isdefaultkitchen, kitchen, user)
             return redirect('/kitchenmanagement/showkitchen/'+kitchid)
         else:
+            # prepare holders for each type of appliance telemetry
             oventelemetry = []
             fridgetelemetry = []
             scaletelemetry = []
 
+            # Get the kitchen object and it's appliances
             kitchen = dbhelper.GetKitchen(kitchid)
             kitchenovens = dbhelper.GetOvensForKitchen(kitchid)
             kitchenfridges = dbhelper.GetFridgesForKitchen(kitchid)
             kitchenscales = dbhelper.GetScalesForKitchen(kitchid)
             user = dbhelper.GetUser(session['user_id'])
 
+            # look for telemetry in each type of appliance, and if it's found then add it to the list to send back to the view.
             for oven in kitchenovens:
                 telemetry = dbhelper.GetTop15DeviceTelemetry(oven.iot_device_id, "Oven")
                 if len(telemetry) > 0:
@@ -73,6 +85,7 @@ def showkitchen(kitchid):
             kid=kitchen.kitchen_id
             uid=user.user_id
             
+            # this is needed so the view can determine whether or not to tick the box for default kitchen for user.
             userkitchen = dbhelper.GetUser_KitchenObject(kid, uid)
 
             if not kitchen:
@@ -83,7 +96,9 @@ def showkitchen(kitchid):
         return render_template("errorpage.html", errorstack=e)
 
 
-
+'''
+This route returns a list of all kitchens and a count of each type of appliance per kitchen
+'''
 @kitchenmanagement.route("/allkitchens", methods=['GET'])
 def allkitchens():
     try:
@@ -99,7 +114,9 @@ def allkitchens():
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
-
+'''
+This route creates an oven digital twin representation, i/e just a record in the database
+'''
 @kitchenmanagement.route("/createoven", methods=['POST', 'GET'])
 def createoven():
     try:
@@ -115,7 +132,9 @@ def createoven():
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
-
+'''
+This route returns an oven digital twin representation, i/e just a record from the database
+'''
 @kitchenmanagement.route("/showoven/<int:ovenid>", methods=['POST', 'GET'])
 def showoven(ovenid):
     try:
@@ -129,7 +148,9 @@ def showoven(ovenid):
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
-
+'''
+This route creates a fridge digital twin representation, i/e just a record in the database
+'''
 @kitchenmanagement.route("/createfridge", methods=['POST', 'GET'])
 def createfridge():
     try:
@@ -146,7 +167,9 @@ def createfridge():
         return render_template("errorpage.html", errorstack=e)
 
 
-
+'''
+This route returns a fridge digital twin representation, i/e just a record from the database
+'''
 @kitchenmanagement.route("/showfridge/<int:fridgeid>", methods=['POST', 'GET'])
 def showfridge(fridgeid):
     try:
@@ -159,7 +182,9 @@ def showfridge(fridgeid):
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
-
+'''
+This route creates a scale digital twin representation, i/e just a record in the database
+'''
 @kitchenmanagement.route("/createscale", methods=['POST', 'GET'])
 def createscale():
     try:
@@ -175,7 +200,9 @@ def createscale():
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
-
+'''
+This route returns a scale digital twin representation, i/e just a record from the database
+'''
 @kitchenmanagement.route("/showscale/<int:scaleid>", methods=['POST', 'GET'])
 def showscale(scaleid):
     try:
@@ -188,18 +215,25 @@ def showscale(scaleid):
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
-
+'''
+This route simply renders an html page for the landing page of registering digital twins menu
+'''
 @kitchenmanagement.route('/registertwinsmenu', methods=['GET'])
 @login_required
 def registertwinsmenu():
     return render_template('registerkitchenandappliance.html')
 
+'''
+This route simply renders an html page showing links to different reports for digital twin items
+'''
 @kitchenmanagement.route('/viewtwinsmenu', methods=['GET'])
 @login_required
 def viewtwinsmenu():
     return render_template('viewdigitaltwinmenu.html')
 
-
+'''
+This route returns all ovens associated with the logged in user
+'''
 @kitchenmanagement.route('/getovens', methods=['GET'])
 def getovens():
     try:
@@ -208,7 +242,9 @@ def getovens():
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
-
+'''
+This route returns all fridges associated with the logged in user
+'''
 @kitchenmanagement.route('/getfridges', methods=['GET'])
 def getfridges():
     try:
@@ -217,6 +253,9 @@ def getfridges():
     except Exception as e:
         return render_template("errorpage.html", errorstack=e)
 
+'''
+This route returns all scales associated with the logged in user
+'''
 @kitchenmanagement.route('/getscales', methods=['GET'])
 def getscales():
     try:

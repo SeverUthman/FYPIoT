@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+<section class="clean-block clean-form dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Create an API for a Supplier</h2>
+            <p>To enable third party Suppliers to Access our APIs, you can create an API Secret for them here.</p>
+            <p>This will generate a strong secret from Azure Active Directory, <strong>be careful who you give access to!</strong></p>
+            <br><br>
+
+            <form method='POST' action='/admin/createapi'>
+                <div class="mb-3">
+                    <label class="form-label" for="name">Customer Name</label>
+                    <input class="form-control" type="text" id="name" name="name">
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="Submit">Create API</button>
+                </div>
+            </form>
+            
+            {% if keydetails %}
+            <form>
+                <h4>Created API Details, <strong>Save these now, as it will not be possible to retrieve them in the future.</strong></h4>
+                <div>
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Customer Name</label>
+                        <div name="name">{{keydetails.displayName}}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="keyid">Key ID</label>
+                        <div name="nkeyidame">{{keydetails.keyId}}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="keyid">Key Secret</label>
+                        <div name="nkeyidame">{{keydetails.secretText}}</div>
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block beforefooter %}
+{% endblock %}

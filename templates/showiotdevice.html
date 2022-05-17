@@ -46,6 +46,12 @@
                             <a href="{{url_for('kitchenmanagement.showkitchen', kitchid=device.kitchenid)}}">{{device.kitchen}}</a>
                         </div>
                     </div>
+                    <div class="mb-3">
+                        <h4><label id="connstringlabel" class="form-label" for="connectionstring">Connection String (Click to reveal)</label></h4>
+                        <div id="connectionstring" name="connectionstring" style="display:none;">
+                            {{device.connstring}}
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="col-md-5 feature-box">
@@ -69,6 +75,13 @@
 {% endblock %}
 
 {% block beforefooter %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#connstringlabel').click(function(){
+                $('#connectionstring').toggle();
+            })
+        })
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         function BuildTelemetryForGoogleCharts()

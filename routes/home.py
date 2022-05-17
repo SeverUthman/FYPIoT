@@ -11,22 +11,24 @@ from database import db
 
 home = Blueprint("home", __name__, static_folder="../static/", template_folder="../templates/")
 
-# The default (aka home) route for the app
+'''
+The default (aka home) route for the app
+'''
 @home.route('/', methods=['POST', 'GET'])
 @login_required
 def index():
     return render_template('index.html')
 
-@home.route('/createuser', methods=['POST', 'GET'])
-def createuser():
-    response, otherresponse = azauth.CreateUser()
-    return response.text + "\n" + otherresponse.text
-        
+'''
+This route is a returns a staic response page informing the user of how they can get support
+'''
+@home.route('/support', methods=['GET'])
+def support():
+    return render_template('support.html')
 
-"""@home.route('/createkitchen', methods=['POST', 'GET'])
-@login_required
-def createkitchen():
-    if request.method == 'POST':
-        pass
-    else:
-        return render_template('registerkitchen.html')"""
+'''
+This route is a placeholer for future developments and returns a staic response page
+'''
+@home.route('/footer', methods=['GET'])
+def footer():
+    return render_template('footer.html')

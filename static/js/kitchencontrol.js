@@ -1,5 +1,6 @@
 function HandleAppliancesForKitchenResponse(data)
 {
+    $('#appliancetypedropdown').empty()
     $.each(data, function(i, obj) {
         $('#appliancetypedropdown').append("<a value='"+obj.id+"' class='dropdown-item' href='#'> "+obj.name+"</a>");
     });
