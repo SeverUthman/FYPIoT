@@ -12,7 +12,7 @@ import app_config
 
 
 app = Flask(__name__)
-app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
+app.secret_key = app_config.APP_SECRET #updated to reflect open repo, need to change this to environment variable once pulled local
 app.config.from_object(app_config)
 
 # This section is needed for url_for("foo", _external=True) to automatically
@@ -25,7 +25,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 def create_app():
     app = Flask(__name__)   
-    app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
+    app.secret_key = app_config.APP_SECRET #updated to reflect open repo, need to change this to environment variable once pulled local
     app.config.from_object(app_config)
     Session(app)
     from database import db
@@ -48,13 +48,13 @@ if __name__ == '__main__':
     # Service, a docker container will be used to publish the app, likely running a web server like gunicorn
     app = create_app()
     app.config.from_object(app_config)
-    app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
+    app.secret_key = app_config.APP_SECRET #updated to reflect open repo, need to change this to environment variable once pulled local
     app.config.from_object(app_config)
     #Session(app)
     app.run(host='localhost', port=5000, debug=True)
 else:
     app = create_app()
-    app.secret_key = 'aT17Q~5F-DkJ.uhRJpeNFcbQfGNL-1x658-Nv' 
+    app.secret_key = app_config.APP_SECRET #updated to reflect open repo, need to change this to environment variable once pulled local
 
 #if __name__ == "__main__":
 #    app.run()
